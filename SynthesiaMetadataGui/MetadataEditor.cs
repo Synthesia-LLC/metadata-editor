@@ -364,12 +364,22 @@ namespace Synthesia
             }
         }
 
+        public void ForceOpenFile(string filename)
+        {
+            File = new FileInfo(filename);
+            using (FileStream input = File.OpenRead()) Metadata = new MetadataFile(input);
+
+            WipeSelection();
+            Dirty = false;
+        }
+
         private void MetadataEditor_DragDrop(object sender, DragEventArgs e)
         {
             if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
 
             string[] filenames = e.Data.GetData(DataFormats.FileDrop) as string[];
             if (filenames.Length > 1) return;
+            if (!System.IO.File.Exists(filenames[0])) return;
 
             FileInfo file = new FileInfo(filenames[0]);
 
@@ -380,7 +390,6 @@ namespace Synthesia
             using (FileStream input = File.OpenRead()) Metadata = new MetadataFile(input);
 
             WipeSelection();
-
             Dirty = false;
         }
 
