@@ -298,6 +298,15 @@ namespace Synthesia
             UpdateSelectedSongTitle();
         }
 
+        private void SubtitleBox_TextChanged(object sender, EventArgs e)
+        {
+            if (IgnoreUpdates) return;
+            SelectedSong.Subtitle = SubtitleBox.Text;
+            RebindAfterChange();
+
+            UpdateSelectedSongTitle();
+        }
+
         private void UpdateSelectedSongTitle()
         {
             int i = SongList.SelectedIndex;
@@ -313,13 +322,6 @@ namespace Synthesia
 
             SongList.SelectedIndexChanged += SongList_SelectedIndexChanged;
         }  
-
-        private void SubtitleBox_TextChanged(object sender, EventArgs e)
-        {
-            if (IgnoreUpdates) return;
-            SelectedSong.Subtitle = SubtitleBox.Text;
-            RebindAfterChange();
-        }
 
         private void ComposerBox_TextChanged(object sender, EventArgs e)
         {
