@@ -35,8 +35,8 @@ namespace Synthesia
 
         public void Save(Stream output)
         {
-            using (XmlWriter writer = XmlWriter.Create(output))
-                m_document.Save(writer);
+            using (StreamWriter writer = new StreamWriter(output))
+                m_document.Save(writer, SaveOptions.None);
         }
 
         public void RemoveSong(string uniqueId)
