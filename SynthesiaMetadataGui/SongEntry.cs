@@ -18,6 +18,8 @@ namespace Synthesia
         public string Copyright { get; set; }
         public string License { get; set; }
 
+        public string FingerHints { get; set; }
+
         private int? m_rating;
         public int? Rating
         {

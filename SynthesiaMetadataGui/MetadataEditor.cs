@@ -200,6 +200,8 @@ namespace Synthesia
             DifficultyBox.Value = 0;
             RatingBox.Value = 0;
 
+            FingerHintBox.Clear();
+
             TagBox.Clear();
             TagList.Items.Clear();
 
@@ -228,6 +230,8 @@ namespace Synthesia
 
             DifficultyBox.Value = e.Difficulty ?? 0;
             RatingBox.Value = e.Rating ?? 0;
+
+            FingerHintBox.Text = e.FingerHints;
 
             TagList.Items.Clear();
             foreach (var i in e.Tags) TagList.Items.Add(i);
@@ -348,6 +352,13 @@ namespace Synthesia
         {
             if (IgnoreUpdates) return;
             SelectedSong.License = LicenseBox.Text;
+            RebindAfterChange();
+        }
+
+        private void FingerHintBox_TextChanged(object sender, EventArgs e)
+        {
+            if (IgnoreUpdates) return;
+            SelectedSong.FingerHints = FingerHintBox.Text;
             RebindAfterChange();
         }
 

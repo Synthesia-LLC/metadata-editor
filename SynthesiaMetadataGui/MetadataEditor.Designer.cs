@@ -74,6 +74,8 @@
             this.OpenSongDialog = new System.Windows.Forms.OpenFileDialog();
             this.SongListLabel = new System.Windows.Forms.Label();
             this.PropertiesGroup = new System.Windows.Forms.GroupBox();
+            this.FingerHintLabel = new System.Windows.Forms.Label();
+            this.FingerHintBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DifficultyBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RatingBox)).BeginInit();
             this.MainMenu.SuspendLayout();
@@ -87,14 +89,14 @@
             this.SongList.FormattingEnabled = true;
             this.SongList.Location = new System.Drawing.Point(12, 46);
             this.SongList.Name = "SongList";
-            this.SongList.Size = new System.Drawing.Size(300, 381);
+            this.SongList.Size = new System.Drawing.Size(300, 446);
             this.SongList.TabIndex = 2;
             this.SongList.SelectedIndexChanged += new System.EventHandler(this.SongList_SelectedIndexChanged);
             // 
             // AddSong
             // 
             this.AddSong.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.AddSong.Location = new System.Drawing.Point(12, 439);
+            this.AddSong.Location = new System.Drawing.Point(12, 504);
             this.AddSong.Name = "AddSong";
             this.AddSong.Size = new System.Drawing.Size(217, 23);
             this.AddSong.TabIndex = 3;
@@ -106,7 +108,7 @@
             // RemoveSong
             // 
             this.RemoveSong.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.RemoveSong.Location = new System.Drawing.Point(235, 439);
+            this.RemoveSong.Location = new System.Drawing.Point(235, 504);
             this.RemoveSong.Name = "RemoveSong";
             this.RemoveSong.Size = new System.Drawing.Size(77, 23);
             this.RemoveSong.TabIndex = 4;
@@ -278,7 +280,7 @@
             // TagsLabel
             // 
             this.TagsLabel.AutoSize = true;
-            this.TagsLabel.Location = new System.Drawing.Point(6, 309);
+            this.TagsLabel.Location = new System.Drawing.Point(6, 374);
             this.TagsLabel.Name = "TagsLabel";
             this.TagsLabel.Size = new System.Drawing.Size(34, 13);
             this.TagsLabel.TabIndex = 21;
@@ -299,7 +301,7 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.TagList.FormattingEnabled = true;
-            this.TagList.Location = new System.Drawing.Point(70, 332);
+            this.TagList.Location = new System.Drawing.Point(70, 397);
             this.TagList.Name = "TagList";
             this.TagList.Size = new System.Drawing.Size(238, 82);
             this.TagList.TabIndex = 24;
@@ -309,7 +311,7 @@
             // 
             this.TagBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.TagBox.Location = new System.Drawing.Point(70, 306);
+            this.TagBox.Location = new System.Drawing.Point(70, 371);
             this.TagBox.Name = "TagBox";
             this.TagBox.Size = new System.Drawing.Size(238, 20);
             this.TagBox.TabIndex = 22;
@@ -319,7 +321,7 @@
             // 
             this.RemoveTag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.RemoveTag.Enabled = false;
-            this.RemoveTag.Location = new System.Drawing.Point(314, 333);
+            this.RemoveTag.Location = new System.Drawing.Point(314, 398);
             this.RemoveTag.Name = "RemoveTag";
             this.RemoveTag.Size = new System.Drawing.Size(72, 23);
             this.RemoveTag.TabIndex = 25;
@@ -331,7 +333,7 @@
             // 
             this.AddTag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.AddTag.Enabled = false;
-            this.AddTag.Location = new System.Drawing.Point(314, 304);
+            this.AddTag.Location = new System.Drawing.Point(314, 369);
             this.AddTag.Name = "AddTag";
             this.AddTag.Size = new System.Drawing.Size(72, 23);
             this.AddTag.TabIndex = 23;
@@ -468,6 +470,8 @@
             this.PropertiesGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.PropertiesGroup.Controls.Add(this.FingerHintBox);
+            this.PropertiesGroup.Controls.Add(this.FingerHintLabel);
             this.PropertiesGroup.Controls.Add(this.UniqueIdLabel);
             this.PropertiesGroup.Controls.Add(this.UniqueIdBox);
             this.PropertiesGroup.Controls.Add(this.TitleBox);
@@ -495,17 +499,36 @@
             this.PropertiesGroup.Controls.Add(this.ArrangerLabel);
             this.PropertiesGroup.Location = new System.Drawing.Point(318, 32);
             this.PropertiesGroup.Name = "PropertiesGroup";
-            this.PropertiesGroup.Size = new System.Drawing.Size(392, 430);
+            this.PropertiesGroup.Size = new System.Drawing.Size(392, 495);
             this.PropertiesGroup.TabIndex = 5;
             this.PropertiesGroup.TabStop = false;
             this.PropertiesGroup.Text = "Properties";
+            // 
+            // FingerHintLabel
+            // 
+            this.FingerHintLabel.AutoSize = true;
+            this.FingerHintLabel.Location = new System.Drawing.Point(7, 307);
+            this.FingerHintLabel.Name = "FingerHintLabel";
+            this.FingerHintLabel.Size = new System.Drawing.Size(44, 13);
+            this.FingerHintLabel.TabIndex = 26;
+            this.FingerHintLabel.Text = "&Fingers:";
+            // 
+            // FingerHintBox
+            // 
+            this.FingerHintBox.Location = new System.Drawing.Point(70, 304);
+            this.FingerHintBox.Multiline = true;
+            this.FingerHintBox.Name = "FingerHintBox";
+            this.FingerHintBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.FingerHintBox.Size = new System.Drawing.Size(316, 44);
+            this.FingerHintBox.TabIndex = 27;
+            this.FingerHintBox.TextChanged += new System.EventHandler(this.FingerHintBox_TextChanged);
             // 
             // MetadataEditor
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(722, 474);
+            this.ClientSize = new System.Drawing.Size(722, 539);
             this.Controls.Add(this.PropertiesGroup);
             this.Controls.Add(this.SongListLabel);
             this.Controls.Add(this.RemoveSong);
@@ -518,9 +541,9 @@
             this.MinimumSize = new System.Drawing.Size(720, 500);
             this.Name = "MetadataEditor";
             this.Text = "[set in code]";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MetadataEditor_FormClosing);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MetadataEditor_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MetadataEditor_DragEnter);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MetadataEditor_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MetadataEditor_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.DifficultyBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.RatingBox)).EndInit();
@@ -579,6 +602,8 @@
         private System.Windows.Forms.OpenFileDialog OpenSongDialog;
         private System.Windows.Forms.Label SongListLabel;
         private System.Windows.Forms.GroupBox PropertiesGroup;
+        private System.Windows.Forms.TextBox FingerHintBox;
+        private System.Windows.Forms.Label FingerHintLabel;
     }
 }
 
