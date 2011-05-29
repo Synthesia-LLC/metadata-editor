@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Xml.Linq;
 
 namespace Synthesia
 {
@@ -427,6 +428,101 @@ namespace Synthesia
             IgnoreUpdates = false;
         }
 
+        private string FingerHintPath
+        {
+            get
+            {
+                // The data directory is different on the Mac version
+                int platform = (int)Environment.OSVersion.Platform;
+                bool unix = platform == 4 || platform == 6 || platform == 128 || Environment.OSVersion.Platform == PlatformID.MacOSX;
+
+                string path = "";
+                if (!unix)
+                {
+                    path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                }
+                else
+                {
+                    path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+                    path = Path.Combine(path, "Library");
+                    path = Path.Combine(path, "Application Support");
+                }
+                path = Path.Combine(path, "Synthesia");
+                path = Path.Combine(path, "fingers.xml");
+
+                return path;
+            }
+        }
+
+        private void ImportFingerHintsMenu_Click(object sender, EventArgs e)
+        {
+            if (SongList.Items.Count == 0)
+            {
+                MessageBox.Show(this, "You must have at least one song entry in this metadata file to perform a finger hint import.  Add a song and try again.", "No song entries", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            DialogResult result = MessageBox.Show(this, "This will scan the auto-saved, in-game finger hints from your Synthesia data directory and import them for any song entries into the current metadata file.\n\nCAUTION: This may overwrite existing finger hints in this metadata file!\n\nAre you sure you'd like to continue?", "Import may overwrite.  Continue?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result != DialogResult.Yes) return;
+
+            FileInfo fingerHintFile = new FileInfo(FingerHintPath);
+            if (!fingerHintFile.Exists)
+            {
+                MessageBox.Show(this, "Couldn't find finger hint file in the Synthesia data directory.  Aborting import.", "Missing fingers.xml", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Bulk pull the fingers out of the file
+            Dictionary<string, string> allFingers = new Dictionary<string, string>();
+            try
+            {
+                XDocument doc = XDocument.Load(FingerHintPath);
+
+                XElement topLevel = doc.Element("LocalFingerInfoList");
+                if (topLevel == null) throw new InvalidDataException("Couldn't find top-level LocalFingerInfoList element.");
+
+                if (topLevel.AttributeOrDefault("version", "1") != "1")
+                {
+                    MessageBox.Show(this, "Data in fingers.xml is in a newer format.  Unable to import.  (Maybe check for a newer version of the metadata editor.)", "Fingers.xml too new!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                var elements = topLevel.Elements("FingerInfo");
+                foreach (var f in elements) allFingers[f.AttributeOrDefault("hash")] = f.AttributeOrDefault("fingers");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Unable to read fingers.xml.  Aborting import.\n\n{0}", ex));
+                return;
+            }
+
+            int imported = 0;
+            int changed = 0;
+            int identical = 0;
+
+            foreach (SongEntry s in SongList.Items)
+            {
+                if (!allFingers.ContainsKey(s.UniqueId)) continue;
+                imported++;
+
+                string oldHints = s.FingerHints;
+                string newHints = allFingers[s.UniqueId];
+
+                if (oldHints == newHints) identical++;
+                else
+                {
+                    s.FingerHints = newHints;
+                    Metadata.AddSong(s);
+
+                    changed++;
+                }
+            }
+
+            SongList_SelectedIndexChanged(this, new EventArgs());
+
+            MessageBox.Show(this, string.Format("Imported hints for {0} song{1}.  ({2} changed, {3} identical.)", imported, (imported == 1 ? "" : "s"), changed, identical), "Import Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (changed > 0) Dirty = true;
+        }
 
     }
 

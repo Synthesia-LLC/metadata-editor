@@ -76,6 +76,8 @@
             this.PropertiesGroup = new System.Windows.Forms.GroupBox();
             this.FingerHintLabel = new System.Windows.Forms.Label();
             this.FingerHintBox = new System.Windows.Forms.TextBox();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.ImportFingerHintsMenu = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.DifficultyBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RatingBox)).BeginInit();
             this.MainMenu.SuspendLayout();
@@ -360,6 +362,8 @@
             this.SaveMenu,
             this.SaveAsMenu,
             this.toolStripMenuItem1,
+            this.ImportFingerHintsMenu,
+            this.toolStripMenuItem2,
             this.ExitMenu});
             this.FileMenu.Name = "FileMenu";
             this.FileMenu.Size = new System.Drawing.Size(37, 20);
@@ -369,7 +373,7 @@
             // 
             this.NewMenu.Name = "NewMenu";
             this.NewMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.NewMenu.Size = new System.Drawing.Size(155, 22);
+            this.NewMenu.Size = new System.Drawing.Size(186, 22);
             this.NewMenu.Text = "&New";
             this.NewMenu.Click += new System.EventHandler(this.NewMenu_Click);
             // 
@@ -377,7 +381,7 @@
             // 
             this.OpenMenu.Name = "OpenMenu";
             this.OpenMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.OpenMenu.Size = new System.Drawing.Size(155, 22);
+            this.OpenMenu.Size = new System.Drawing.Size(186, 22);
             this.OpenMenu.Text = "&Open...";
             this.OpenMenu.Click += new System.EventHandler(this.OpenMenu_Click);
             // 
@@ -385,26 +389,26 @@
             // 
             this.SaveMenu.Name = "SaveMenu";
             this.SaveMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.SaveMenu.Size = new System.Drawing.Size(155, 22);
+            this.SaveMenu.Size = new System.Drawing.Size(186, 22);
             this.SaveMenu.Text = "&Save";
             this.SaveMenu.Click += new System.EventHandler(this.SaveMenu_Click);
             // 
             // SaveAsMenu
             // 
             this.SaveAsMenu.Name = "SaveAsMenu";
-            this.SaveAsMenu.Size = new System.Drawing.Size(155, 22);
+            this.SaveAsMenu.Size = new System.Drawing.Size(186, 22);
             this.SaveAsMenu.Text = "Save &As...";
             this.SaveAsMenu.Click += new System.EventHandler(this.SaveAsMenu_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(183, 6);
             // 
             // ExitMenu
             // 
             this.ExitMenu.Name = "ExitMenu";
-            this.ExitMenu.Size = new System.Drawing.Size(155, 22);
+            this.ExitMenu.Size = new System.Drawing.Size(186, 22);
             this.ExitMenu.Text = "E&xit";
             this.ExitMenu.Click += new System.EventHandler(this.ExitMenu_Click);
             // 
@@ -515,6 +519,8 @@
             // 
             // FingerHintBox
             // 
+            this.FingerHintBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.FingerHintBox.Location = new System.Drawing.Point(70, 304);
             this.FingerHintBox.Multiline = true;
             this.FingerHintBox.Name = "FingerHintBox";
@@ -522,6 +528,18 @@
             this.FingerHintBox.Size = new System.Drawing.Size(316, 44);
             this.FingerHintBox.TabIndex = 27;
             this.FingerHintBox.TextChanged += new System.EventHandler(this.FingerHintBox_TextChanged);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(183, 6);
+            // 
+            // ImportFingerHintsMenu
+            // 
+            this.ImportFingerHintsMenu.Name = "ImportFingerHintsMenu";
+            this.ImportFingerHintsMenu.Size = new System.Drawing.Size(186, 22);
+            this.ImportFingerHintsMenu.Text = "&Import Finger Hints...";
+            this.ImportFingerHintsMenu.Click += new System.EventHandler(this.ImportFingerHintsMenu_Click);
             // 
             // MetadataEditor
             // 
@@ -604,6 +622,8 @@
         private System.Windows.Forms.GroupBox PropertiesGroup;
         private System.Windows.Forms.TextBox FingerHintBox;
         private System.Windows.Forms.Label FingerHintLabel;
+        private System.Windows.Forms.ToolStripMenuItem ImportFingerHintsMenu;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
     }
 }
 
