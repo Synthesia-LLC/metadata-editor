@@ -25,7 +25,7 @@ namespace Synthesia
         public MetadataFile(Stream input)
         {
             using (var reader = new StreamReader(input))
-                m_document = XDocument.Load(reader, LoadOptions.PreserveWhitespace);
+                m_document = XDocument.Load(reader, LoadOptions.None);
 
             XElement top = m_document.Root;
             if (top == null || top.Name != "SynthesiaMetadata") throw new InvalidOperationException("Stream does not contain a valid Synthesia metadata file.");
