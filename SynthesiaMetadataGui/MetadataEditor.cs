@@ -13,6 +13,9 @@ namespace Synthesia
 {
     public partial class MetadataEditor : Form
     {
+        readonly HashSet<string> SongExtensions = new HashSet<string>() { ".mid", ".midi", ".kar" };
+        readonly HashSet<string> MetaExtensions = new HashSet<string>() { ".synthesia", ".xml" };
+
         private FileInfo File { get; set; }
         private MetadataFile Metadata { get; set; }
 
@@ -97,12 +100,19 @@ namespace Synthesia
         private void AddSong_Click(object sender, EventArgs e)
         {
             if (OpenSongDialog.ShowDialog() != DialogResult.OK) return;
+            AddSongs(OpenSongDialog.FileNames);
+        }
 
+        private void AddSongs(string[] filenames)
+        {
             List<string> existingIds = (from s in Metadata.Songs select s.UniqueId).ToList();
 
-            foreach (string s in OpenSongDialog.FileNames)
+            foreach (string s in filenames)
             {
                 FileInfo songFile = new FileInfo(s);
+                if (!songFile.Exists) continue;
+
+                if (!SongExtensions.Contains(songFile.Extension.ToLower())) continue;
 
                 string md5 = songFile.Md5sum();
                 if (existingIds.Contains(md5)) continue;
@@ -189,6 +199,8 @@ namespace Synthesia
 
         private void UnbindSong()
         {
+            IgnoreUpdates = true;
+
             UniqueIdBox.Text = "(No song selected)";
             TitleBox.Clear();
             SubtitleBox.Clear();
@@ -207,6 +219,8 @@ namespace Synthesia
             TagList.Items.Clear();
 
             PropertiesGroup.Enabled = false;
+
+            IgnoreUpdates = false;
         }
 
         private bool IgnoreUpdates { get; set; }
@@ -392,19 +406,26 @@ namespace Synthesia
             if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
 
             string[] filenames = e.Data.GetData(DataFormats.FileDrop) as string[];
-            if (filenames.Length > 1) return;
-            if (!System.IO.File.Exists(filenames[0])) return;
+            if (filenames.Length > 1) AddSongs(filenames);
+            else
+            {
+                FileInfo file = new FileInfo(filenames[0]);
 
-            FileInfo file = new FileInfo(filenames[0]);
+                if (SongExtensions.Contains(file.Extension.ToLower()))
+                {
+                    AddSongs(filenames);
+                    return;
+                }
 
-            if (file.Extension.ToLower() != ".synthesia") return;
-            if (!OkayToProceed()) return;
+                if (!MetaExtensions.Contains(file.Extension.ToLower())) return;
+                if (!OkayToProceed()) return;
 
-            File = file;
-            using (FileStream input = File.OpenRead()) Metadata = new MetadataFile(input);
+                File = file;
+                using (FileStream input = File.OpenRead()) Metadata = new MetadataFile(input);
 
-            WipeSelection();
-            Dirty = false;
+                WipeSelection();
+                Dirty = false;
+            }
         }
 
         private void MetadataEditor_DragEnter(object sender, DragEventArgs e)
@@ -412,10 +433,19 @@ namespace Synthesia
             if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
 
             string[] filenames = e.Data.GetData(DataFormats.FileDrop) as string[];
-            if (filenames.Length > 1) return;
 
-            FileInfo file = new FileInfo(filenames[0]);
-            if (file.Extension.ToLower() == ".synthesia") e.Effect = DragDropEffects.All;
+            if (filenames.Length > 1)
+            {
+                foreach (string f in filenames)
+                    if (!SongExtensions.Contains(new FileInfo(f).Extension.ToLower())) return;
+            }
+            else
+            {
+                string extension = new FileInfo(filenames[0]).Extension.ToLower();
+                if (!SongExtensions.Contains(extension) && !MetaExtensions.Contains(extension)) return;
+            }
+
+            e.Effect = DragDropEffects.All;
         }
 
         private void WipeSelection()

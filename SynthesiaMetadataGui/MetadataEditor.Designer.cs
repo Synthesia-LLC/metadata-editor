@@ -63,6 +63,8 @@
             this.SaveMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveAsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ImportFingerHintsMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.ExitMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,10 +76,8 @@
             this.OpenSongDialog = new System.Windows.Forms.OpenFileDialog();
             this.SongListLabel = new System.Windows.Forms.Label();
             this.PropertiesGroup = new System.Windows.Forms.GroupBox();
-            this.FingerHintLabel = new System.Windows.Forms.Label();
             this.FingerHintBox = new System.Windows.Forms.TextBox();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.ImportFingerHintsMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.FingerHintLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DifficultyBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RatingBox)).BeginInit();
             this.MainMenu.SuspendLayout();
@@ -405,6 +405,18 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(183, 6);
             // 
+            // ImportFingerHintsMenu
+            // 
+            this.ImportFingerHintsMenu.Name = "ImportFingerHintsMenu";
+            this.ImportFingerHintsMenu.Size = new System.Drawing.Size(186, 22);
+            this.ImportFingerHintsMenu.Text = "&Import Finger Hints...";
+            this.ImportFingerHintsMenu.Click += new System.EventHandler(this.ImportFingerHintsMenu_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(183, 6);
+            // 
             // ExitMenu
             // 
             this.ExitMenu.Name = "ExitMenu";
@@ -452,7 +464,7 @@
             // 
             // OpenMetadataDialog
             // 
-            this.OpenMetadataDialog.Filter = "Synthesia Metadata Files|*.synthesia|All Files (*.*)|*.*";
+            this.OpenMetadataDialog.Filter = "Synthesia Metadata Files|*.synthesia;*.xml|All Files (*.*)|*.*";
             this.OpenMetadataDialog.Title = "Open Metadata File";
             // 
             // OpenSongDialog
@@ -508,15 +520,6 @@
             this.PropertiesGroup.TabStop = false;
             this.PropertiesGroup.Text = "Properties";
             // 
-            // FingerHintLabel
-            // 
-            this.FingerHintLabel.AutoSize = true;
-            this.FingerHintLabel.Location = new System.Drawing.Point(7, 307);
-            this.FingerHintLabel.Name = "FingerHintLabel";
-            this.FingerHintLabel.Size = new System.Drawing.Size(44, 13);
-            this.FingerHintLabel.TabIndex = 26;
-            this.FingerHintLabel.Text = "&Fingers:";
-            // 
             // FingerHintBox
             // 
             this.FingerHintBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -529,17 +532,14 @@
             this.FingerHintBox.TabIndex = 27;
             this.FingerHintBox.TextChanged += new System.EventHandler(this.FingerHintBox_TextChanged);
             // 
-            // toolStripMenuItem2
+            // FingerHintLabel
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(183, 6);
-            // 
-            // ImportFingerHintsMenu
-            // 
-            this.ImportFingerHintsMenu.Name = "ImportFingerHintsMenu";
-            this.ImportFingerHintsMenu.Size = new System.Drawing.Size(186, 22);
-            this.ImportFingerHintsMenu.Text = "&Import Finger Hints...";
-            this.ImportFingerHintsMenu.Click += new System.EventHandler(this.ImportFingerHintsMenu_Click);
+            this.FingerHintLabel.AutoSize = true;
+            this.FingerHintLabel.Location = new System.Drawing.Point(7, 307);
+            this.FingerHintLabel.Name = "FingerHintLabel";
+            this.FingerHintLabel.Size = new System.Drawing.Size(44, 13);
+            this.FingerHintLabel.TabIndex = 26;
+            this.FingerHintLabel.Text = "&Fingers:";
             // 
             // MetadataEditor
             // 
