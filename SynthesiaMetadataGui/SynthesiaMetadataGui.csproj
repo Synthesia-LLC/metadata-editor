@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Synthesia</RootNamespace>
     <AssemblyName>SynthesiaMetadataGui</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>app_icon.ico</ApplicationIcon>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
