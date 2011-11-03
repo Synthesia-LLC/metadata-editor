@@ -19,6 +19,7 @@ namespace Synthesia
         public string License { get; set; }
 
         public string FingerHints { get; set; }
+        public string HandParts { get; set; }
 
         private int? m_rating;
         public int? Rating

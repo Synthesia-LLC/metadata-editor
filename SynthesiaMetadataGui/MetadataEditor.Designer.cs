@@ -63,7 +63,7 @@
             this.SaveMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveAsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.ImportFingerHintsMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.ImportMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.ExitMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,6 +76,8 @@
             this.OpenSongDialog = new System.Windows.Forms.OpenFileDialog();
             this.SongListLabel = new System.Windows.Forms.Label();
             this.PropertiesGroup = new System.Windows.Forms.GroupBox();
+            this.HandsBox = new System.Windows.Forms.TextBox();
+            this.PartsLabel = new System.Windows.Forms.Label();
             this.FingerHintBox = new System.Windows.Forms.TextBox();
             this.FingerHintLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DifficultyBox)).BeginInit();
@@ -91,14 +93,14 @@
             this.SongList.FormattingEnabled = true;
             this.SongList.Location = new System.Drawing.Point(12, 46);
             this.SongList.Name = "SongList";
-            this.SongList.Size = new System.Drawing.Size(300, 446);
+            this.SongList.Size = new System.Drawing.Size(300, 472);
             this.SongList.TabIndex = 2;
             this.SongList.SelectedIndexChanged += new System.EventHandler(this.SongList_SelectedIndexChanged);
             // 
             // AddSong
             // 
             this.AddSong.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.AddSong.Location = new System.Drawing.Point(12, 504);
+            this.AddSong.Location = new System.Drawing.Point(12, 534);
             this.AddSong.Name = "AddSong";
             this.AddSong.Size = new System.Drawing.Size(217, 23);
             this.AddSong.TabIndex = 3;
@@ -110,7 +112,7 @@
             // RemoveSong
             // 
             this.RemoveSong.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.RemoveSong.Location = new System.Drawing.Point(235, 504);
+            this.RemoveSong.Location = new System.Drawing.Point(235, 534);
             this.RemoveSong.Name = "RemoveSong";
             this.RemoveSong.Size = new System.Drawing.Size(77, 23);
             this.RemoveSong.TabIndex = 4;
@@ -136,7 +138,7 @@
             this.TitleBox.Location = new System.Drawing.Point(70, 50);
             this.TitleBox.Name = "TitleBox";
             this.TitleBox.Size = new System.Drawing.Size(316, 20);
-            this.TitleBox.TabIndex = 4;
+            this.TitleBox.TabIndex = 3;
             this.TitleBox.TextChanged += new System.EventHandler(this.TitleBox_TextChanged);
             // 
             // SubtitleBox
@@ -146,7 +148,7 @@
             this.SubtitleBox.Location = new System.Drawing.Point(70, 76);
             this.SubtitleBox.Name = "SubtitleBox";
             this.SubtitleBox.Size = new System.Drawing.Size(316, 20);
-            this.SubtitleBox.TabIndex = 6;
+            this.SubtitleBox.TabIndex = 5;
             this.SubtitleBox.TextChanged += new System.EventHandler(this.SubtitleBox_TextChanged);
             // 
             // ComposerBox
@@ -156,7 +158,7 @@
             this.ComposerBox.Location = new System.Drawing.Point(70, 118);
             this.ComposerBox.Name = "ComposerBox";
             this.ComposerBox.Size = new System.Drawing.Size(316, 20);
-            this.ComposerBox.TabIndex = 8;
+            this.ComposerBox.TabIndex = 7;
             this.ComposerBox.TextChanged += new System.EventHandler(this.ComposerBox_TextChanged);
             // 
             // LicenseBox
@@ -166,7 +168,7 @@
             this.LicenseBox.Location = new System.Drawing.Point(70, 196);
             this.LicenseBox.Name = "LicenseBox";
             this.LicenseBox.Size = new System.Drawing.Size(316, 20);
-            this.LicenseBox.TabIndex = 14;
+            this.LicenseBox.TabIndex = 13;
             this.LicenseBox.TextChanged += new System.EventHandler(this.LicenseBox_TextChanged);
             // 
             // CopyrightBox
@@ -176,7 +178,7 @@
             this.CopyrightBox.Location = new System.Drawing.Point(70, 170);
             this.CopyrightBox.Name = "CopyrightBox";
             this.CopyrightBox.Size = new System.Drawing.Size(316, 20);
-            this.CopyrightBox.TabIndex = 12;
+            this.CopyrightBox.TabIndex = 11;
             this.CopyrightBox.TextChanged += new System.EventHandler(this.CopyrightBox_TextChanged);
             // 
             // ArrangerBox
@@ -186,7 +188,7 @@
             this.ArrangerBox.Location = new System.Drawing.Point(70, 144);
             this.ArrangerBox.Name = "ArrangerBox";
             this.ArrangerBox.Size = new System.Drawing.Size(316, 20);
-            this.ArrangerBox.TabIndex = 10;
+            this.ArrangerBox.TabIndex = 9;
             this.ArrangerBox.TextChanged += new System.EventHandler(this.ArrangerBox_TextChanged);
             // 
             // DifficultyBox
@@ -194,7 +196,7 @@
             this.DifficultyBox.Location = new System.Drawing.Point(70, 238);
             this.DifficultyBox.Name = "DifficultyBox";
             this.DifficultyBox.Size = new System.Drawing.Size(64, 20);
-            this.DifficultyBox.TabIndex = 16;
+            this.DifficultyBox.TabIndex = 15;
             this.DifficultyBox.ValueChanged += new System.EventHandler(this.DifficultyBox_ValueChanged);
             // 
             // RatingBox
@@ -202,7 +204,7 @@
             this.RatingBox.Location = new System.Drawing.Point(70, 264);
             this.RatingBox.Name = "RatingBox";
             this.RatingBox.Size = new System.Drawing.Size(64, 20);
-            this.RatingBox.TabIndex = 19;
+            this.RatingBox.TabIndex = 18;
             this.RatingBox.ValueChanged += new System.EventHandler(this.RatingBox_ValueChanged);
             // 
             // UniqueIdLabel
@@ -221,7 +223,7 @@
             this.TitleLabel.Location = new System.Drawing.Point(6, 53);
             this.TitleLabel.Name = "TitleLabel";
             this.TitleLabel.Size = new System.Drawing.Size(30, 13);
-            this.TitleLabel.TabIndex = 3;
+            this.TitleLabel.TabIndex = 2;
             this.TitleLabel.Text = "&Title:";
             // 
             // ComposerLabel
@@ -230,7 +232,7 @@
             this.ComposerLabel.Location = new System.Drawing.Point(6, 121);
             this.ComposerLabel.Name = "ComposerLabel";
             this.ComposerLabel.Size = new System.Drawing.Size(57, 13);
-            this.ComposerLabel.TabIndex = 7;
+            this.ComposerLabel.TabIndex = 6;
             this.ComposerLabel.Text = "&Composer:";
             // 
             // SubtitleLabel
@@ -239,7 +241,7 @@
             this.SubtitleLabel.Location = new System.Drawing.Point(6, 79);
             this.SubtitleLabel.Name = "SubtitleLabel";
             this.SubtitleLabel.Size = new System.Drawing.Size(45, 13);
-            this.SubtitleLabel.TabIndex = 5;
+            this.SubtitleLabel.TabIndex = 4;
             this.SubtitleLabel.Text = "&Subtitle:";
             // 
             // DifficultyLabel
@@ -248,7 +250,7 @@
             this.DifficultyLabel.Location = new System.Drawing.Point(6, 240);
             this.DifficultyLabel.Name = "DifficultyLabel";
             this.DifficultyLabel.Size = new System.Drawing.Size(50, 13);
-            this.DifficultyLabel.TabIndex = 15;
+            this.DifficultyLabel.TabIndex = 14;
             this.DifficultyLabel.Text = "&Difficulty:";
             this.Tip.SetToolTip(this.DifficultyLabel, "Percentage ");
             // 
@@ -258,7 +260,7 @@
             this.LicenseLabel.Location = new System.Drawing.Point(6, 199);
             this.LicenseLabel.Name = "LicenseLabel";
             this.LicenseLabel.Size = new System.Drawing.Size(47, 13);
-            this.LicenseLabel.TabIndex = 13;
+            this.LicenseLabel.TabIndex = 12;
             this.LicenseLabel.Text = "&License:";
             // 
             // CopyrightLabel
@@ -267,7 +269,7 @@
             this.CopyrightLabel.Location = new System.Drawing.Point(6, 173);
             this.CopyrightLabel.Name = "CopyrightLabel";
             this.CopyrightLabel.Size = new System.Drawing.Size(54, 13);
-            this.CopyrightLabel.TabIndex = 11;
+            this.CopyrightLabel.TabIndex = 10;
             this.CopyrightLabel.Text = "Co&pyright:";
             // 
             // ArrangerLabel
@@ -276,16 +278,16 @@
             this.ArrangerLabel.Location = new System.Drawing.Point(6, 147);
             this.ArrangerLabel.Name = "ArrangerLabel";
             this.ArrangerLabel.Size = new System.Drawing.Size(50, 13);
-            this.ArrangerLabel.TabIndex = 9;
+            this.ArrangerLabel.TabIndex = 8;
             this.ArrangerLabel.Text = "&Arranger:";
             // 
             // TagsLabel
             // 
             this.TagsLabel.AutoSize = true;
-            this.TagsLabel.Location = new System.Drawing.Point(6, 374);
+            this.TagsLabel.Location = new System.Drawing.Point(6, 413);
             this.TagsLabel.Name = "TagsLabel";
             this.TagsLabel.Size = new System.Drawing.Size(34, 13);
-            this.TagsLabel.TabIndex = 21;
+            this.TagsLabel.TabIndex = 24;
             this.TagsLabel.Text = "Ta&gs:";
             // 
             // RatingLabel
@@ -294,7 +296,7 @@
             this.RatingLabel.Location = new System.Drawing.Point(6, 266);
             this.RatingLabel.Name = "RatingLabel";
             this.RatingLabel.Size = new System.Drawing.Size(41, 13);
-            this.RatingLabel.TabIndex = 18;
+            this.RatingLabel.TabIndex = 17;
             this.RatingLabel.Text = "&Rating:";
             // 
             // TagList
@@ -303,30 +305,30 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.TagList.FormattingEnabled = true;
-            this.TagList.Location = new System.Drawing.Point(70, 397);
+            this.TagList.Location = new System.Drawing.Point(70, 436);
             this.TagList.Name = "TagList";
-            this.TagList.Size = new System.Drawing.Size(238, 82);
-            this.TagList.TabIndex = 24;
+            this.TagList.Size = new System.Drawing.Size(238, 69);
+            this.TagList.TabIndex = 26;
             this.TagList.SelectedIndexChanged += new System.EventHandler(this.TagList_SelectedIndexChanged);
             // 
             // TagBox
             // 
             this.TagBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.TagBox.Location = new System.Drawing.Point(70, 371);
+            this.TagBox.Location = new System.Drawing.Point(70, 410);
             this.TagBox.Name = "TagBox";
             this.TagBox.Size = new System.Drawing.Size(238, 20);
-            this.TagBox.TabIndex = 22;
+            this.TagBox.TabIndex = 25;
             this.TagBox.TextChanged += new System.EventHandler(this.TagBox_TextChanged);
             // 
             // RemoveTag
             // 
             this.RemoveTag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.RemoveTag.Enabled = false;
-            this.RemoveTag.Location = new System.Drawing.Point(314, 398);
+            this.RemoveTag.Location = new System.Drawing.Point(314, 437);
             this.RemoveTag.Name = "RemoveTag";
             this.RemoveTag.Size = new System.Drawing.Size(72, 23);
-            this.RemoveTag.TabIndex = 25;
+            this.RemoveTag.TabIndex = 28;
             this.RemoveTag.Text = "Remove";
             this.RemoveTag.UseVisualStyleBackColor = true;
             this.RemoveTag.Click += new System.EventHandler(this.RemoveTag_Click);
@@ -335,10 +337,10 @@
             // 
             this.AddTag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.AddTag.Enabled = false;
-            this.AddTag.Location = new System.Drawing.Point(314, 369);
+            this.AddTag.Location = new System.Drawing.Point(314, 408);
             this.AddTag.Name = "AddTag";
             this.AddTag.Size = new System.Drawing.Size(72, 23);
-            this.AddTag.TabIndex = 23;
+            this.AddTag.TabIndex = 27;
             this.AddTag.Text = "Add";
             this.AddTag.UseVisualStyleBackColor = true;
             this.AddTag.Click += new System.EventHandler(this.AddTag_Click);
@@ -362,7 +364,7 @@
             this.SaveMenu,
             this.SaveAsMenu,
             this.toolStripMenuItem1,
-            this.ImportFingerHintsMenu,
+            this.ImportMenu,
             this.toolStripMenuItem2,
             this.ExitMenu});
             this.FileMenu.Name = "FileMenu";
@@ -373,7 +375,7 @@
             // 
             this.NewMenu.Name = "NewMenu";
             this.NewMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.NewMenu.Size = new System.Drawing.Size(186, 22);
+            this.NewMenu.Size = new System.Drawing.Size(227, 22);
             this.NewMenu.Text = "&New";
             this.NewMenu.Click += new System.EventHandler(this.NewMenu_Click);
             // 
@@ -381,7 +383,7 @@
             // 
             this.OpenMenu.Name = "OpenMenu";
             this.OpenMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.OpenMenu.Size = new System.Drawing.Size(186, 22);
+            this.OpenMenu.Size = new System.Drawing.Size(227, 22);
             this.OpenMenu.Text = "&Open...";
             this.OpenMenu.Click += new System.EventHandler(this.OpenMenu_Click);
             // 
@@ -389,38 +391,38 @@
             // 
             this.SaveMenu.Name = "SaveMenu";
             this.SaveMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.SaveMenu.Size = new System.Drawing.Size(186, 22);
+            this.SaveMenu.Size = new System.Drawing.Size(227, 22);
             this.SaveMenu.Text = "&Save";
             this.SaveMenu.Click += new System.EventHandler(this.SaveMenu_Click);
             // 
             // SaveAsMenu
             // 
             this.SaveAsMenu.Name = "SaveAsMenu";
-            this.SaveAsMenu.Size = new System.Drawing.Size(186, 22);
+            this.SaveAsMenu.Size = new System.Drawing.Size(227, 22);
             this.SaveAsMenu.Text = "Save &As...";
             this.SaveAsMenu.Click += new System.EventHandler(this.SaveAsMenu_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(183, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(224, 6);
             // 
-            // ImportFingerHintsMenu
+            // ImportMenu
             // 
-            this.ImportFingerHintsMenu.Name = "ImportFingerHintsMenu";
-            this.ImportFingerHintsMenu.Size = new System.Drawing.Size(186, 22);
-            this.ImportFingerHintsMenu.Text = "&Import Finger Hints...";
-            this.ImportFingerHintsMenu.Click += new System.EventHandler(this.ImportFingerHintsMenu_Click);
+            this.ImportMenu.Name = "ImportMenu";
+            this.ImportMenu.Size = new System.Drawing.Size(227, 22);
+            this.ImportMenu.Text = "&Import data from Synthesia...";
+            this.ImportMenu.Click += new System.EventHandler(this.ImportMenu_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(183, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(224, 6);
             // 
             // ExitMenu
             // 
             this.ExitMenu.Name = "ExitMenu";
-            this.ExitMenu.Size = new System.Drawing.Size(186, 22);
+            this.ExitMenu.Size = new System.Drawing.Size(227, 22);
             this.ExitMenu.Text = "E&xit";
             this.ExitMenu.Click += new System.EventHandler(this.ExitMenu_Click);
             // 
@@ -445,7 +447,7 @@
             this.DifficultyRangeLabel.Location = new System.Drawing.Point(140, 240);
             this.DifficultyRangeLabel.Name = "DifficultyRangeLabel";
             this.DifficultyRangeLabel.Size = new System.Drawing.Size(103, 13);
-            this.DifficultyRangeLabel.TabIndex = 17;
+            this.DifficultyRangeLabel.TabIndex = 16;
             this.DifficultyRangeLabel.Text = "(1-100 or 0 for none)";
             // 
             // RatingRangeLabel
@@ -454,7 +456,7 @@
             this.RatingRangeLabel.Location = new System.Drawing.Point(140, 266);
             this.RatingRangeLabel.Name = "RatingRangeLabel";
             this.RatingRangeLabel.Size = new System.Drawing.Size(103, 13);
-            this.RatingRangeLabel.TabIndex = 20;
+            this.RatingRangeLabel.TabIndex = 19;
             this.RatingRangeLabel.Text = "(1-100 or 0 for none)";
             // 
             // SaveMetadataDialog
@@ -486,6 +488,8 @@
             this.PropertiesGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.PropertiesGroup.Controls.Add(this.HandsBox);
+            this.PropertiesGroup.Controls.Add(this.PartsLabel);
             this.PropertiesGroup.Controls.Add(this.FingerHintBox);
             this.PropertiesGroup.Controls.Add(this.FingerHintLabel);
             this.PropertiesGroup.Controls.Add(this.UniqueIdLabel);
@@ -515,10 +519,29 @@
             this.PropertiesGroup.Controls.Add(this.ArrangerLabel);
             this.PropertiesGroup.Location = new System.Drawing.Point(318, 32);
             this.PropertiesGroup.Name = "PropertiesGroup";
-            this.PropertiesGroup.Size = new System.Drawing.Size(392, 495);
+            this.PropertiesGroup.Size = new System.Drawing.Size(392, 525);
             this.PropertiesGroup.TabIndex = 5;
             this.PropertiesGroup.TabStop = false;
             this.PropertiesGroup.Text = "Properties";
+            // 
+            // HandsBox
+            // 
+            this.HandsBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.HandsBox.Location = new System.Drawing.Point(70, 354);
+            this.HandsBox.Name = "HandsBox";
+            this.HandsBox.Size = new System.Drawing.Size(316, 20);
+            this.HandsBox.TabIndex = 23;
+            this.HandsBox.TextChanged += new System.EventHandler(this.HandsBox_TextChanged);
+            // 
+            // PartsLabel
+            // 
+            this.PartsLabel.AutoSize = true;
+            this.PartsLabel.Location = new System.Drawing.Point(6, 357);
+            this.PartsLabel.Name = "PartsLabel";
+            this.PartsLabel.Size = new System.Drawing.Size(41, 13);
+            this.PartsLabel.TabIndex = 22;
+            this.PartsLabel.Text = "&Hands:";
             // 
             // FingerHintBox
             // 
@@ -529,16 +552,16 @@
             this.FingerHintBox.Name = "FingerHintBox";
             this.FingerHintBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.FingerHintBox.Size = new System.Drawing.Size(316, 44);
-            this.FingerHintBox.TabIndex = 27;
+            this.FingerHintBox.TabIndex = 21;
             this.FingerHintBox.TextChanged += new System.EventHandler(this.FingerHintBox_TextChanged);
             // 
             // FingerHintLabel
             // 
             this.FingerHintLabel.AutoSize = true;
-            this.FingerHintLabel.Location = new System.Drawing.Point(7, 307);
+            this.FingerHintLabel.Location = new System.Drawing.Point(6, 307);
             this.FingerHintLabel.Name = "FingerHintLabel";
             this.FingerHintLabel.Size = new System.Drawing.Size(44, 13);
-            this.FingerHintLabel.TabIndex = 26;
+            this.FingerHintLabel.TabIndex = 20;
             this.FingerHintLabel.Text = "&Fingers:";
             // 
             // MetadataEditor
@@ -546,7 +569,7 @@
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(722, 539);
+            this.ClientSize = new System.Drawing.Size(722, 569);
             this.Controls.Add(this.PropertiesGroup);
             this.Controls.Add(this.SongListLabel);
             this.Controls.Add(this.RemoveSong);
@@ -622,8 +645,10 @@
         private System.Windows.Forms.GroupBox PropertiesGroup;
         private System.Windows.Forms.TextBox FingerHintBox;
         private System.Windows.Forms.Label FingerHintLabel;
-        private System.Windows.Forms.ToolStripMenuItem ImportFingerHintsMenu;
+        private System.Windows.Forms.ToolStripMenuItem ImportMenu;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.TextBox HandsBox;
+        private System.Windows.Forms.Label PartsLabel;
     }
 }
 

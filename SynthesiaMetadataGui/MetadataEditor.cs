@@ -214,6 +214,7 @@ namespace Synthesia
             RatingBox.Value = 0;
 
             FingerHintBox.Clear();
+            HandsBox.Clear();
 
             TagBox.Clear();
             TagList.Items.Clear();
@@ -247,6 +248,7 @@ namespace Synthesia
             RatingBox.Value = e.Rating ?? 0;
 
             FingerHintBox.Text = e.FingerHints;
+            HandsBox.Text = e.HandParts;
 
             TagList.Items.Clear();
             foreach (var i in e.Tags) TagList.Items.Add(i);
@@ -377,6 +379,13 @@ namespace Synthesia
             RebindAfterChange();
         }
 
+        private void HandsBox_TextChanged(object sender, EventArgs e)
+        {
+            if (IgnoreUpdates) return;
+            SelectedSong.HandParts = HandsBox.Text;
+            RebindAfterChange();
+        }
+
         private void MetadataEditor_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Control && e.KeyCode == Keys.OemPeriod && SongList.SelectedIndex != -1 && SongList.SelectedIndex < SongList.Items.Count - 1)
@@ -458,7 +467,7 @@ namespace Synthesia
             IgnoreUpdates = false;
         }
 
-        private string FingerHintPath
+        private string SynthesiaDataPath
         {
             get
             {
@@ -478,28 +487,129 @@ namespace Synthesia
                     path = Path.Combine(path, "Application Support");
                 }
                 path = Path.Combine(path, "Synthesia");
-                path = Path.Combine(path, "fingers.xml");
 
                 return path;
             }
         }
 
-        private void ImportFingerHintsMenu_Click(object sender, EventArgs e)
+        struct ImportResults
+        {
+            public int Imported;
+            public int Changed;
+            public int Identical;
+
+            public bool ProblemEncountered;
+
+            public string ToDisplayString(string importType)
+            {
+                if (ProblemEncountered) return string.Format("Unable to import {0}.", importType);
+                return string.Format("Imported {0} for {1} song{2}.  ({3} changed, {4} identical.)", importType, Imported, (Imported == 1 ? "" : "s"), Changed, Identical);
+            }
+        }
+
+        private void ImportMenu_Click(object sender, EventArgs e)
         {
             if (SongList.Items.Count == 0)
             {
-                MessageBox.Show(this, "You must have at least one song entry in this metadata file to perform a finger hint import.  Add a song and try again.", "No song entries", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(this, "You must have at least one song entry in this metadata file to perform a data import.  Add a song and try again.", "No song entries", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
-            DialogResult result = MessageBox.Show(this, "This will scan the auto-saved, in-game finger hints from your Synthesia data directory and import them for any song entries into the current metadata file.\n\nCAUTION: This may overwrite existing finger hints in this metadata file!\n\nAre you sure you'd like to continue?", "Import may overwrite.  Continue?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result != DialogResult.Yes) return;
+            using (ImportSelection importDialog = new ImportSelection())
+            {
+                if (importDialog.ShowDialog(this) != DialogResult.OK) return;
+
+                Dictionary<string, ImportResults> results = new Dictionary<string,ImportResults>();
+                if (importDialog.ImportFingerHints) results["finger hints"] = ImportFingerHints();
+                if (importDialog.ImportHandParts) results["hand parts"] = ImportHandParts();
+
+                SongList_SelectedIndexChanged(this, new EventArgs());
+
+                MessageBox.Show(this, string.Join(Environment.NewLine, from r in results select r.Value.ToDisplayString(r.Key)), "Import Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if ((from r in results where r.Value.Changed > 0 select true).Any()) Dirty = true;
+            }
+        }
+
+
+        ImportResults ImportHandParts()
+        {
+            ImportResults results = new ImportResults();
+            results.ProblemEncountered = true;
+
+            string SongInfoPath = Path.Combine(SynthesiaDataPath, "songInfo.xml");
+
+            FileInfo songInfoFile = new FileInfo(SongInfoPath);
+            if (!songInfoFile.Exists)
+            {
+                MessageBox.Show(this, "Couldn't find song info file in the Synthesia data directory.  Aborting hand part import.", "Missing songInfo.xml", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return results;
+            }
+
+            try
+            {
+                XDocument doc = XDocument.Load(SongInfoPath);
+
+                XElement topLevel = doc.Element("LocalSongInfoList");
+                if (topLevel == null) throw new InvalidDataException("Couldn't find top-level LocalSongInfoList element.");
+
+                if (topLevel.AttributeOrDefault("version", "1") != "1")
+                {
+                    MessageBox.Show(this, "Data in songInfo.xml is in a newer format.  Unable to hand parts import.  (Maybe check for a newer version of the metadata editor.)", "songInfo.xml too new!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return results;
+                }
+
+                var elements = topLevel.Elements("SongInfo");
+                var parts = (from i in elements select new 
+                {
+                    hash = i.AttributeOrDefault("hash"),
+                    left = i.AttributeOrDefault("leftHand"),
+                    right = i.AttributeOrDefault("rightHand"),
+                    both = i.AttributeOrDefault("bothHands")
+                }).Where(i => !string.IsNullOrWhiteSpace(i.left) || !string.IsNullOrWhiteSpace(i.right) || !string.IsNullOrWhiteSpace(i.both)).ToDictionary(i => i.hash);
+
+                foreach (SongEntry s in SongList.Items)
+                {
+                    if (!parts.ContainsKey(s.UniqueId)) continue;
+                    results.Imported++;
+
+                    string oldParts = s.HandParts;
+
+                    var match = parts[s.UniqueId];
+                    string newParts = string.Join(";", match.left, match.right, match.both);
+
+                    if (oldParts == newParts) results.Identical++;
+                    else
+                    {
+                        s.HandParts = newParts;
+                        Metadata.AddSong(s);
+
+                        results.Changed++;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Unable to read songInfo.xml.  Aborting hand part import.\n\n{0}", ex));
+                return results;
+            }
+
+            results.ProblemEncountered = false;
+            return results;
+        }
+
+        ImportResults ImportFingerHints()
+        {
+            ImportResults results = new ImportResults();
+            results.ProblemEncountered = true;
+
+            string FingerHintPath = Path.Combine(SynthesiaDataPath, "fingers.xml");
 
             FileInfo fingerHintFile = new FileInfo(FingerHintPath);
             if (!fingerHintFile.Exists)
             {
                 MessageBox.Show(this, "Couldn't find finger hint file in the Synthesia data directory.  Aborting import.", "Missing fingers.xml", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return results;
             }
 
             // Bulk pull the fingers out of the file
@@ -514,7 +624,7 @@ namespace Synthesia
                 if (topLevel.AttributeOrDefault("version", "1") != "1")
                 {
                     MessageBox.Show(this, "Data in fingers.xml is in a newer format.  Unable to import.  (Maybe check for a newer version of the metadata editor.)", "Fingers.xml too new!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    return;
+                    return results;
                 }
 
                 var elements = topLevel.Elements("FingerInfo");
@@ -523,35 +633,29 @@ namespace Synthesia
             catch (Exception ex)
             {
                 MessageBox.Show(string.Format("Unable to read fingers.xml.  Aborting import.\n\n{0}", ex));
-                return;
+                return results;
             }
-
-            int imported = 0;
-            int changed = 0;
-            int identical = 0;
 
             foreach (SongEntry s in SongList.Items)
             {
                 if (!allFingers.ContainsKey(s.UniqueId)) continue;
-                imported++;
+                results.Imported++;
 
                 string oldHints = s.FingerHints;
                 string newHints = allFingers[s.UniqueId];
 
-                if (oldHints == newHints) identical++;
+                if (oldHints == newHints) results.Identical++;
                 else
                 {
                     s.FingerHints = newHints;
                     Metadata.AddSong(s);
 
-                    changed++;
+                    results.Changed++;
                 }
             }
 
-            SongList_SelectedIndexChanged(this, new EventArgs());
-
-            MessageBox.Show(this, string.Format("Imported hints for {0} song{1}.  ({2} changed, {3} identical.)", imported, (imported == 1 ? "" : "s"), changed, identical), "Import Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            if (changed > 0) Dirty = true;
+            results.ProblemEncountered = false;
+            return results;
         }
 
     }

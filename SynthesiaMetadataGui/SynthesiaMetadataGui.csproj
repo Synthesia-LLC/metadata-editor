@@ -57,6 +57,12 @@
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
     <Compile Include="FileExtensions.cs" />
+    <Compile Include="ImportSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportSelection.Designer.cs">
+      <DependentUpon>ImportSelection.cs</DependentUpon>
+    </Compile>
     <Compile Include="MetadataEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +74,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportSelection.resx">
+      <DependentUpon>ImportSelection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MetadataEditor.resx">
       <DependentUpon>MetadataEditor.cs</DependentUpon>

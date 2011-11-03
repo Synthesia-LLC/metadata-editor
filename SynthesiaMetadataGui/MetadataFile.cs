@@ -73,6 +73,7 @@ namespace Synthesia
             element.SetAttributeValue("Difficulty", entry.Difficulty);
 
             element.SetAttributeValue("FingerHints", entry.FingerHints);
+            element.SetAttributeValue("HandParts", entry.HandParts);
             element.SetAttributeValue("Tags", string.Join(";", entry.Tags.ToArray()));
         }
 
@@ -105,6 +106,7 @@ namespace Synthesia
                     entry.License = s.AttributeOrDefault("License");
 
                     entry.FingerHints = s.AttributeOrDefault("FingerHints");
+                    entry.HandParts = s.AttributeOrDefault("HandParts");
 
                     int rating;
                     if (int.TryParse(s.AttributeOrDefault("Rating"), out rating)) entry.Rating = rating;
