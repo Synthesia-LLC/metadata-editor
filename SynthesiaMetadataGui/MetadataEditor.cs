@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Xml.Linq;
+using System.Reflection;
 
 namespace Synthesia
 {
@@ -31,7 +32,7 @@ namespace Synthesia
             }
         }
 
-        SongEntry SelectedSong { get { return SongList.SelectedItem as SongEntry; } }
+        IEnumerable<SongEntry> SelectedSongs { get { return from s in SongList.SelectedItems.Cast<SongEntry>() select s; } }
 
         public bool OkayToProceed()
         {
@@ -88,10 +89,10 @@ namespace Synthesia
 
         private void RemoveSong_Click(object sender, EventArgs e)
         {
-            if (SelectedSong == null) return;
+            if (!SelectedSongs.Any()) return;
             if (MessageBox.Show("Are you sure you want to remove all metadata associated with the selected song(s)?  (This may remove metadata not visible to this editor!)", "Remove Metadata?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
 
-            Metadata.RemoveSong(SelectedSong.UniqueId);
+            foreach (SongEntry s in SelectedSongs) Metadata.RemoveSong(s.UniqueId);
             WipeSelection();
 
             Dirty = true;
@@ -169,9 +170,7 @@ namespace Synthesia
         {
             SongList.BeginUpdate();
 
-            string previousId = null;
-            if (SelectedSong != null) previousId = SelectedSong.UniqueId;
-
+            var selectedIds = (from s in SelectedSongs select s.UniqueId).ToList();
             SongList.Items.Clear();
 
             if (Metadata != null)
@@ -179,7 +178,7 @@ namespace Synthesia
                 foreach (SongEntry s in Metadata.Songs)
                 {
                     SongList.Items.Add(s);
-                    if (previousId != null && s.UniqueId == previousId) SongList.SelectedItem = s;
+                    if (selectedIds.Contains(s.UniqueId)) SongList.SetSelected(SongList.Items.Count - 1, true);
                 }
             }
 
@@ -193,7 +192,7 @@ namespace Synthesia
 
         private void SongList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (SelectedSong == null) UnbindSong();
+            if (!SelectedSongs.Any()) UnbindSong();
             else BindSong();
         }
 
@@ -226,32 +225,51 @@ namespace Synthesia
 
         private bool IgnoreUpdates { get; set; }
 
+        private void BindBox(TextBox box, PropertyInfo prop)
+        {
+            int values = (from e in SelectedSongs select prop.GetValue(e, null) as string).Distinct().Count();
+            
+            box.ForeColor = values == 1 ? SystemColors.ControlText : SystemColors.GrayText;
+            box.Text = values == 1 ? prop.GetValue(SelectedSongs.First(), null) as string : "(Various)";
+        }
+
+        private void BindNumericBox(NumericUpDown box, PropertyInfo prop)
+        {
+            int values = (from e in SelectedSongs select prop.GetValue(e, null) as int?).Distinct().Count();
+
+            box.ForeColor = values == 1 ? SystemColors.ControlText : SystemColors.GrayText;
+            box.Value = values == 1 ? (prop.GetValue(SelectedSongs.First(), null) as int?) ?? 0 : 0;
+        }
+
         private void BindSong()
         {
-            SongEntry e = SelectedSong;
-            if (e == null) throw new InvalidOperationException("Cannot bind a null song.");
-
             IgnoreUpdates = true;
-
             PropertiesGroup.Enabled = true;
+            
+            BindBox(UniqueIdBox, typeof(SongEntry).GetProperty("UniqueId"));
+            BindBox(TitleBox, typeof(SongEntry).GetProperty("Title"));
+            BindBox(SubtitleBox, typeof(SongEntry).GetProperty("Subtitle"));
 
-            UniqueIdBox.Text = e.UniqueId;
-            TitleBox.Text = e.Title;
-            SubtitleBox.Text = e.Subtitle;
+            BindBox(ComposerBox, typeof(SongEntry).GetProperty("Composer"));
+            BindBox(ArrangerBox, typeof(SongEntry).GetProperty("Arranger"));
+            BindBox(CopyrightBox, typeof(SongEntry).GetProperty("Copyright"));
+            BindBox(LicenseBox, typeof(SongEntry).GetProperty("License"));
 
-            ComposerBox.Text = e.Composer;
-            ArrangerBox.Text = e.Arranger;
-            CopyrightBox.Text = e.Copyright;
-            LicenseBox.Text = e.License;
+            BindNumericBox(DifficultyBox, typeof(SongEntry).GetProperty("Difficulty"));
+            BindNumericBox(RatingBox, typeof(SongEntry).GetProperty("Rating"));
 
-            DifficultyBox.Value = e.Difficulty ?? 0;
-            RatingBox.Value = e.Rating ?? 0;
+            BindBox(FingerHintBox, typeof(SongEntry).GetProperty("FingerHints"));
+            BindBox(HandsBox, typeof(SongEntry).GetProperty("HandParts"));
 
-            FingerHintBox.Text = e.FingerHints;
-            HandsBox.Text = e.HandParts;
+            int selectedCount = SongList.SelectedItems.Count;
+            SortedDictionary<string, int> tagFrequency = new SortedDictionary<string, int>();
+
+            foreach (SongEntry e in SelectedSongs)
+                foreach (string tag in e.Tags)
+                    tagFrequency[tag] = tagFrequency.ContainsKey(tag) ? tagFrequency[tag] + 1 : 1;
 
             TagList.Items.Clear();
-            foreach (var i in e.Tags) TagList.Items.Add(i);
+            foreach (var tag in tagFrequency) if (tag.Value == selectedCount) TagList.Items.Add(tag.Key);
 
             IgnoreUpdates = false;
         }
@@ -270,13 +288,13 @@ namespace Synthesia
         private void RebindAfterChange()
         {
             Dirty = true;
-            Metadata.AddSong(SelectedSong);
+            foreach (SongEntry e in SelectedSongs) Metadata.AddSong(e);
             BindSong();
         }
 
         private void AddTag_Click(object sender, EventArgs e)
         {
-            SelectedSong.AddTag(TagBox.Text);
+            foreach (SongEntry entry in SelectedSongs) entry.AddTag(TagBox.Text);
             TagBox.Clear();
 
             RebindAfterChange();
@@ -288,7 +306,7 @@ namespace Synthesia
 
             string tag = TagList.SelectedItem as string;
 
-            SelectedSong.RemoveTag(tag);
+            foreach (SongEntry entry in SelectedSongs) entry.RemoveTag(tag);
             RebindAfterChange();
 
             TagBox.Text = tag;
@@ -298,7 +316,7 @@ namespace Synthesia
         {
             if (IgnoreUpdates) return;
 
-            SelectedSong.Rating = (RatingBox.Value == 0) ? (int?)null : Convert.ToInt32(RatingBox.Value);
+            foreach (SongEntry entry in SelectedSongs) entry.Rating = (RatingBox.Value == 0) ? (int?)null : Convert.ToInt32(RatingBox.Value);
             RebindAfterChange();
         }
 
@@ -306,14 +324,14 @@ namespace Synthesia
         {
             if (IgnoreUpdates) return;
 
-            SelectedSong.Difficulty = (DifficultyBox.Value == 0) ? (int?)null : Convert.ToInt32(DifficultyBox.Value);
+            foreach (SongEntry entry in SelectedSongs) entry.Difficulty = (DifficultyBox.Value == 0) ? (int?)null : Convert.ToInt32(DifficultyBox.Value);
             RebindAfterChange();
         }
 
         private void TitleBox_TextChanged(object sender, EventArgs e)
         {
             if (IgnoreUpdates) return;
-            SelectedSong.Title = TitleBox.Text;
+            foreach (SongEntry entry in SelectedSongs) entry.Title = TitleBox.Text;
             RebindAfterChange();
 
             UpdateSelectedSongTitle();
@@ -322,7 +340,7 @@ namespace Synthesia
         private void SubtitleBox_TextChanged(object sender, EventArgs e)
         {
             if (IgnoreUpdates) return;
-            SelectedSong.Subtitle = SubtitleBox.Text;
+            foreach (SongEntry entry in SelectedSongs) entry.Subtitle = SubtitleBox.Text;
             RebindAfterChange();
 
             UpdateSelectedSongTitle();
@@ -330,59 +348,62 @@ namespace Synthesia
 
         private void UpdateSelectedSongTitle()
         {
-            int i = SongList.SelectedIndex;
-            SongEntry e = SelectedSong;
-
             SongList.SelectedIndexChanged -= SongList_SelectedIndexChanged;
-
             SongList.BeginUpdate();
-            SongList.ClearSelected();
-            SongList.Items[i] = e;
-            SongList.SelectedIndex = i;
-            SongList.EndUpdate();
 
+            List<int> selected = SongList.SelectedIndices.Cast<int>().ToList();
+            List<SongEntry> songs = SelectedSongs.ToList();
+            if (selected.Count != songs.Count) return;
+
+            SongList.ClearSelected();
+
+            for (int i = 0; i < songs.Count; ++i)
+                SongList.Items[selected[i]] = songs[i];
+
+            foreach (int i in selected) SongList.SetSelected(i, true);
+            SongList.EndUpdate();
             SongList.SelectedIndexChanged += SongList_SelectedIndexChanged;
         }  
 
         private void ComposerBox_TextChanged(object sender, EventArgs e)
         {
             if (IgnoreUpdates) return;
-            SelectedSong.Composer = ComposerBox.Text;
+            foreach (SongEntry entry in SelectedSongs) entry.Composer = ComposerBox.Text;
             RebindAfterChange();
         }
 
         private void ArrangerBox_TextChanged(object sender, EventArgs e)
         {
             if (IgnoreUpdates) return;
-            SelectedSong.Arranger = ArrangerBox.Text;
+            foreach (SongEntry entry in SelectedSongs) entry.Arranger = ArrangerBox.Text;
             RebindAfterChange();
         }
 
         private void CopyrightBox_TextChanged(object sender, EventArgs e)
         {
             if (IgnoreUpdates) return;
-            SelectedSong.Copyright = CopyrightBox.Text;
+            foreach (SongEntry entry in SelectedSongs) entry.Copyright = CopyrightBox.Text;
             RebindAfterChange();
         }
 
         private void LicenseBox_TextChanged(object sender, EventArgs e)
         {
             if (IgnoreUpdates) return;
-            SelectedSong.License = LicenseBox.Text;
+            foreach (SongEntry entry in SelectedSongs) entry.License = LicenseBox.Text;
             RebindAfterChange();
         }
 
         private void FingerHintBox_TextChanged(object sender, EventArgs e)
         {
             if (IgnoreUpdates) return;
-            SelectedSong.FingerHints = FingerHintBox.Text;
+            foreach (SongEntry entry in SelectedSongs) entry.FingerHints = FingerHintBox.Text;
             RebindAfterChange();
         }
 
         private void HandsBox_TextChanged(object sender, EventArgs e)
         {
             if (IgnoreUpdates) return;
-            SelectedSong.HandParts = HandsBox.Text;
+            foreach (SongEntry entry in SelectedSongs) entry.HandParts = HandsBox.Text;
             RebindAfterChange();
         }
 

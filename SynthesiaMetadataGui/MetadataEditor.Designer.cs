@@ -93,6 +93,7 @@
             this.SongList.FormattingEnabled = true;
             this.SongList.Location = new System.Drawing.Point(12, 46);
             this.SongList.Name = "SongList";
+            this.SongList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.SongList.Size = new System.Drawing.Size(300, 472);
             this.SongList.TabIndex = 2;
             this.SongList.SelectedIndexChanged += new System.EventHandler(this.SongList_SelectedIndexChanged);
