@@ -513,6 +513,36 @@ namespace Synthesia
             }
         }
 
+        private void UploadMenu_Click(object sender, EventArgs e)
+        {
+            if (SongList.Items.Count == 0)
+            {
+                MessageBox.Show(this, "You must have at least one song entry in this metadata file to perform an upload to the Synthesia website.  Add a song and try again.", "No song entries", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            using (UploadCredentials uploadDialog = new UploadCredentials())
+            {
+                if (uploadDialog.ShowDialog(this) != DialogResult.OK) return;
+                string siteKey = uploadDialog.SiteKey;
+
+                try
+                {
+                    string result = "Not implemented.";
+                    /*
+                    using (SynthesiaSite.MetadataSoapClient client = new SynthesiaSite.MetadataSoapClient())
+                        result = client.SubmitMetadata((from SongEntry s in SongList.Items select SynthesiaSite.SongEntry.ToRemote(s)).ToList(), siteKey);
+                    */
+
+                    MessageBox.Show(this, result, "Upload results", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(this, ex.Message, "Unable to upload metadata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
         struct ImportResults
         {
             public int Imported;
@@ -679,6 +709,58 @@ namespace Synthesia
             return results;
         }
 
+    }
+
+    namespace SynthesiaSite
+    {
+        partial class SongEntry
+        {
+            public static SynthesiaSite.SongEntry ToRemote(Synthesia.SongEntry from)
+            {
+                return ReflectionCopy.Copy<SynthesiaSite.SongEntry>(from);
+            }
+        }
+    }
+
+    // From: http://stackoverflow.com/questions/562517/coerce-types-in-different-namespaces-with-identical-layout-in-c-sharp
+    internal class ReflectionCopy
+    {
+        public static ToType Copy<ToType>(object from) where ToType : new()
+        {
+            return (ToType)Copy(typeof(ToType), from);
+        }
+
+        public static object Copy(Type totype, object from)
+        {
+            object to = Activator.CreateInstance(totype);
+
+            PropertyInfo[] tpis = totype.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            PropertyInfo[] fpis = from.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            // Go through each property on the "to" object
+            Array.ForEach(tpis, tpi =>
+            {
+                // Find a matching property by name on the "from" object
+                PropertyInfo fpi = Array.Find(fpis, pi => pi.Name == tpi.Name);
+                if (fpi != null)
+                {
+                    // Do the source and destination have identical types (built-ins)?
+                    if (fpi.PropertyType == tpi.PropertyType)
+                    {
+                        // Transfer the value
+                        tpi.SetValue(to, fpi.GetValue(from, null), null);
+                    }
+                    else
+                    {
+                        // If type names are the same (ignoring namespace) copy them recursively
+                        if (fpi.PropertyType.Name == tpi.PropertyType.Name)
+                            tpi.SetValue(to, Copy(fpi.PropertyType, tpi.GetValue(from, null)), null);
+                    }
+                }
+            });
+
+            return to;
+        }
     }
 
 }

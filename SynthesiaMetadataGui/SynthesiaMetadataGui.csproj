@@ -91,6 +91,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UploadCredentials.resx">
+      <DependentUpon>UploadCredentials.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -102,6 +105,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="SongEntry.cs" />
+    <Compile Include="UploadCredentials.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UploadCredentials.Designer.cs">
+      <DependentUpon>UploadCredentials.cs</DependentUpon>
+    </Compile>
     <Compile Include="XExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

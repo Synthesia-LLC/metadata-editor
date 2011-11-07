@@ -64,6 +64,7 @@
             this.SaveAsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.ImportMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.UploadMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.ExitMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.HelpMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -366,6 +367,7 @@
             this.SaveAsMenu,
             this.toolStripMenuItem1,
             this.ImportMenu,
+            this.UploadMenu,
             this.toolStripMenuItem2,
             this.ExitMenu});
             this.FileMenu.Name = "FileMenu";
@@ -376,7 +378,7 @@
             // 
             this.NewMenu.Name = "NewMenu";
             this.NewMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.NewMenu.Size = new System.Drawing.Size(227, 22);
+            this.NewMenu.Size = new System.Drawing.Size(231, 22);
             this.NewMenu.Text = "&New";
             this.NewMenu.Click += new System.EventHandler(this.NewMenu_Click);
             // 
@@ -384,7 +386,7 @@
             // 
             this.OpenMenu.Name = "OpenMenu";
             this.OpenMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.OpenMenu.Size = new System.Drawing.Size(227, 22);
+            this.OpenMenu.Size = new System.Drawing.Size(231, 22);
             this.OpenMenu.Text = "&Open...";
             this.OpenMenu.Click += new System.EventHandler(this.OpenMenu_Click);
             // 
@@ -392,38 +394,46 @@
             // 
             this.SaveMenu.Name = "SaveMenu";
             this.SaveMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.SaveMenu.Size = new System.Drawing.Size(227, 22);
+            this.SaveMenu.Size = new System.Drawing.Size(231, 22);
             this.SaveMenu.Text = "&Save";
             this.SaveMenu.Click += new System.EventHandler(this.SaveMenu_Click);
             // 
             // SaveAsMenu
             // 
             this.SaveAsMenu.Name = "SaveAsMenu";
-            this.SaveAsMenu.Size = new System.Drawing.Size(227, 22);
+            this.SaveAsMenu.Size = new System.Drawing.Size(231, 22);
             this.SaveAsMenu.Text = "Save &As...";
             this.SaveAsMenu.Click += new System.EventHandler(this.SaveAsMenu_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(224, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(228, 6);
             // 
             // ImportMenu
             // 
             this.ImportMenu.Name = "ImportMenu";
-            this.ImportMenu.Size = new System.Drawing.Size(227, 22);
+            this.ImportMenu.Size = new System.Drawing.Size(231, 22);
             this.ImportMenu.Text = "&Import data from Synthesia...";
             this.ImportMenu.Click += new System.EventHandler(this.ImportMenu_Click);
+            // 
+            // UploadMenu
+            // 
+            this.UploadMenu.Enabled = false;
+            this.UploadMenu.Name = "UploadMenu";
+            this.UploadMenu.Size = new System.Drawing.Size(231, 22);
+            this.UploadMenu.Text = "Upload to Synthesia website...";
+            this.UploadMenu.Click += new System.EventHandler(this.UploadMenu_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(224, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(228, 6);
             // 
             // ExitMenu
             // 
             this.ExitMenu.Name = "ExitMenu";
-            this.ExitMenu.Size = new System.Drawing.Size(227, 22);
+            this.ExitMenu.Size = new System.Drawing.Size(231, 22);
             this.ExitMenu.Text = "E&xit";
             this.ExitMenu.Click += new System.EventHandler(this.ExitMenu_Click);
             // 
@@ -650,6 +660,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.TextBox HandsBox;
         private System.Windows.Forms.Label PartsLabel;
+        private System.Windows.Forms.ToolStripMenuItem UploadMenu;
     }
 }
 
