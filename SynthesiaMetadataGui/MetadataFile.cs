@@ -53,6 +53,8 @@ namespace Synthesia
                 s.Remove();
                 break;
             }
+
+            // TODO: Remove song entries from any groups and further (recursively!) remove groups that become empty as a result!
         }
 
         public void AddSong(XElement songs, SongEntry entry)
@@ -145,10 +147,18 @@ namespace Synthesia
             return entry;
         }
 
-        private XElement GroupFromPath(List<string> groupNamePath)
+        private XElement RootGroupElement(bool createIfMissing)
+        {
+            XElement result = m_document.Root.Element("Groups");
+            if (result == null && createIfMissing) m_document.Root.Add(result = new XElement("Groups"));
+
+            return result;
+        }
+
+        private XElement GroupFromPath(List<string> groupNamePath, bool createRootIfMissing)
         {
             if (groupNamePath.Count == 0) return null;
-            XElement result = m_document.Root.Element("Groups");
+            XElement result = RootGroupElement(createRootIfMissing);
 
             foreach (string name in groupNamePath)
             {
@@ -181,7 +191,7 @@ namespace Synthesia
         {
             ValidatePath(groupNamePath);
 
-            XElement e = GroupFromPath(groupNamePath);
+            XElement e = GroupFromPath(groupNamePath, false);
             if (e != null) e.Remove();
         }
 
@@ -194,7 +204,7 @@ namespace Synthesia
         {
             ValidatePath(groupNamePath);
 
-            XElement parent = groupNamePath.Count == 1 ? m_document.Root.Element("Groups") : GroupFromPath(groupNamePath.Take(groupNamePath.Count-1).ToList());
+            XElement parent = groupNamePath.Count == 1 ? RootGroupElement(true) : GroupFromPath(groupNamePath.Take(groupNamePath.Count - 1).ToList(), true);
             if (parent == null) throw new InvalidOperationException(string.Format("All but the last element must already exist when adding a group.  Path: {0}", string.Join("/", groupNamePath)));
 
             string name = DisambiguateName(parent, groupNamePath.Last());
@@ -212,7 +222,7 @@ namespace Synthesia
             ValidatePath(groupNamePath);
             if (groupNamePath.Last() == newName) return newName;
 
-            XElement group = GroupFromPath(groupNamePath);
+            XElement group = GroupFromPath(groupNamePath, false);
             if (group == null) throw new InvalidOperationException("Couldn't find group to rename.");
 
             XElement parent = group.Parent;
@@ -225,14 +235,28 @@ namespace Synthesia
 
         public void SwapGroups(List<string> parentPath, string groupA, string groupB)
         {
-            List<string> groupPathA = parentPath; groupPathA.Add(groupA);
-            List<string> groupPathB = parentPath; groupPathB.Add(groupB);
+            List<string> groupPathA = parentPath.ToList(); groupPathA.Add(groupA);
+            List<string> groupPathB = parentPath.ToList(); groupPathB.Add(groupB);
             ValidatePath(groupPathA);
             ValidatePath(groupPathB);
 
-            XElement a = GroupFromPath(groupPathA);
-            XElement b = GroupFromPath(groupPathB);
+            XElement a = GroupFromPath(groupPathA, false);
+            XElement b = GroupFromPath(groupPathB, false);
             if (a == null || b == null) throw new InvalidOperationException("Couldn't find a group for swapping.");
+
+            a.ReplaceWith(b);
+            b.ReplaceWith(a);
+        }
+
+        public void SwapSongsInGroup(List<string> groupNamePath, string songUniqueIdA, string songUniqueIdB)
+        {
+            ValidatePath(groupNamePath);
+            XElement g = GroupFromPath(groupNamePath, false);
+            if (g == null) throw new InvalidOperationException("Couldn't find group to swap songs.");
+
+            XElement a = (from s in g.Elements("Song") where s.AttributeOrDefault("UniqueId") == songUniqueIdA select s).FirstOrDefault();
+            XElement b = (from s in g.Elements("Song") where s.AttributeOrDefault("UniqueId") == songUniqueIdB select s).FirstOrDefault();
+            if (a == null || b == null) throw new InvalidOperationException("Couldn't find songs for swapping.");
 
             a.ReplaceWith(b);
             b.ReplaceWith(a);
@@ -243,7 +267,7 @@ namespace Synthesia
             ValidatePath(groupNamePath);
             if (string.IsNullOrWhiteSpace(songUniqueId)) throw new InvalidOperationException("Bad song UniqueId");
 
-            XElement g = GroupFromPath(groupNamePath);
+            XElement g = GroupFromPath(groupNamePath, true);
             if ((from e in g.Elements("Song") where e.AttributeOrDefault("UniqueId") == songUniqueId select true).Any()) return;
 
             g.Add(new XElement("Song", new XAttribute("UniqueId", songUniqueId)));
@@ -254,7 +278,7 @@ namespace Synthesia
             ValidatePath(groupNamePath);
             if (string.IsNullOrWhiteSpace(songUniqueId)) throw new InvalidOperationException("Bad song UniqueId");
 
-            XElement g = GroupFromPath(groupNamePath);
+            XElement g = GroupFromPath(groupNamePath, false);
             foreach (XElement s in (from e in g.Elements("Song") where e.AttributeOrDefault("UniqueId") == songUniqueId select e)) s.Remove();
         }
 
@@ -263,7 +287,7 @@ namespace Synthesia
         {
             ValidatePath(groupNamePath);
 
-            XElement g = GroupFromPath(groupNamePath);
+            XElement g = GroupFromPath(groupNamePath, false);
             foreach (XElement s in (from e in g.Elements("Song") select e)) s.Remove();
         }
 
@@ -271,7 +295,7 @@ namespace Synthesia
         {
             get
             {
-                XElement groups = m_document.Root.Element("Groups");
+                XElement groups = RootGroupElement(false);
                 if (groups == null) yield break;
 
                 foreach (XElement g in groups.Elements("Group")) yield return RecursiveGroupLoad(g);

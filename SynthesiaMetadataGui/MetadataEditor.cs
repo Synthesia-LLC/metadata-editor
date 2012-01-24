@@ -90,7 +90,7 @@ namespace Synthesia
         private void RemoveSong_Click(object sender, EventArgs e)
         {
             if (!SelectedSongs.Any()) return;
-            if (MessageBox.Show("Are you sure you want to remove all metadata associated with the selected song(s)?  (This may remove metadata not visible to this editor!)", "Remove Metadata?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            if (MessageBox.Show("Are you sure you want to remove all metadata associated with the selected song(s)?  Any groups containing only these song(s) will also be removed!  This may also remove metadata not visible to this editor!", "Remove Metadata?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
 
             foreach (SongEntry s in SelectedSongs) Metadata.RemoveSong(s.UniqueId);
             WipeSelection();
@@ -707,6 +707,21 @@ namespace Synthesia
 
             results.ProblemEncountered = false;
             return results;
+        }
+
+        private void SongGrouping_Click(object sender, EventArgs e)
+        {
+            if (SongList.Items.Count == 0)
+            {
+                MessageBox.Show(this, "You must have at least one song entry in this metadata file to manage groups.  Add a song and try again.", "No song entries", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            using (GroupEditor editor = new GroupEditor(Metadata))
+            {
+                editor.ShowDialog(this);
+                if (editor.MadeChanges) Dirty = true;
+            }
         }
 
     }

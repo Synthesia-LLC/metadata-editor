@@ -81,6 +81,7 @@
             this.PartsLabel = new System.Windows.Forms.Label();
             this.FingerHintBox = new System.Windows.Forms.TextBox();
             this.FingerHintLabel = new System.Windows.Forms.Label();
+            this.SongGrouping = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DifficultyBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RatingBox)).BeginInit();
             this.MainMenu.SuspendLayout();
@@ -104,7 +105,7 @@
             this.AddSong.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.AddSong.Location = new System.Drawing.Point(12, 534);
             this.AddSong.Name = "AddSong";
-            this.AddSong.Size = new System.Drawing.Size(217, 23);
+            this.AddSong.Size = new System.Drawing.Size(90, 23);
             this.AddSong.TabIndex = 3;
             this.AddSong.Text = "Add Song...";
             this.Tip.SetToolTip(this.AddSong, "Browse to a song file on your hard drive to add to this metadata file");
@@ -114,7 +115,7 @@
             // RemoveSong
             // 
             this.RemoveSong.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.RemoveSong.Location = new System.Drawing.Point(235, 534);
+            this.RemoveSong.Location = new System.Drawing.Point(108, 534);
             this.RemoveSong.Name = "RemoveSong";
             this.RemoveSong.Size = new System.Drawing.Size(77, 23);
             this.RemoveSong.TabIndex = 4;
@@ -419,10 +420,10 @@
             // 
             // UploadMenu
             // 
-            this.UploadMenu.Enabled = false;
             this.UploadMenu.Name = "UploadMenu";
             this.UploadMenu.Size = new System.Drawing.Size(231, 22);
             this.UploadMenu.Text = "Upload to Synthesia website...";
+            this.UploadMenu.Visible = false;
             this.UploadMenu.Click += new System.EventHandler(this.UploadMenu_Click);
             // 
             // toolStripMenuItem2
@@ -531,7 +532,7 @@
             this.PropertiesGroup.Location = new System.Drawing.Point(318, 32);
             this.PropertiesGroup.Name = "PropertiesGroup";
             this.PropertiesGroup.Size = new System.Drawing.Size(392, 525);
-            this.PropertiesGroup.TabIndex = 5;
+            this.PropertiesGroup.TabIndex = 6;
             this.PropertiesGroup.TabStop = false;
             this.PropertiesGroup.Text = "Properties";
             // 
@@ -575,12 +576,23 @@
             this.FingerHintLabel.TabIndex = 20;
             this.FingerHintLabel.Text = "&Fingers:";
             // 
+            // SongGrouping
+            // 
+            this.SongGrouping.Location = new System.Drawing.Point(232, 534);
+            this.SongGrouping.Name = "SongGrouping";
+            this.SongGrouping.Size = new System.Drawing.Size(80, 23);
+            this.SongGrouping.TabIndex = 5;
+            this.SongGrouping.Text = "Grouping...";
+            this.SongGrouping.UseVisualStyleBackColor = true;
+            this.SongGrouping.Click += new System.EventHandler(this.SongGrouping_Click);
+            // 
             // MetadataEditor
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(722, 569);
+            this.Controls.Add(this.SongGrouping);
             this.Controls.Add(this.PropertiesGroup);
             this.Controls.Add(this.SongListLabel);
             this.Controls.Add(this.RemoveSong);
@@ -661,6 +673,7 @@
         private System.Windows.Forms.TextBox HandsBox;
         private System.Windows.Forms.Label PartsLabel;
         private System.Windows.Forms.ToolStripMenuItem UploadMenu;
+        private System.Windows.Forms.Button SongGrouping;
     }
 }
 
