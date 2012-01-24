@@ -129,12 +129,153 @@ namespace Synthesia
             set
             {
                 XElement songs = m_document.Root.Element("Songs");
-                if (songs == null)  m_document.Add(songs = new XElement("Songs"));
+                if (songs == null) m_document.Add(songs = new XElement("Songs"));
 
-                foreach (SongEntry entry in value)
-                    AddSong(songs, entry);
+                foreach (SongEntry entry in value) AddSong(songs, entry);
             }
 
+        }
+
+        private GroupEntry RecursiveGroupLoad(XElement element)
+        {
+            GroupEntry entry = new GroupEntry() { Name = element.AttributeOrDefault("Name") };
+            foreach (XElement s in element.Elements("Song")) entry.Songs.Add(new SongEntry() { UniqueId = s.AttributeOrDefault("UniqueId") });
+            foreach (XElement g in element.Elements("Group")) entry.Groups.Add(RecursiveGroupLoad(g));
+
+            return entry;
+        }
+
+        private XElement GroupFromPath(List<string> groupNamePath)
+        {
+            if (groupNamePath.Count == 0) return null;
+            XElement result = m_document.Root.Element("Groups");
+
+            foreach (string name in groupNamePath)
+            {
+                if (result == null) break;
+                result = (from e in result.Elements("Group") where e.AttributeOrDefault("Name") == name select e).FirstOrDefault();
+            }
+
+            return result;
+        }
+
+        private void ValidatePath(List<string> groupNamePath)
+        {
+            if (groupNamePath.Count == 0) throw new InvalidOperationException("Group path cannot be empty.");
+            foreach (string n in groupNamePath) if (string.IsNullOrWhiteSpace(n)) throw new InvalidOperationException("Group names cannot be empty.");
+        }
+
+        private string DisambiguateName(XElement parent, string desiredName)
+        {
+            if (parent == null) throw new InvalidOperationException("Bad parent.");
+            if (string.IsNullOrWhiteSpace(desiredName)) throw new InvalidOperationException("Empty name.");
+
+            int attempt = 1;
+            string finalName = desiredName;
+            while ((from e in parent.Elements("Group") where e.AttributeOrDefault("Name") == finalName select e).Any()) finalName = string.Format("{0} {1}", desiredName, ++attempt);
+
+            return finalName;
+        }
+
+        public void RemoveGroup(List<string> groupNamePath)
+        {
+            ValidatePath(groupNamePath);
+
+            XElement e = GroupFromPath(groupNamePath);
+            if (e != null) e.Remove();
+        }
+
+        /// <summary>
+        /// The path up through groupNamePath.Count-1 must already exist.  Name
+        /// will be altered if a duplicate exists at the same level.  Final name
+        /// is returned.
+        /// </summary>
+        public string AddGroup(List<string> groupNamePath)
+        {
+            ValidatePath(groupNamePath);
+
+            XElement parent = groupNamePath.Count == 1 ? m_document.Root.Element("Groups") : GroupFromPath(groupNamePath.Take(groupNamePath.Count-1).ToList());
+            if (parent == null) throw new InvalidOperationException(string.Format("All but the last element must already exist when adding a group.  Path: {0}", string.Join("/", groupNamePath)));
+
+            string name = DisambiguateName(parent, groupNamePath.Last());
+            parent.Add(new XElement("Group", new XAttribute("Name", name)));
+
+            return name;
+        }
+
+        /// <summary>
+        /// newName will be altered if a duplicate exists at the same
+        /// level.  Final name is returned.
+        /// </summary>
+        public string RenameGroup(List<string> groupNamePath, string newName)
+        {
+            ValidatePath(groupNamePath);
+            if (groupNamePath.Last() == newName) return newName;
+
+            XElement group = GroupFromPath(groupNamePath);
+            if (group == null) throw new InvalidOperationException("Couldn't find group to rename.");
+
+            XElement parent = group.Parent;
+
+            string name = DisambiguateName(parent, newName);
+            group.SetAttributeValue("Name", name);
+
+            return name;
+        }
+
+        public void SwapGroups(List<string> parentPath, string groupA, string groupB)
+        {
+            List<string> groupPathA = parentPath; groupPathA.Add(groupA);
+            List<string> groupPathB = parentPath; groupPathB.Add(groupB);
+            ValidatePath(groupPathA);
+            ValidatePath(groupPathB);
+
+            XElement a = GroupFromPath(groupPathA);
+            XElement b = GroupFromPath(groupPathB);
+            if (a == null || b == null) throw new InvalidOperationException("Couldn't find a group for swapping.");
+
+            a.ReplaceWith(b);
+            b.ReplaceWith(a);
+        }
+
+        public void AddSongToGroup(List<string> groupNamePath, string songUniqueId)
+        {
+            ValidatePath(groupNamePath);
+            if (string.IsNullOrWhiteSpace(songUniqueId)) throw new InvalidOperationException("Bad song UniqueId");
+
+            XElement g = GroupFromPath(groupNamePath);
+            if ((from e in g.Elements("Song") where e.AttributeOrDefault("UniqueId") == songUniqueId select true).Any()) return;
+
+            g.Add(new XElement("Song", new XAttribute("UniqueId", songUniqueId)));
+        }
+
+        public void RemoveSongFromGroup(List<string> groupNamePath, string songUniqueId)
+        {
+            ValidatePath(groupNamePath);
+            if (string.IsNullOrWhiteSpace(songUniqueId)) throw new InvalidOperationException("Bad song UniqueId");
+
+            XElement g = GroupFromPath(groupNamePath);
+            foreach (XElement s in (from e in g.Elements("Song") where e.AttributeOrDefault("UniqueId") == songUniqueId select e)) s.Remove();
+        }
+
+        /// <remarks>More convenience than anything.  Maybe a little for efficiency, too.</remarks>
+        public void RemoveAllSongsFromGroup(List<string> groupNamePath)
+        {
+            ValidatePath(groupNamePath);
+
+            XElement g = GroupFromPath(groupNamePath);
+            foreach (XElement s in (from e in g.Elements("Song") select e)) s.Remove();
+        }
+
+        public IEnumerable<GroupEntry> Groups
+        {
+            get
+            {
+                XElement groups = m_document.Root.Element("Groups");
+                if (groups == null) yield break;
+
+                foreach (XElement g in groups.Elements("Group")) yield return RecursiveGroupLoad(g);
+            }
         }
 
     }
