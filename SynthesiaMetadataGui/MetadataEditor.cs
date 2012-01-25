@@ -90,7 +90,7 @@ namespace Synthesia
         private void RemoveSong_Click(object sender, EventArgs e)
         {
             if (!SelectedSongs.Any()) return;
-            if (MessageBox.Show("Are you sure you want to remove all metadata associated with the selected song(s)?  Any groups containing only these song(s) will also be removed!  This may also remove metadata not visible to this editor!", "Remove Metadata?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            if (MessageBox.Show("Are you sure you want to remove all metadata associated with the selected song(s)?  This will remove the song(s) from any groups containing it.  This may also remove metadata not visible to this editor!", "Remove Metadata?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
 
             foreach (SongEntry s in SelectedSongs) Metadata.RemoveSong(s.UniqueId);
             WipeSelection();

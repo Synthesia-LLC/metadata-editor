@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Xml.Linq;
 using System.Xml;
+using System.Xml.XPath;
 
 namespace Synthesia
 {
@@ -54,7 +55,7 @@ namespace Synthesia
                 break;
             }
 
-            // TODO: Remove song entries from any groups and further (recursively!) remove groups that become empty as a result!
+            RemoveSongFromAnyGroup(uniqueId);
         }
 
         public void AddSong(XElement songs, SongEntry entry)
@@ -286,9 +287,22 @@ namespace Synthesia
         public void RemoveAllSongsFromGroup(List<string> groupNamePath)
         {
             ValidatePath(groupNamePath);
+            GroupFromPath(groupNamePath, false).Elements("Song").Remove();
+        }
 
-            XElement g = GroupFromPath(groupNamePath, false);
-            foreach (XElement s in (from e in g.Elements("Song") select e)) s.Remove();
+        /// <summary>
+        /// Searches the entire group tree and removes the song from every location it
+        /// appears in.  Useful when removing a song from the top-level Songs list.
+        /// </summary>
+        public void RemoveSongFromAnyGroup(string songUniqueId)
+        {
+            if (string.IsNullOrWhiteSpace(songUniqueId)) throw new InvalidOperationException("Bad song UniqueId");
+
+            XElement groups = RootGroupElement(false);
+            if (groups == null) return;
+
+            var e = groups.XPathSelectElements(string.Format("Group//Song[@UniqueId = \"{0}\"]", songUniqueId));
+            e.Remove();
         }
 
         public IEnumerable<GroupEntry> Groups

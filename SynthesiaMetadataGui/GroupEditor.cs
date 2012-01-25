@@ -28,7 +28,9 @@ namespace Synthesia
             foreach (var s in group.Songs)
             {
                 TreeNode node = groupNode.Nodes.Add(s.UniqueId, (from r in remainingSongs where r.UniqueId == s.UniqueId select r.ToString()).FirstOrDefault() ?? "Unknown Song", 1, 1);
-                node.Tag = s.UniqueId;
+
+                SongEntry matching = remainingSongs.Find(song => song.UniqueId == s.UniqueId) ?? s;
+                node.Tag = matching;
 
                 remainingSongs.RemoveAll(song => song.UniqueId == s.UniqueId);
             }
@@ -87,13 +89,21 @@ namespace Synthesia
             bool selectionIsSong =  hasSelection && !selectionIsGroup;
 
             int songsInSelectedGroup = 0;
-            if (selectionIsGroup) foreach (TreeNode t in GroupList.SelectedNode.Nodes) if (t.ForeColor != Color.RoyalBlue) ++songsInSelectedGroup;
+            string groupName = "";
+
+            if (hasSelection)
+            {
+                TreeNode group = GroupList.SelectedNode;
+                if (!selectionIsGroup) group = group.Parent;
+
+                groupName = group.Text;
+                foreach (TreeNode t in group.Nodes) if (t.ForeColor != Color.RoyalBlue) ++songsInSelectedGroup;
+            }
 
             CreateSubGroupMenu.Enabled = selectionIsGroup;
             RemoveGroupMenu.Enabled = selectionIsGroup;
             RemoveSongsFromGroupMenu.Enabled = songsInSelectedGroup > 0;
 
-            string groupName = selectionIsGroup ? GroupList.SelectedNode.Text : "";
 
             CreateSubGroupMenu.Text = CreateSubGroupMenu.Enabled ? string.Format("Create group under {0}", groupName) : "Create sub-group";
             RemoveGroupMenu.Text = RemoveGroupMenu.Enabled ? string.Format("Remove {0}", groupName) : "Remove group";
@@ -117,7 +127,15 @@ namespace Synthesia
         {
             TreeNodeCollection nodes = parent == null ? GroupList.Nodes : parent.Nodes;
 
-            TreeNode node = nodes.Add(name);
+            // Add it after the last group (but before any songs)
+            int index = 0;
+            foreach (TreeNode t in nodes)
+            {
+                if (t.ForeColor != Color.RoyalBlue) break;
+                ++index;
+            }
+
+            TreeNode node = nodes.Insert(index, name);
             node.ForeColor = Color.RoyalBlue;
             GroupList.SelectedNode = node;
             GroupNameBox.Focus();
@@ -131,11 +149,29 @@ namespace Synthesia
             if (parent == null) throw new InvalidOperationException("Songs can only be added to existing groups.");
 
             TreeNode node = parent.Nodes.Add(song.UniqueId, song.ToString(), 1, 1);
-            node.Tag = song.UniqueId;
+            node.Tag = song;
             GroupList.SelectedNode = node;
 
             MadeChanges = true;
             return node;
+        }
+
+        private void UnwindSongs(TreeNode group, bool recursive)
+        {
+            List<TreeNode> toRemove = new List<TreeNode>();
+            foreach (TreeNode t in group.Nodes)
+            {
+                if (t.ForeColor != Color.RoyalBlue) toRemove.Add(t);
+                else if (recursive) UnwindSongs(t, true);
+            }
+
+            foreach (TreeNode t in toRemove)
+            {
+                t.Remove();
+                SongList.Items.Add(t.Tag);
+            }
+
+            if (toRemove.Count > 0) MadeChanges = true;
         }
 
         private void CreateTopLevelGroupMenu_Click(object sender, EventArgs e)
@@ -178,7 +214,7 @@ namespace Synthesia
                 path.RemoveAt(path.Count - 1);
                 Metadata.SwapGroups(path, selected.Text, other.Text);
             }
-            else Metadata.SwapSongsInGroup(path, selected.Tag as string, other.Tag as string);
+            else Metadata.SwapSongsInGroup(path, (selected.Tag as SongEntry).UniqueId, (other.Tag as SongEntry).UniqueId);
 
             nodes.Remove(selected);
             nodes.Insert(prevIndex, selected);
@@ -192,6 +228,8 @@ namespace Synthesia
             if (GroupList.SelectedNode.Nodes.Count > 0 && MessageBox.Show("This group isn't empty.  Are you sure you want to remove it?", "Remove Group Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
 
             Metadata.RemoveGroup(PathToSelectedGroup());
+
+            UnwindSongs(GroupList.SelectedNode, true);
             GroupList.SelectedNode.Remove();
 
             MadeChanges = true;
@@ -224,29 +262,31 @@ namespace Synthesia
 
         private void RemoveSongsFromGroupMenu_Click(object sender, EventArgs e)
         {
-            // TODO!
+            Metadata.RemoveAllSongsFromGroup(PathToSelectedGroup());
 
-            MadeChanges = true;
+            TreeNode group = GroupList.SelectedNode;
+            if (group.ForeColor != Color.RoyalBlue) group = group.Parent;
+
+            UnwindSongs(group, false);
         }
 
         private void RemoveButton_Click(object sender, EventArgs e)
         {
-            // TODO!
+            SongEntry song = GroupList.SelectedNode.Tag as SongEntry;
+            Metadata.RemoveSongFromGroup(PathToSelectedGroup(), song.UniqueId);
+            SongList.Items.Add(song);
+
+            GroupList.SelectedNode.Remove();
 
             MadeChanges = true;
         }
 
-
-
-
-        // TODO: Remove this and the PRINT! button
-        private void button1_Click(object sender, EventArgs e)
+        private void TestWriteButton_Click(object sender, EventArgs e)
         {
             Console.Out.WriteLine();
             Metadata.Save(Console.OpenStandardOutput());
             Console.Out.WriteLine();
         }
-
 
     }
 }

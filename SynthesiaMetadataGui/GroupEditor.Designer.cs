@@ -37,6 +37,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.RemoveGroupMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.RemoveSongsFromGroupMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.TreeImages = new System.Windows.Forms.ImageList(this.components);
             this.labelGroups = new System.Windows.Forms.Label();
             this.labelSongs = new System.Windows.Forms.Label();
             this.labelInstructions = new System.Windows.Forms.Label();
@@ -44,11 +45,10 @@
             this.AddButton = new System.Windows.Forms.Button();
             this.RemoveButton = new System.Windows.Forms.Button();
             this.SongList = new System.Windows.Forms.ListBox();
-            this.button1 = new System.Windows.Forms.Button();
             this._closeButton = new System.Windows.Forms.Button();
             this.MoveDownButton = new System.Windows.Forms.Button();
             this.MoveUpButton = new System.Windows.Forms.Button();
-            this.TreeImages = new System.Windows.Forms.ImageList(this.components);
+            this.TestWriteButton = new System.Windows.Forms.Button();
             this.GroupContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -113,6 +113,13 @@
             this.RemoveSongsFromGroupMenu.Size = new System.Drawing.Size(298, 22);
             this.RemoveSongsFromGroupMenu.Text = "Remove all songs from [group set in code]";
             this.RemoveSongsFromGroupMenu.Click += new System.EventHandler(this.RemoveSongsFromGroupMenu_Click);
+            // 
+            // TreeImages
+            // 
+            this.TreeImages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("TreeImages.ImageStream")));
+            this.TreeImages.TransparentColor = System.Drawing.Color.Transparent;
+            this.TreeImages.Images.SetKeyName(0, "group.png");
+            this.TreeImages.Images.SetKeyName(1, "song.png");
             // 
             // labelGroups
             // 
@@ -188,17 +195,6 @@
             this.SongList.TabIndex = 6;
             this.SongList.SelectedIndexChanged += new System.EventHandler(this.SongList_SelectedIndexChanged);
             // 
-            // button1
-            // 
-            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button1.Location = new System.Drawing.Point(295, 276);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(83, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "PRINT!";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // _closeButton
             // 
             this._closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -232,12 +228,17 @@
             this.MoveUpButton.UseVisualStyleBackColor = true;
             this.MoveUpButton.Click += new System.EventHandler(this.MoveUpButton_Click);
             // 
-            // TreeImages
+            // TestWriteButton
             // 
-            this.TreeImages.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("TreeImages.ImageStream")));
-            this.TreeImages.TransparentColor = System.Drawing.Color.Transparent;
-            this.TreeImages.Images.SetKeyName(0, "group.png");
-            this.TreeImages.Images.SetKeyName(1, "song.png");
+            this.TestWriteButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.TestWriteButton.Location = new System.Drawing.Point(295, 276);
+            this.TestWriteButton.Name = "TestWriteButton";
+            this.TestWriteButton.Size = new System.Drawing.Size(83, 44);
+            this.TestWriteButton.TabIndex = 10;
+            this.TestWriteButton.Text = "Write XML to console";
+            this.TestWriteButton.UseVisualStyleBackColor = true;
+            this.TestWriteButton.Visible = false;
+            this.TestWriteButton.Click += new System.EventHandler(this.TestWriteButton_Click);
             // 
             // GroupEditor
             // 
@@ -250,7 +251,7 @@
             this.Controls.Add(this.labelInstructions);
             this.Controls.Add(this.MoveUpButton);
             this.Controls.Add(this.RemoveButton);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.TestWriteButton);
             this.Controls.Add(this.AddButton);
             this.Controls.Add(this.GroupNameBox);
             this.Controls.Add(this._closeButton);
@@ -283,10 +284,10 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem RemoveSongsFromGroupMenu;
         private System.Windows.Forms.ListBox SongList;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button _closeButton;
         private System.Windows.Forms.Button MoveUpButton;
         private System.Windows.Forms.Button MoveDownButton;
         private System.Windows.Forms.ImageList TreeImages;
+        private System.Windows.Forms.Button TestWriteButton;
     }
 }
