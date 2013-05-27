@@ -44,7 +44,7 @@ namespace Synthesia
         {
             get
             {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
+                return Assembly.GetExecutingAssembly().GetName().Version.ToString(1);
             }
         }
 

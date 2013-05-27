@@ -42,6 +42,7 @@ namespace Synthesia
         private List<string> m_tags = new List<string>();
 
         public void ClearAllTags() { m_tags.Clear(); }
+        public void RemoveTag(string tag) { m_tags.RemoveAll(t => t.ToLower() == tag.ToLower()); }
 
         public void AddTag(string tag)
         {
@@ -53,9 +54,24 @@ namespace Synthesia
             m_tags.Add(tag);
         }
 
-        public void RemoveTag(string tag)
+        /// <summary>
+        /// Returns a copy of the dictionary.  Use AddBookmark() and RemoveBookmark() to make changes.
+        /// </summary>
+        public Dictionary<int, string> Bookmarks { get { return m_bookmarks.ToDictionary(p => p.Key, p => p.Value); } }
+        private Dictionary<int, string> m_bookmarks = new Dictionary<int, string>();
+
+        public void ClearAllBookmarks() { m_bookmarks.Clear(); }
+        public void RemoveBookmark(int measure) { m_bookmarks.Remove(measure); }
+
+        public void AddBookmark(int measure, string description = "")
         {
-            m_tags.RemoveAll(t => t.ToLower() == tag.ToLower());
+            string d = description ?? "";
+
+            if (measure < 1) throw new InvalidOperationException("Bookmarks must have a positive integer measure number.");
+            if (d.Contains(';')) throw new InvalidOperationException("Bookmark descriptions cannot contain semi-colons.");
+
+            // NOTE: We overwrite duplicates silently, so no need to check for them
+            m_bookmarks[measure] = d;
         }
 
         public override string ToString()

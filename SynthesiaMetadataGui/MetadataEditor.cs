@@ -218,6 +218,10 @@ namespace Synthesia
             TagBox.Clear();
             TagList.Items.Clear();
 
+            BookmarkMeasureBox.Value = 1;
+            BookmarkDescriptionBox.Clear();
+            BookmarkList.Items.Clear();
+
             PropertiesGroup.Enabled = false;
 
             IgnoreUpdates = false;
@@ -239,6 +243,23 @@ namespace Synthesia
 
             box.ForeColor = values == 1 ? SystemColors.ControlText : SystemColors.GrayText;
             box.Value = values == 1 ? (prop.GetValue(SelectedSongs.First(), null) as int?) ?? 0 : 0;
+        }
+
+        private class BookmarkListItem
+        {
+            public int Measure { get; private set; }
+            public string Description { get; private set; }
+
+            public BookmarkListItem(int measure, string description)
+            {
+                Measure = measure;
+                Description = description ?? "";
+            }
+
+            public override string ToString()
+            {
+                return Measure.ToString() + (string.IsNullOrWhiteSpace(Description) ? "" : (": " + Description));
+            }
         }
 
         private void BindSong()
@@ -263,26 +284,21 @@ namespace Synthesia
 
             int selectedCount = SongList.SelectedItems.Count;
             SortedDictionary<string, int> tagFrequency = new SortedDictionary<string, int>();
+            Dictionary<KeyValuePair<int, string>, int> bookmarkFrequency = new Dictionary<KeyValuePair<int,string>,int>();
 
             foreach (SongEntry e in SelectedSongs)
-                foreach (string tag in e.Tags)
-                    tagFrequency[tag] = tagFrequency.ContainsKey(tag) ? tagFrequency[tag] + 1 : 1;
+            {
+                foreach (string tag in e.Tags) tagFrequency[tag] = tagFrequency.ContainsKey(tag) ? tagFrequency[tag] + 1 : 1;
+                foreach (var b in e.Bookmarks) bookmarkFrequency[b] = bookmarkFrequency.ContainsKey(b) ? bookmarkFrequency[b] + 1 : 1;
+            }
 
             TagList.Items.Clear();
             foreach (var tag in tagFrequency) if (tag.Value == selectedCount) TagList.Items.Add(tag.Key);
 
+            BookmarkList.Items.Clear();
+            foreach (var b in bookmarkFrequency) if (b.Value == selectedCount) BookmarkList.Items.Add(new BookmarkListItem(b.Key.Key, b.Key.Value));
+
             IgnoreUpdates = false;
-        }
-
-        private void TagBox_TextChanged(object sender, EventArgs e)
-        {
-            if (TagBox.Text.Contains(';')) TagBox.Text = TagBox.Text.Replace(";", "");
-            AddTag.Enabled = TagBox.Text.Length > 0 && !TagList.Items.Contains(TagBox.Text);
-        }
-
-        private void TagList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            RemoveTag.Enabled = TagList.SelectedIndex != -1;
         }
 
         private void RebindAfterChange()
@@ -310,6 +326,47 @@ namespace Synthesia
             RebindAfterChange();
 
             TagBox.Text = tag;
+        }
+
+        private void TagBox_TextChanged(object sender, EventArgs e)
+        {
+            if (TagBox.Text.Contains(';')) TagBox.Text = TagBox.Text.Replace(";", "");
+            AddTag.Enabled = TagBox.Text.Length > 0 && !TagList.Items.Contains(TagBox.Text);
+        }
+
+        private void TagList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RemoveTag.Enabled = TagList.SelectedIndex != -1;
+        }
+
+        private void AddBookmark_Click(object sender, EventArgs e)
+        {
+            foreach (SongEntry entry in SelectedSongs) entry.AddBookmark((int)BookmarkMeasureBox.Value, BookmarkDescriptionBox.Text);
+            BookmarkDescriptionBox.Clear();
+
+            RebindAfterChange();
+        }
+
+        private void RemoveBookmark_Click(object sender, EventArgs e)
+        {
+            if (BookmarkList.SelectedItem == null) return;
+            BookmarkListItem b = BookmarkList.SelectedItem as BookmarkListItem;
+
+            foreach (SongEntry entry in SelectedSongs) entry.RemoveBookmark(b.Measure);
+            RebindAfterChange();
+
+            BookmarkMeasureBox.Value = b.Measure;
+            BookmarkDescriptionBox.Text = b.Description;
+        }
+
+        private void BookmarkDescriptionBox_TextChanged(object sender, EventArgs e)
+        {
+            if (BookmarkDescriptionBox.Text.Contains(';')) BookmarkDescriptionBox.Text = BookmarkDescriptionBox.Text.Replace(";", "");
+        }
+
+        private void BookmarkList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RemoveBookmark.Enabled = BookmarkList.SelectedIndex != -1;
         }
 
         private void RatingBox_ValueChanged(object sender, EventArgs e)
@@ -723,7 +780,6 @@ namespace Synthesia
                 if (editor.MadeChanges) Dirty = true;
             }
         }
-
     }
 
     namespace SynthesiaSite

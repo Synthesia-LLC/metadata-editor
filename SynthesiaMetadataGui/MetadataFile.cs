@@ -78,6 +78,7 @@ namespace Synthesia
             element.SetAttributeValue("FingerHints", entry.FingerHints);
             element.SetAttributeValue("HandParts", entry.HandParts);
             element.SetAttributeValue("Tags", string.Join(";", entry.Tags.ToArray()));
+            element.SetAttributeValue("Bookmarks", string.Join(";", from b in entry.Bookmarks select (string.IsNullOrWhiteSpace(b.Value) ? b.Key.ToString() : string.Join(",", b.Key.ToString(), b.Value))));
         }
 
         public void AddSong(SongEntry entry)
@@ -123,6 +124,25 @@ namespace Synthesia
                         entry.ClearAllTags();
                         foreach (var t in tags.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
                             entry.AddTag(t);
+                    }
+
+                    string bookmarks = s.AttributeOrDefault("Bookmarks");
+                    if (bookmarks != null)
+                    {
+                        entry.ClearAllBookmarks();
+                        foreach (var b in bookmarks.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+                        {
+                            int comma = b.IndexOf(',');
+                            
+                            int measure = 0;
+                            int.TryParse(comma == -1 ? b : b.Substring(0, comma), out measure);
+                            if (measure == 0) continue;
+
+                            string description = "";
+                            if (comma != -1) description = b.Substring(comma + 1);
+
+                            entry.AddBookmark(measure, description);
+                        }
                     }
 
                     yield return entry;

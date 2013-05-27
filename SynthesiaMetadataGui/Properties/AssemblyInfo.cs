@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Synthesia Metadata Editor")]
-[assembly: AssemblyDescription("Simple editor for .synthesia metadata files used by Synthesia.  See http://www.synthesiagame.com for more information.")]
+[assembly: AssemblyDescription("Simple editor for .synthesia metadata files used by Synthesia.  For more information, see:\r\n\r\nhttp://www.synthesiagame.com/contentCreators.aspx")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Synthesia Metadata Editor")]
-[assembly: AssemblyCopyright("© 2011 Nicholas Piegdon")]
+[assembly: AssemblyCopyright("©2013 Synthesia LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0")]
-[assembly: AssemblyFileVersion("1.0")]
+[assembly: AssemblyVersion("29")]
+[assembly: AssemblyFileVersion("29")]

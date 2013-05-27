@@ -77,6 +77,12 @@
             this.OpenSongDialog = new System.Windows.Forms.OpenFileDialog();
             this.SongListLabel = new System.Windows.Forms.Label();
             this.PropertiesGroup = new System.Windows.Forms.GroupBox();
+            this.BookmarkMeasureBox = new System.Windows.Forms.NumericUpDown();
+            this.BookmarksLabel = new System.Windows.Forms.Label();
+            this.RemoveBookmark = new System.Windows.Forms.Button();
+            this.AddBookmark = new System.Windows.Forms.Button();
+            this.BookmarkDescriptionBox = new System.Windows.Forms.TextBox();
+            this.BookmarkList = new System.Windows.Forms.ListBox();
             this.HandsBox = new System.Windows.Forms.TextBox();
             this.PartsLabel = new System.Windows.Forms.Label();
             this.FingerHintBox = new System.Windows.Forms.TextBox();
@@ -86,12 +92,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.RatingBox)).BeginInit();
             this.MainMenu.SuspendLayout();
             this.PropertiesGroup.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BookmarkMeasureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // SongList
             // 
-            this.SongList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.SongList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.SongList.FormattingEnabled = true;
             this.SongList.Location = new System.Drawing.Point(12, 46);
             this.SongList.Name = "SongList";
@@ -126,8 +133,8 @@
             // 
             // UniqueIdBox
             // 
-            this.UniqueIdBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.UniqueIdBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.UniqueIdBox.Location = new System.Drawing.Point(70, 24);
             this.UniqueIdBox.Name = "UniqueIdBox";
             this.UniqueIdBox.ReadOnly = true;
@@ -136,8 +143,8 @@
             // 
             // TitleBox
             // 
-            this.TitleBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.TitleBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TitleBox.Location = new System.Drawing.Point(70, 50);
             this.TitleBox.Name = "TitleBox";
             this.TitleBox.Size = new System.Drawing.Size(316, 20);
@@ -146,8 +153,8 @@
             // 
             // SubtitleBox
             // 
-            this.SubtitleBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.SubtitleBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.SubtitleBox.Location = new System.Drawing.Point(70, 76);
             this.SubtitleBox.Name = "SubtitleBox";
             this.SubtitleBox.Size = new System.Drawing.Size(316, 20);
@@ -156,8 +163,8 @@
             // 
             // ComposerBox
             // 
-            this.ComposerBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ComposerBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ComposerBox.Location = new System.Drawing.Point(70, 118);
             this.ComposerBox.Name = "ComposerBox";
             this.ComposerBox.Size = new System.Drawing.Size(316, 20);
@@ -166,8 +173,8 @@
             // 
             // LicenseBox
             // 
-            this.LicenseBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.LicenseBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.LicenseBox.Location = new System.Drawing.Point(70, 196);
             this.LicenseBox.Name = "LicenseBox";
             this.LicenseBox.Size = new System.Drawing.Size(316, 20);
@@ -176,8 +183,8 @@
             // 
             // CopyrightBox
             // 
-            this.CopyrightBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.CopyrightBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.CopyrightBox.Location = new System.Drawing.Point(70, 170);
             this.CopyrightBox.Name = "CopyrightBox";
             this.CopyrightBox.Size = new System.Drawing.Size(316, 20);
@@ -186,8 +193,8 @@
             // 
             // ArrangerBox
             // 
-            this.ArrangerBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ArrangerBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ArrangerBox.Location = new System.Drawing.Point(70, 144);
             this.ArrangerBox.Name = "ArrangerBox";
             this.ArrangerBox.Size = new System.Drawing.Size(316, 20);
@@ -287,7 +294,7 @@
             // TagsLabel
             // 
             this.TagsLabel.AutoSize = true;
-            this.TagsLabel.Location = new System.Drawing.Point(6, 413);
+            this.TagsLabel.Location = new System.Drawing.Point(6, 394);
             this.TagsLabel.Name = "TagsLabel";
             this.TagsLabel.Size = new System.Drawing.Size(34, 13);
             this.TagsLabel.TabIndex = 24;
@@ -304,23 +311,23 @@
             // 
             // TagList
             // 
-            this.TagList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.TagList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TagList.FormattingEnabled = true;
-            this.TagList.Location = new System.Drawing.Point(70, 436);
+            this.TagList.Location = new System.Drawing.Point(9, 436);
             this.TagList.Name = "TagList";
-            this.TagList.Size = new System.Drawing.Size(238, 69);
-            this.TagList.TabIndex = 26;
+            this.TagList.Size = new System.Drawing.Size(104, 69);
+            this.TagList.TabIndex = 27;
             this.TagList.SelectedIndexChanged += new System.EventHandler(this.TagList_SelectedIndexChanged);
             // 
             // TagBox
             // 
-            this.TagBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.TagBox.Location = new System.Drawing.Point(70, 410);
+            this.TagBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TagBox.Location = new System.Drawing.Point(9, 410);
             this.TagBox.Name = "TagBox";
-            this.TagBox.Size = new System.Drawing.Size(238, 20);
+            this.TagBox.Size = new System.Drawing.Size(104, 20);
             this.TagBox.TabIndex = 25;
             this.TagBox.TextChanged += new System.EventHandler(this.TagBox_TextChanged);
             // 
@@ -328,11 +335,11 @@
             // 
             this.RemoveTag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.RemoveTag.Enabled = false;
-            this.RemoveTag.Location = new System.Drawing.Point(314, 437);
+            this.RemoveTag.Location = new System.Drawing.Point(119, 436);
             this.RemoveTag.Name = "RemoveTag";
-            this.RemoveTag.Size = new System.Drawing.Size(72, 23);
+            this.RemoveTag.Size = new System.Drawing.Size(23, 23);
             this.RemoveTag.TabIndex = 28;
-            this.RemoveTag.Text = "Remove";
+            this.RemoveTag.Text = "-";
             this.RemoveTag.UseVisualStyleBackColor = true;
             this.RemoveTag.Click += new System.EventHandler(this.RemoveTag_Click);
             // 
@@ -340,11 +347,11 @@
             // 
             this.AddTag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.AddTag.Enabled = false;
-            this.AddTag.Location = new System.Drawing.Point(314, 408);
+            this.AddTag.Location = new System.Drawing.Point(119, 408);
             this.AddTag.Name = "AddTag";
-            this.AddTag.Size = new System.Drawing.Size(72, 23);
-            this.AddTag.TabIndex = 27;
-            this.AddTag.Text = "Add";
+            this.AddTag.Size = new System.Drawing.Size(23, 23);
+            this.AddTag.TabIndex = 26;
+            this.AddTag.Text = "+";
             this.AddTag.UseVisualStyleBackColor = true;
             this.AddTag.Click += new System.EventHandler(this.AddTag_Click);
             // 
@@ -497,9 +504,15 @@
             // 
             // PropertiesGroup
             // 
-            this.PropertiesGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.PropertiesGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PropertiesGroup.Controls.Add(this.BookmarkMeasureBox);
+            this.PropertiesGroup.Controls.Add(this.BookmarksLabel);
+            this.PropertiesGroup.Controls.Add(this.RemoveBookmark);
+            this.PropertiesGroup.Controls.Add(this.AddBookmark);
+            this.PropertiesGroup.Controls.Add(this.BookmarkDescriptionBox);
+            this.PropertiesGroup.Controls.Add(this.BookmarkList);
             this.PropertiesGroup.Controls.Add(this.HandsBox);
             this.PropertiesGroup.Controls.Add(this.PartsLabel);
             this.PropertiesGroup.Controls.Add(this.FingerHintBox);
@@ -536,10 +549,86 @@
             this.PropertiesGroup.TabStop = false;
             this.PropertiesGroup.Text = "Properties";
             // 
+            // BookmarkMeasureBox
+            // 
+            this.BookmarkMeasureBox.Location = new System.Drawing.Point(172, 411);
+            this.BookmarkMeasureBox.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.BookmarkMeasureBox.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.BookmarkMeasureBox.Name = "BookmarkMeasureBox";
+            this.BookmarkMeasureBox.Size = new System.Drawing.Size(54, 20);
+            this.BookmarkMeasureBox.TabIndex = 30;
+            this.BookmarkMeasureBox.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // BookmarksLabel
+            // 
+            this.BookmarksLabel.AutoSize = true;
+            this.BookmarksLabel.Location = new System.Drawing.Point(169, 394);
+            this.BookmarksLabel.Name = "BookmarksLabel";
+            this.BookmarksLabel.Size = new System.Drawing.Size(214, 13);
+            this.BookmarksLabel.TabIndex = 29;
+            this.BookmarksLabel.Text = "&Bookmarks (measure / optional description):";
+            // 
+            // RemoveBookmark
+            // 
+            this.RemoveBookmark.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.RemoveBookmark.Enabled = false;
+            this.RemoveBookmark.Location = new System.Drawing.Point(363, 436);
+            this.RemoveBookmark.Name = "RemoveBookmark";
+            this.RemoveBookmark.Size = new System.Drawing.Size(23, 23);
+            this.RemoveBookmark.TabIndex = 34;
+            this.RemoveBookmark.Text = "-";
+            this.RemoveBookmark.UseVisualStyleBackColor = true;
+            this.RemoveBookmark.Click += new System.EventHandler(this.RemoveBookmark_Click);
+            // 
+            // AddBookmark
+            // 
+            this.AddBookmark.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.AddBookmark.Location = new System.Drawing.Point(363, 408);
+            this.AddBookmark.Name = "AddBookmark";
+            this.AddBookmark.Size = new System.Drawing.Size(23, 23);
+            this.AddBookmark.TabIndex = 32;
+            this.AddBookmark.Text = "+";
+            this.AddBookmark.UseVisualStyleBackColor = true;
+            this.AddBookmark.Click += new System.EventHandler(this.AddBookmark_Click);
+            // 
+            // BookmarkDescriptionBox
+            // 
+            this.BookmarkDescriptionBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.BookmarkDescriptionBox.Location = new System.Drawing.Point(232, 410);
+            this.BookmarkDescriptionBox.Name = "BookmarkDescriptionBox";
+            this.BookmarkDescriptionBox.Size = new System.Drawing.Size(125, 20);
+            this.BookmarkDescriptionBox.TabIndex = 31;
+            this.BookmarkDescriptionBox.TextChanged += new System.EventHandler(this.BookmarkDescriptionBox_TextChanged);
+            // 
+            // BookmarkList
+            // 
+            this.BookmarkList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.BookmarkList.FormattingEnabled = true;
+            this.BookmarkList.Location = new System.Drawing.Point(172, 436);
+            this.BookmarkList.Name = "BookmarkList";
+            this.BookmarkList.Size = new System.Drawing.Size(185, 69);
+            this.BookmarkList.TabIndex = 33;
+            this.BookmarkList.SelectedIndexChanged += new System.EventHandler(this.BookmarkList_SelectedIndexChanged);
+            // 
             // HandsBox
             // 
-            this.HandsBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.HandsBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.HandsBox.Location = new System.Drawing.Point(70, 354);
             this.HandsBox.Name = "HandsBox";
             this.HandsBox.Size = new System.Drawing.Size(316, 20);
@@ -557,8 +646,8 @@
             // 
             // FingerHintBox
             // 
-            this.FingerHintBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.FingerHintBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.FingerHintBox.Location = new System.Drawing.Point(70, 304);
             this.FingerHintBox.Multiline = true;
             this.FingerHintBox.Name = "FingerHintBox";
@@ -615,6 +704,7 @@
             this.MainMenu.PerformLayout();
             this.PropertiesGroup.ResumeLayout(false);
             this.PropertiesGroup.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BookmarkMeasureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -674,6 +764,12 @@
         private System.Windows.Forms.Label PartsLabel;
         private System.Windows.Forms.ToolStripMenuItem UploadMenu;
         private System.Windows.Forms.Button SongGrouping;
+        private System.Windows.Forms.Label BookmarksLabel;
+        private System.Windows.Forms.Button RemoveBookmark;
+        private System.Windows.Forms.Button AddBookmark;
+        private System.Windows.Forms.TextBox BookmarkDescriptionBox;
+        private System.Windows.Forms.ListBox BookmarkList;
+        private System.Windows.Forms.NumericUpDown BookmarkMeasureBox;
     }
 }
 
