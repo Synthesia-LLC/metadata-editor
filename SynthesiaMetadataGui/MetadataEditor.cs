@@ -286,6 +286,8 @@ namespace Synthesia
             SortedDictionary<string, int> tagFrequency = new SortedDictionary<string, int>();
             Dictionary<KeyValuePair<int, string>, int> bookmarkFrequency = new Dictionary<KeyValuePair<int,string>,int>();
 
+            Md5Update.Enabled = selectedCount == 1;
+
             foreach (SongEntry e in SelectedSongs)
             {
                 foreach (string tag in e.Tags) tagFrequency[tag] = tagFrequency.ContainsKey(tag) ? tagFrequency[tag] + 1 : 1;
@@ -779,6 +781,37 @@ namespace Synthesia
                 editor.ShowDialog(this);
                 if (editor.MadeChanges) Dirty = true;
             }
+        }
+
+        private void Md5Update_Click(object sender, EventArgs e)
+        {
+            var selectedList = SelectedSongs.ToList();
+            if (selectedList.Count != 1) return;
+
+            if (RetargetSongDialog.ShowDialog() != DialogResult.OK) return;
+
+            FileInfo songFile = new FileInfo(RetargetSongDialog.FileName);
+            if (!songFile.Exists) return;
+
+            string md5 = songFile.Md5sum();
+            if ((from s in Metadata.Songs where s.UniqueId == md5 select s).Any())
+            {
+                MessageBox.Show("This metadata file already contains a song with the new unique ID.  We cannot update this unique ID.", "Duplicate Unique ID", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            var song = selectedList.First() as SongEntry;
+
+            if (!Metadata.UpdateSongUniqueId(song.UniqueId, md5))
+            {
+                MessageBox.Show("There was a problem retargeting this entry with a new unique ID.", "Couldn't Update Unique ID", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            song.UniqueId = md5;
+
+            RebindAfterChange();
+            Dirty = true;
         }
     }
 

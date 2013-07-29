@@ -77,6 +77,7 @@
          this.OpenSongDialog = new System.Windows.Forms.OpenFileDialog();
          this.SongListLabel = new System.Windows.Forms.Label();
          this.PropertiesGroup = new System.Windows.Forms.GroupBox();
+         this.Md5Update = new System.Windows.Forms.Button();
          this.BookmarkMeasureBox = new System.Windows.Forms.NumericUpDown();
          this.BookmarksLabel = new System.Windows.Forms.Label();
          this.RemoveBookmark = new System.Windows.Forms.Button();
@@ -88,6 +89,7 @@
          this.FingerHintBox = new System.Windows.Forms.TextBox();
          this.FingerHintLabel = new System.Windows.Forms.Label();
          this.SongGrouping = new System.Windows.Forms.Button();
+         this.RetargetSongDialog = new System.Windows.Forms.OpenFileDialog();
          ((System.ComponentModel.ISupportInitialize)(this.DifficultyBox)).BeginInit();
          ((System.ComponentModel.ISupportInitialize)(this.RatingBox)).BeginInit();
          this.MainMenu.SuspendLayout();
@@ -138,7 +140,7 @@
          this.UniqueIdBox.Location = new System.Drawing.Point(70, 24);
          this.UniqueIdBox.Name = "UniqueIdBox";
          this.UniqueIdBox.ReadOnly = true;
-         this.UniqueIdBox.Size = new System.Drawing.Size(316, 20);
+         this.UniqueIdBox.Size = new System.Drawing.Size(248, 20);
          this.UniqueIdBox.TabIndex = 1;
          // 
          // TitleBox
@@ -148,7 +150,7 @@
          this.TitleBox.Location = new System.Drawing.Point(70, 50);
          this.TitleBox.Name = "TitleBox";
          this.TitleBox.Size = new System.Drawing.Size(316, 20);
-         this.TitleBox.TabIndex = 3;
+         this.TitleBox.TabIndex = 4;
          this.TitleBox.TextChanged += new System.EventHandler(this.TitleBox_TextChanged);
          // 
          // SubtitleBox
@@ -158,7 +160,7 @@
          this.SubtitleBox.Location = new System.Drawing.Point(70, 76);
          this.SubtitleBox.Name = "SubtitleBox";
          this.SubtitleBox.Size = new System.Drawing.Size(316, 20);
-         this.SubtitleBox.TabIndex = 5;
+         this.SubtitleBox.TabIndex = 6;
          this.SubtitleBox.TextChanged += new System.EventHandler(this.SubtitleBox_TextChanged);
          // 
          // ComposerBox
@@ -168,7 +170,7 @@
          this.ComposerBox.Location = new System.Drawing.Point(70, 118);
          this.ComposerBox.Name = "ComposerBox";
          this.ComposerBox.Size = new System.Drawing.Size(316, 20);
-         this.ComposerBox.TabIndex = 7;
+         this.ComposerBox.TabIndex = 8;
          this.ComposerBox.TextChanged += new System.EventHandler(this.ComposerBox_TextChanged);
          // 
          // LicenseBox
@@ -178,7 +180,7 @@
          this.LicenseBox.Location = new System.Drawing.Point(70, 196);
          this.LicenseBox.Name = "LicenseBox";
          this.LicenseBox.Size = new System.Drawing.Size(316, 20);
-         this.LicenseBox.TabIndex = 13;
+         this.LicenseBox.TabIndex = 14;
          this.LicenseBox.TextChanged += new System.EventHandler(this.LicenseBox_TextChanged);
          // 
          // CopyrightBox
@@ -188,7 +190,7 @@
          this.CopyrightBox.Location = new System.Drawing.Point(70, 170);
          this.CopyrightBox.Name = "CopyrightBox";
          this.CopyrightBox.Size = new System.Drawing.Size(316, 20);
-         this.CopyrightBox.TabIndex = 11;
+         this.CopyrightBox.TabIndex = 12;
          this.CopyrightBox.TextChanged += new System.EventHandler(this.CopyrightBox_TextChanged);
          // 
          // ArrangerBox
@@ -198,7 +200,7 @@
          this.ArrangerBox.Location = new System.Drawing.Point(70, 144);
          this.ArrangerBox.Name = "ArrangerBox";
          this.ArrangerBox.Size = new System.Drawing.Size(316, 20);
-         this.ArrangerBox.TabIndex = 9;
+         this.ArrangerBox.TabIndex = 10;
          this.ArrangerBox.TextChanged += new System.EventHandler(this.ArrangerBox_TextChanged);
          // 
          // DifficultyBox
@@ -206,7 +208,7 @@
          this.DifficultyBox.Location = new System.Drawing.Point(70, 238);
          this.DifficultyBox.Name = "DifficultyBox";
          this.DifficultyBox.Size = new System.Drawing.Size(64, 20);
-         this.DifficultyBox.TabIndex = 15;
+         this.DifficultyBox.TabIndex = 16;
          this.DifficultyBox.ValueChanged += new System.EventHandler(this.DifficultyBox_ValueChanged);
          // 
          // RatingBox
@@ -214,7 +216,7 @@
          this.RatingBox.Location = new System.Drawing.Point(70, 264);
          this.RatingBox.Name = "RatingBox";
          this.RatingBox.Size = new System.Drawing.Size(64, 20);
-         this.RatingBox.TabIndex = 18;
+         this.RatingBox.TabIndex = 19;
          this.RatingBox.ValueChanged += new System.EventHandler(this.RatingBox_ValueChanged);
          // 
          // UniqueIdLabel
@@ -233,7 +235,7 @@
          this.TitleLabel.Location = new System.Drawing.Point(6, 53);
          this.TitleLabel.Name = "TitleLabel";
          this.TitleLabel.Size = new System.Drawing.Size(30, 13);
-         this.TitleLabel.TabIndex = 2;
+         this.TitleLabel.TabIndex = 3;
          this.TitleLabel.Text = "&Title:";
          // 
          // ComposerLabel
@@ -242,7 +244,7 @@
          this.ComposerLabel.Location = new System.Drawing.Point(6, 121);
          this.ComposerLabel.Name = "ComposerLabel";
          this.ComposerLabel.Size = new System.Drawing.Size(57, 13);
-         this.ComposerLabel.TabIndex = 6;
+         this.ComposerLabel.TabIndex = 7;
          this.ComposerLabel.Text = "&Composer:";
          // 
          // SubtitleLabel
@@ -251,7 +253,7 @@
          this.SubtitleLabel.Location = new System.Drawing.Point(6, 79);
          this.SubtitleLabel.Name = "SubtitleLabel";
          this.SubtitleLabel.Size = new System.Drawing.Size(45, 13);
-         this.SubtitleLabel.TabIndex = 4;
+         this.SubtitleLabel.TabIndex = 5;
          this.SubtitleLabel.Text = "&Subtitle:";
          // 
          // DifficultyLabel
@@ -260,7 +262,7 @@
          this.DifficultyLabel.Location = new System.Drawing.Point(6, 240);
          this.DifficultyLabel.Name = "DifficultyLabel";
          this.DifficultyLabel.Size = new System.Drawing.Size(50, 13);
-         this.DifficultyLabel.TabIndex = 14;
+         this.DifficultyLabel.TabIndex = 15;
          this.DifficultyLabel.Text = "&Difficulty:";
          this.Tip.SetToolTip(this.DifficultyLabel, "Percentage ");
          // 
@@ -270,7 +272,7 @@
          this.LicenseLabel.Location = new System.Drawing.Point(6, 199);
          this.LicenseLabel.Name = "LicenseLabel";
          this.LicenseLabel.Size = new System.Drawing.Size(47, 13);
-         this.LicenseLabel.TabIndex = 12;
+         this.LicenseLabel.TabIndex = 13;
          this.LicenseLabel.Text = "&License:";
          // 
          // CopyrightLabel
@@ -279,7 +281,7 @@
          this.CopyrightLabel.Location = new System.Drawing.Point(6, 173);
          this.CopyrightLabel.Name = "CopyrightLabel";
          this.CopyrightLabel.Size = new System.Drawing.Size(54, 13);
-         this.CopyrightLabel.TabIndex = 10;
+         this.CopyrightLabel.TabIndex = 11;
          this.CopyrightLabel.Text = "Co&pyright:";
          // 
          // ArrangerLabel
@@ -288,7 +290,7 @@
          this.ArrangerLabel.Location = new System.Drawing.Point(6, 147);
          this.ArrangerLabel.Name = "ArrangerLabel";
          this.ArrangerLabel.Size = new System.Drawing.Size(50, 13);
-         this.ArrangerLabel.TabIndex = 8;
+         this.ArrangerLabel.TabIndex = 9;
          this.ArrangerLabel.Text = "&Arranger:";
          // 
          // TagsLabel
@@ -297,7 +299,7 @@
          this.TagsLabel.Location = new System.Drawing.Point(6, 394);
          this.TagsLabel.Name = "TagsLabel";
          this.TagsLabel.Size = new System.Drawing.Size(34, 13);
-         this.TagsLabel.TabIndex = 24;
+         this.TagsLabel.TabIndex = 25;
          this.TagsLabel.Text = "Ta&gs:";
          // 
          // RatingLabel
@@ -306,51 +308,46 @@
          this.RatingLabel.Location = new System.Drawing.Point(6, 266);
          this.RatingLabel.Name = "RatingLabel";
          this.RatingLabel.Size = new System.Drawing.Size(41, 13);
-         this.RatingLabel.TabIndex = 17;
+         this.RatingLabel.TabIndex = 18;
          this.RatingLabel.Text = "&Rating:";
          // 
          // TagList
          // 
-         this.TagList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+         this.TagList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
          this.TagList.FormattingEnabled = true;
          this.TagList.Location = new System.Drawing.Point(9, 436);
          this.TagList.Name = "TagList";
          this.TagList.Size = new System.Drawing.Size(104, 69);
-         this.TagList.TabIndex = 27;
+         this.TagList.TabIndex = 28;
          this.TagList.SelectedIndexChanged += new System.EventHandler(this.TagList_SelectedIndexChanged);
          // 
          // TagBox
          // 
-         this.TagBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
          this.TagBox.Location = new System.Drawing.Point(9, 410);
          this.TagBox.Name = "TagBox";
          this.TagBox.Size = new System.Drawing.Size(104, 20);
-         this.TagBox.TabIndex = 25;
+         this.TagBox.TabIndex = 26;
          this.TagBox.TextChanged += new System.EventHandler(this.TagBox_TextChanged);
          // 
          // RemoveTag
          // 
-         this.RemoveTag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
          this.RemoveTag.Enabled = false;
          this.RemoveTag.Location = new System.Drawing.Point(119, 436);
          this.RemoveTag.Name = "RemoveTag";
          this.RemoveTag.Size = new System.Drawing.Size(23, 23);
-         this.RemoveTag.TabIndex = 28;
+         this.RemoveTag.TabIndex = 29;
          this.RemoveTag.Text = "-";
          this.RemoveTag.UseVisualStyleBackColor = true;
          this.RemoveTag.Click += new System.EventHandler(this.RemoveTag_Click);
          // 
          // AddTag
          // 
-         this.AddTag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
          this.AddTag.Enabled = false;
          this.AddTag.Location = new System.Drawing.Point(119, 408);
          this.AddTag.Name = "AddTag";
          this.AddTag.Size = new System.Drawing.Size(23, 23);
-         this.AddTag.TabIndex = 26;
+         this.AddTag.TabIndex = 27;
          this.AddTag.Text = "+";
          this.AddTag.UseVisualStyleBackColor = true;
          this.AddTag.Click += new System.EventHandler(this.AddTag_Click);
@@ -466,7 +463,7 @@
          this.DifficultyRangeLabel.Location = new System.Drawing.Point(140, 240);
          this.DifficultyRangeLabel.Name = "DifficultyRangeLabel";
          this.DifficultyRangeLabel.Size = new System.Drawing.Size(103, 13);
-         this.DifficultyRangeLabel.TabIndex = 16;
+         this.DifficultyRangeLabel.TabIndex = 17;
          this.DifficultyRangeLabel.Text = "(1-100 or 0 for none)";
          // 
          // RatingRangeLabel
@@ -475,7 +472,7 @@
          this.RatingRangeLabel.Location = new System.Drawing.Point(140, 266);
          this.RatingRangeLabel.Name = "RatingRangeLabel";
          this.RatingRangeLabel.Size = new System.Drawing.Size(103, 13);
-         this.RatingRangeLabel.TabIndex = 19;
+         this.RatingRangeLabel.TabIndex = 20;
          this.RatingRangeLabel.Text = "(1-100 or 0 for none)";
          // 
          // SaveMetadataDialog
@@ -507,6 +504,7 @@
          this.PropertiesGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+         this.PropertiesGroup.Controls.Add(this.Md5Update);
          this.PropertiesGroup.Controls.Add(this.BookmarkMeasureBox);
          this.PropertiesGroup.Controls.Add(this.BookmarksLabel);
          this.PropertiesGroup.Controls.Add(this.RemoveBookmark);
@@ -549,6 +547,17 @@
          this.PropertiesGroup.TabStop = false;
          this.PropertiesGroup.Text = "Properties";
          // 
+         // Md5Update
+         // 
+         this.Md5Update.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+         this.Md5Update.Location = new System.Drawing.Point(324, 22);
+         this.Md5Update.Name = "Md5Update";
+         this.Md5Update.Size = new System.Drawing.Size(62, 23);
+         this.Md5Update.TabIndex = 2;
+         this.Md5Update.Text = "Retarget";
+         this.Md5Update.UseVisualStyleBackColor = true;
+         this.Md5Update.Click += new System.EventHandler(this.Md5Update_Click);
+         // 
          // BookmarkMeasureBox
          // 
          this.BookmarkMeasureBox.Location = new System.Drawing.Point(172, 411);
@@ -564,7 +573,7 @@
             0});
          this.BookmarkMeasureBox.Name = "BookmarkMeasureBox";
          this.BookmarkMeasureBox.Size = new System.Drawing.Size(54, 20);
-         this.BookmarkMeasureBox.TabIndex = 30;
+         this.BookmarkMeasureBox.TabIndex = 31;
          this.BookmarkMeasureBox.Value = new decimal(new int[] {
             1,
             0,
@@ -577,7 +586,7 @@
          this.BookmarksLabel.Location = new System.Drawing.Point(169, 394);
          this.BookmarksLabel.Name = "BookmarksLabel";
          this.BookmarksLabel.Size = new System.Drawing.Size(214, 13);
-         this.BookmarksLabel.TabIndex = 29;
+         this.BookmarksLabel.TabIndex = 30;
          this.BookmarksLabel.Text = "&Bookmarks (measure / optional description):";
          // 
          // RemoveBookmark
@@ -587,7 +596,7 @@
          this.RemoveBookmark.Location = new System.Drawing.Point(363, 436);
          this.RemoveBookmark.Name = "RemoveBookmark";
          this.RemoveBookmark.Size = new System.Drawing.Size(23, 23);
-         this.RemoveBookmark.TabIndex = 34;
+         this.RemoveBookmark.TabIndex = 35;
          this.RemoveBookmark.Text = "-";
          this.RemoveBookmark.UseVisualStyleBackColor = true;
          this.RemoveBookmark.Click += new System.EventHandler(this.RemoveBookmark_Click);
@@ -598,7 +607,7 @@
          this.AddBookmark.Location = new System.Drawing.Point(363, 408);
          this.AddBookmark.Name = "AddBookmark";
          this.AddBookmark.Size = new System.Drawing.Size(23, 23);
-         this.AddBookmark.TabIndex = 32;
+         this.AddBookmark.TabIndex = 33;
          this.AddBookmark.Text = "+";
          this.AddBookmark.UseVisualStyleBackColor = true;
          this.AddBookmark.Click += new System.EventHandler(this.AddBookmark_Click);
@@ -610,7 +619,7 @@
          this.BookmarkDescriptionBox.Location = new System.Drawing.Point(232, 410);
          this.BookmarkDescriptionBox.Name = "BookmarkDescriptionBox";
          this.BookmarkDescriptionBox.Size = new System.Drawing.Size(125, 20);
-         this.BookmarkDescriptionBox.TabIndex = 31;
+         this.BookmarkDescriptionBox.TabIndex = 32;
          this.BookmarkDescriptionBox.TextChanged += new System.EventHandler(this.BookmarkDescriptionBox_TextChanged);
          // 
          // BookmarkList
@@ -622,7 +631,7 @@
          this.BookmarkList.Location = new System.Drawing.Point(172, 436);
          this.BookmarkList.Name = "BookmarkList";
          this.BookmarkList.Size = new System.Drawing.Size(185, 69);
-         this.BookmarkList.TabIndex = 33;
+         this.BookmarkList.TabIndex = 34;
          this.BookmarkList.SelectedIndexChanged += new System.EventHandler(this.BookmarkList_SelectedIndexChanged);
          // 
          // HandsBox
@@ -632,7 +641,7 @@
          this.HandsBox.Location = new System.Drawing.Point(70, 354);
          this.HandsBox.Name = "HandsBox";
          this.HandsBox.Size = new System.Drawing.Size(316, 20);
-         this.HandsBox.TabIndex = 23;
+         this.HandsBox.TabIndex = 24;
          this.HandsBox.TextChanged += new System.EventHandler(this.HandsBox_TextChanged);
          // 
          // PartsLabel
@@ -641,7 +650,7 @@
          this.PartsLabel.Location = new System.Drawing.Point(6, 357);
          this.PartsLabel.Name = "PartsLabel";
          this.PartsLabel.Size = new System.Drawing.Size(41, 13);
-         this.PartsLabel.TabIndex = 22;
+         this.PartsLabel.TabIndex = 23;
          this.PartsLabel.Text = "&Hands:";
          // 
          // FingerHintBox
@@ -653,7 +662,7 @@
          this.FingerHintBox.Name = "FingerHintBox";
          this.FingerHintBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
          this.FingerHintBox.Size = new System.Drawing.Size(316, 44);
-         this.FingerHintBox.TabIndex = 21;
+         this.FingerHintBox.TabIndex = 22;
          this.FingerHintBox.TextChanged += new System.EventHandler(this.FingerHintBox_TextChanged);
          // 
          // FingerHintLabel
@@ -662,7 +671,7 @@
          this.FingerHintLabel.Location = new System.Drawing.Point(6, 307);
          this.FingerHintLabel.Name = "FingerHintLabel";
          this.FingerHintLabel.Size = new System.Drawing.Size(44, 13);
-         this.FingerHintLabel.TabIndex = 20;
+         this.FingerHintLabel.TabIndex = 21;
          this.FingerHintLabel.Text = "&Fingers:";
          // 
          // SongGrouping
@@ -675,6 +684,10 @@
          this.SongGrouping.Text = "Grouping...";
          this.SongGrouping.UseVisualStyleBackColor = true;
          this.SongGrouping.Click += new System.EventHandler(this.SongGrouping_Click);
+         // 
+         // RetargetSongDialog
+         // 
+         this.RetargetSongDialog.Filter = "Supported Songs|*.mid;*.midi;*.kar|All Files (*.*)|*.*";
          // 
          // MetadataEditor
          // 
@@ -771,6 +784,8 @@
         private System.Windows.Forms.TextBox BookmarkDescriptionBox;
         private System.Windows.Forms.ListBox BookmarkList;
         private System.Windows.Forms.NumericUpDown BookmarkMeasureBox;
+        private System.Windows.Forms.Button Md5Update;
+        private System.Windows.Forms.OpenFileDialog RetargetSongDialog;
     }
 }
 

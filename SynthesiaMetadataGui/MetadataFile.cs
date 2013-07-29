@@ -58,6 +58,31 @@ namespace Synthesia
             RemoveSongFromAnyGroup(uniqueId);
         }
 
+        /// <summary>
+        /// Returns whether the update took place
+        /// </summary>
+        public bool UpdateSongUniqueId(string oldId, string newId)
+        {
+            if (string.IsNullOrWhiteSpace(newId)) return false;
+
+            XElement songs = m_document.Root.Element("Songs");
+            if (songs == null) return false;
+
+            XElement element = (from e in songs.Elements("Song") where e.AttributeOrDefault("UniqueId") == oldId select e).FirstOrDefault();
+            if (element == null) return false;
+
+            element.SetAttributeValue("UniqueId", newId);
+
+
+            XElement groups = RootGroupElement(false);
+            if (groups == null) return true;
+
+            var matchingSongs = groups.XPathSelectElements(string.Format("Group//Song[@UniqueId = \"{0}\"]", oldId));
+            foreach (var s in matchingSongs) s.SetAttributeValue("UniqueId", newId);
+
+            return true;
+        }
+
         public void AddSong(XElement songs, SongEntry entry)
         {
             XElement element = (from e in songs.Elements("Song") where e.AttributeOrDefault("UniqueId") == entry.UniqueId select e).FirstOrDefault();
