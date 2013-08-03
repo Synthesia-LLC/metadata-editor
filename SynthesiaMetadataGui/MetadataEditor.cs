@@ -438,6 +438,13 @@ namespace Synthesia
             RebindAfterChange();
         }
 
+        private void MadeFamousByBox_TextChanged(object sender, EventArgs e)
+        {
+           if (IgnoreUpdates) return;
+           foreach (SongEntry entry in SelectedSongs) entry.MadeFamousBy = MadeFamousByBox.Text;
+           RebindAfterChange();
+        }
+
         private void CopyrightBox_TextChanged(object sender, EventArgs e)
         {
             if (IgnoreUpdates) return;

@@ -96,6 +96,7 @@ namespace Synthesia
             element.SetAttributeValue("Arranger", entry.Arranger);
             element.SetAttributeValue("Copyright", entry.Copyright);
             element.SetAttributeValue("License", entry.License);
+            element.SetAttributeValue("MadeFamousBy", entry.MadeFamousBy);
 
             element.SetAttributeValue("Rating", entry.Rating);
             element.SetAttributeValue("Difficulty", entry.Difficulty);
@@ -133,6 +134,7 @@ namespace Synthesia
                     entry.Arranger = s.AttributeOrDefault("Arranger");
                     entry.Copyright = s.AttributeOrDefault("Copyright");
                     entry.License = s.AttributeOrDefault("License");
+                    entry.MadeFamousBy = s.AttributeOrDefault("MadeFamousBy");
 
                     entry.FingerHints = s.AttributeOrDefault("FingerHints");
                     entry.HandParts = s.AttributeOrDefault("HandParts");

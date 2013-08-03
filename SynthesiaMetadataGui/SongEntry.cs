@@ -17,6 +17,7 @@ namespace Synthesia
         public string Arranger { get; set; }
         public string Copyright { get; set; }
         public string License { get; set; }
+        public string MadeFamousBy { get; set; }
 
         public string FingerHints { get; set; }
         public string HandParts { get; set; }
