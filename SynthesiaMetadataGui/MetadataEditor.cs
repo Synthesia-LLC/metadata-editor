@@ -208,6 +208,7 @@ namespace Synthesia
             ArrangerBox.Clear();
             CopyrightBox.Clear();
             LicenseBox.Clear();
+            MadeFamousByBox.Clear();
 
             DifficultyBox.Value = 0;
             RatingBox.Value = 0;
@@ -275,6 +276,7 @@ namespace Synthesia
             BindBox(ArrangerBox, typeof(SongEntry).GetProperty("Arranger"));
             BindBox(CopyrightBox, typeof(SongEntry).GetProperty("Copyright"));
             BindBox(LicenseBox, typeof(SongEntry).GetProperty("License"));
+            BindBox(MadeFamousByBox, typeof(SongEntry).GetProperty("MadeFamousBy"));
 
             BindNumericBox(DifficultyBox, typeof(SongEntry).GetProperty("Difficulty"));
             BindNumericBox(RatingBox, typeof(SongEntry).GetProperty("Rating"));
