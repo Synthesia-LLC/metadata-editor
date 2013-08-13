@@ -210,7 +210,7 @@
          this.DifficultyBox.Location = new System.Drawing.Point(70, 265);
          this.DifficultyBox.Name = "DifficultyBox";
          this.DifficultyBox.Size = new System.Drawing.Size(64, 20);
-         this.DifficultyBox.TabIndex = 16;
+         this.DifficultyBox.TabIndex = 18;
          this.DifficultyBox.ValueChanged += new System.EventHandler(this.DifficultyBox_ValueChanged);
          // 
          // RatingBox
@@ -218,7 +218,7 @@
          this.RatingBox.Location = new System.Drawing.Point(70, 291);
          this.RatingBox.Name = "RatingBox";
          this.RatingBox.Size = new System.Drawing.Size(64, 20);
-         this.RatingBox.TabIndex = 19;
+         this.RatingBox.TabIndex = 21;
          this.RatingBox.ValueChanged += new System.EventHandler(this.RatingBox_ValueChanged);
          // 
          // UniqueIdLabel
@@ -264,7 +264,7 @@
          this.DifficultyLabel.Location = new System.Drawing.Point(6, 267);
          this.DifficultyLabel.Name = "DifficultyLabel";
          this.DifficultyLabel.Size = new System.Drawing.Size(50, 13);
-         this.DifficultyLabel.TabIndex = 15;
+         this.DifficultyLabel.TabIndex = 17;
          this.DifficultyLabel.Text = "&Difficulty:";
          this.Tip.SetToolTip(this.DifficultyLabel, "Percentage ");
          // 
@@ -301,7 +301,7 @@
          this.TagsLabel.Location = new System.Drawing.Point(6, 420);
          this.TagsLabel.Name = "TagsLabel";
          this.TagsLabel.Size = new System.Drawing.Size(34, 13);
-         this.TagsLabel.TabIndex = 25;
+         this.TagsLabel.TabIndex = 27;
          this.TagsLabel.Text = "Ta&gs:";
          // 
          // RatingLabel
@@ -310,7 +310,7 @@
          this.RatingLabel.Location = new System.Drawing.Point(6, 293);
          this.RatingLabel.Name = "RatingLabel";
          this.RatingLabel.Size = new System.Drawing.Size(41, 13);
-         this.RatingLabel.TabIndex = 18;
+         this.RatingLabel.TabIndex = 20;
          this.RatingLabel.Text = "&Rating:";
          // 
          // TagList
@@ -321,7 +321,7 @@
          this.TagList.Location = new System.Drawing.Point(9, 462);
          this.TagList.Name = "TagList";
          this.TagList.Size = new System.Drawing.Size(104, 69);
-         this.TagList.TabIndex = 28;
+         this.TagList.TabIndex = 30;
          this.TagList.SelectedIndexChanged += new System.EventHandler(this.TagList_SelectedIndexChanged);
          // 
          // TagBox
@@ -329,7 +329,7 @@
          this.TagBox.Location = new System.Drawing.Point(9, 436);
          this.TagBox.Name = "TagBox";
          this.TagBox.Size = new System.Drawing.Size(104, 20);
-         this.TagBox.TabIndex = 26;
+         this.TagBox.TabIndex = 28;
          this.TagBox.TextChanged += new System.EventHandler(this.TagBox_TextChanged);
          // 
          // RemoveTag
@@ -338,7 +338,7 @@
          this.RemoveTag.Location = new System.Drawing.Point(119, 462);
          this.RemoveTag.Name = "RemoveTag";
          this.RemoveTag.Size = new System.Drawing.Size(23, 23);
-         this.RemoveTag.TabIndex = 29;
+         this.RemoveTag.TabIndex = 31;
          this.RemoveTag.Text = "-";
          this.RemoveTag.UseVisualStyleBackColor = true;
          this.RemoveTag.Click += new System.EventHandler(this.RemoveTag_Click);
@@ -349,7 +349,7 @@
          this.AddTag.Location = new System.Drawing.Point(119, 434);
          this.AddTag.Name = "AddTag";
          this.AddTag.Size = new System.Drawing.Size(23, 23);
-         this.AddTag.TabIndex = 27;
+         this.AddTag.TabIndex = 29;
          this.AddTag.Text = "+";
          this.AddTag.UseVisualStyleBackColor = true;
          this.AddTag.Click += new System.EventHandler(this.AddTag_Click);
@@ -465,7 +465,7 @@
          this.DifficultyRangeLabel.Location = new System.Drawing.Point(140, 267);
          this.DifficultyRangeLabel.Name = "DifficultyRangeLabel";
          this.DifficultyRangeLabel.Size = new System.Drawing.Size(103, 13);
-         this.DifficultyRangeLabel.TabIndex = 17;
+         this.DifficultyRangeLabel.TabIndex = 19;
          this.DifficultyRangeLabel.Text = "(1-100 or 0 for none)";
          // 
          // RatingRangeLabel
@@ -474,7 +474,7 @@
          this.RatingRangeLabel.Location = new System.Drawing.Point(140, 293);
          this.RatingRangeLabel.Name = "RatingRangeLabel";
          this.RatingRangeLabel.Size = new System.Drawing.Size(103, 13);
-         this.RatingRangeLabel.TabIndex = 20;
+         this.RatingRangeLabel.TabIndex = 22;
          this.RatingRangeLabel.Text = "(1-100 or 0 for none)";
          // 
          // SaveMetadataDialog
@@ -558,7 +558,7 @@
          this.MadeFamousByBox.Location = new System.Drawing.Point(70, 222);
          this.MadeFamousByBox.Name = "MadeFamousByBox";
          this.MadeFamousByBox.Size = new System.Drawing.Size(316, 20);
-         this.MadeFamousByBox.TabIndex = 37;
+         this.MadeFamousByBox.TabIndex = 16;
          this.MadeFamousByBox.TextChanged += new System.EventHandler(this.MadeFamousByBox_TextChanged);
          // 
          // MadeFamousByLabel
@@ -567,7 +567,7 @@
          this.MadeFamousByLabel.Location = new System.Drawing.Point(6, 225);
          this.MadeFamousByLabel.Name = "MadeFamousByLabel";
          this.MadeFamousByLabel.Size = new System.Drawing.Size(62, 13);
-         this.MadeFamousByLabel.TabIndex = 36;
+         this.MadeFamousByLabel.TabIndex = 15;
          this.MadeFamousByLabel.Text = "Fa&mous By:";
          // 
          // Md5Update
@@ -596,7 +596,7 @@
             0});
          this.BookmarkMeasureBox.Name = "BookmarkMeasureBox";
          this.BookmarkMeasureBox.Size = new System.Drawing.Size(54, 20);
-         this.BookmarkMeasureBox.TabIndex = 31;
+         this.BookmarkMeasureBox.TabIndex = 33;
          this.BookmarkMeasureBox.Value = new decimal(new int[] {
             1,
             0,
@@ -609,7 +609,7 @@
          this.BookmarksLabel.Location = new System.Drawing.Point(169, 420);
          this.BookmarksLabel.Name = "BookmarksLabel";
          this.BookmarksLabel.Size = new System.Drawing.Size(214, 13);
-         this.BookmarksLabel.TabIndex = 30;
+         this.BookmarksLabel.TabIndex = 32;
          this.BookmarksLabel.Text = "&Bookmarks (measure / optional description):";
          // 
          // RemoveBookmark
@@ -619,7 +619,7 @@
          this.RemoveBookmark.Location = new System.Drawing.Point(363, 462);
          this.RemoveBookmark.Name = "RemoveBookmark";
          this.RemoveBookmark.Size = new System.Drawing.Size(23, 23);
-         this.RemoveBookmark.TabIndex = 35;
+         this.RemoveBookmark.TabIndex = 37;
          this.RemoveBookmark.Text = "-";
          this.RemoveBookmark.UseVisualStyleBackColor = true;
          this.RemoveBookmark.Click += new System.EventHandler(this.RemoveBookmark_Click);
@@ -630,7 +630,7 @@
          this.AddBookmark.Location = new System.Drawing.Point(363, 434);
          this.AddBookmark.Name = "AddBookmark";
          this.AddBookmark.Size = new System.Drawing.Size(23, 23);
-         this.AddBookmark.TabIndex = 33;
+         this.AddBookmark.TabIndex = 35;
          this.AddBookmark.Text = "+";
          this.AddBookmark.UseVisualStyleBackColor = true;
          this.AddBookmark.Click += new System.EventHandler(this.AddBookmark_Click);
@@ -642,7 +642,7 @@
          this.BookmarkDescriptionBox.Location = new System.Drawing.Point(232, 436);
          this.BookmarkDescriptionBox.Name = "BookmarkDescriptionBox";
          this.BookmarkDescriptionBox.Size = new System.Drawing.Size(125, 20);
-         this.BookmarkDescriptionBox.TabIndex = 32;
+         this.BookmarkDescriptionBox.TabIndex = 34;
          this.BookmarkDescriptionBox.TextChanged += new System.EventHandler(this.BookmarkDescriptionBox_TextChanged);
          // 
          // BookmarkList
@@ -654,7 +654,7 @@
          this.BookmarkList.Location = new System.Drawing.Point(172, 462);
          this.BookmarkList.Name = "BookmarkList";
          this.BookmarkList.Size = new System.Drawing.Size(185, 69);
-         this.BookmarkList.TabIndex = 34;
+         this.BookmarkList.TabIndex = 36;
          this.BookmarkList.SelectedIndexChanged += new System.EventHandler(this.BookmarkList_SelectedIndexChanged);
          // 
          // HandsBox
@@ -664,7 +664,7 @@
          this.HandsBox.Location = new System.Drawing.Point(70, 381);
          this.HandsBox.Name = "HandsBox";
          this.HandsBox.Size = new System.Drawing.Size(316, 20);
-         this.HandsBox.TabIndex = 24;
+         this.HandsBox.TabIndex = 26;
          this.HandsBox.TextChanged += new System.EventHandler(this.HandsBox_TextChanged);
          // 
          // PartsLabel
@@ -673,7 +673,7 @@
          this.PartsLabel.Location = new System.Drawing.Point(6, 384);
          this.PartsLabel.Name = "PartsLabel";
          this.PartsLabel.Size = new System.Drawing.Size(41, 13);
-         this.PartsLabel.TabIndex = 23;
+         this.PartsLabel.TabIndex = 25;
          this.PartsLabel.Text = "&Hands:";
          // 
          // FingerHintBox
@@ -685,7 +685,7 @@
          this.FingerHintBox.Name = "FingerHintBox";
          this.FingerHintBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
          this.FingerHintBox.Size = new System.Drawing.Size(316, 44);
-         this.FingerHintBox.TabIndex = 22;
+         this.FingerHintBox.TabIndex = 24;
          this.FingerHintBox.TextChanged += new System.EventHandler(this.FingerHintBox_TextChanged);
          // 
          // FingerHintLabel
@@ -694,7 +694,7 @@
          this.FingerHintLabel.Location = new System.Drawing.Point(6, 334);
          this.FingerHintLabel.Name = "FingerHintLabel";
          this.FingerHintLabel.Size = new System.Drawing.Size(44, 13);
-         this.FingerHintLabel.TabIndex = 21;
+         this.FingerHintLabel.TabIndex = 23;
          this.FingerHintLabel.Text = "&Fingers:";
          // 
          // SongGrouping
