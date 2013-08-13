@@ -132,6 +132,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Shortcut.cs" />
     <Compile Include="SongEntry.cs" />
     <Compile Include="UploadCredentials.cs">
       <SubType>Form</SubType>

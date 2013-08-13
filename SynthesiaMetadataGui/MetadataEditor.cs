@@ -16,6 +16,7 @@ namespace Synthesia
     {
         readonly HashSet<string> SongExtensions = new HashSet<string>() { ".mid", ".midi", ".kar" };
         readonly HashSet<string> MetaExtensions = new HashSet<string>() { ".synthesia", ".xml" };
+        readonly HashSet<string> LinkExtensions = new HashSet<string>() { ".lnk" };
 
         private FileInfo File { get; set; }
         private MetadataFile Metadata { get; set; }
@@ -493,6 +494,8 @@ namespace Synthesia
         public void ForceOpenFile(string filename)
         {
             File = new FileInfo(filename);
+            if (LinkExtensions.Contains(File.Extension.ToLower())) File = new FileInfo(WindowsShell.Shortcut.Resolve(filename));
+
             using (FileStream input = File.OpenRead()) Metadata = new MetadataFile(input);
 
             WipeSelection();
@@ -508,6 +511,7 @@ namespace Synthesia
             else
             {
                 FileInfo file = new FileInfo(filenames[0]);
+                if (LinkExtensions.Contains(file.Extension.ToLower())) file = new FileInfo(WindowsShell.Shortcut.Resolve(filenames[0]));
 
                 if (SongExtensions.Contains(file.Extension.ToLower()))
                 {
@@ -540,7 +544,7 @@ namespace Synthesia
             else
             {
                 string extension = new FileInfo(filenames[0]).Extension.ToLower();
-                if (!SongExtensions.Contains(extension) && !MetaExtensions.Contains(extension)) return;
+                if (!SongExtensions.Contains(extension) && !MetaExtensions.Contains(extension) && !LinkExtensions.Contains(extension)) return;
             }
 
             e.Effect = DragDropEffects.All;
