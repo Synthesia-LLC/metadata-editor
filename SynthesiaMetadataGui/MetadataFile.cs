@@ -92,6 +92,8 @@ namespace Synthesia
          element.SetAttributeValueAndRemoveEmpty("Title", entry.Title);
          element.SetAttributeValueAndRemoveEmpty("Subtitle", entry.Subtitle);
 
+         element.SetAttributeValueAndRemoveEmpty("BackgroundImage", entry.BackgroundImage);
+
          element.SetAttributeValueAndRemoveEmpty("Composer", entry.Composer);
          element.SetAttributeValueAndRemoveEmpty("Arranger", entry.Arranger);
          element.SetAttributeValueAndRemoveEmpty("Copyright", entry.Copyright);
@@ -129,6 +131,8 @@ namespace Synthesia
                entry.UniqueId = s.AttributeOrDefault("UniqueId");
                entry.Title = s.AttributeOrDefault("Title");
                entry.Subtitle = s.AttributeOrDefault("Subtitle");
+
+               entry.BackgroundImage = s.AttributeOrDefault("BackgroundImage");
 
                entry.Composer = s.AttributeOrDefault("Composer");
                entry.Arranger = s.AttributeOrDefault("Arranger");

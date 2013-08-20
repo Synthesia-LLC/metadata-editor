@@ -13,6 +13,8 @@ namespace Synthesia
         public string Title { get; set; }
         public string Subtitle { get; set; }
 
+        public string BackgroundImage { get; set; }
+
         public string Composer { get; set; }
         public string Arranger { get; set; }
         public string Copyright { get; set; }

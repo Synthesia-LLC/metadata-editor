@@ -16,5 +16,20 @@ namespace Synthesia
             using (FileStream input = file.OpenRead())
                 return BitConverter.ToString(new MD5CryptoServiceProvider().ComputeHash(input)).Replace("-", "").ToLower();
         }
+
+        // Source: http://stackoverflow.com/a/340454/1744288
+        public static string MakeRelativePath(this FileInfo from, FileInfo to)
+        {
+            if (from == null) throw new ArgumentNullException("from");
+            if (to == null) throw new ArgumentNullException("to");
+
+            Uri fromUri = new Uri(from.FullName);
+            Uri toUri = new Uri(to.FullName);
+
+            Uri relativeUri = fromUri.MakeRelativeUri(toUri);
+            string relativePath = Uri.UnescapeDataString(relativeUri.ToString());
+
+            return relativePath.Replace('/', Path.DirectorySeparatorChar);
+        }
     }
 }
