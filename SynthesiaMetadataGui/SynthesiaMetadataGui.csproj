@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Synthesia</RootNamespace>
-    <AssemblyName>SynthesiaMetadataGui</AssemblyName>
+    <AssemblyName>MetadataEditor</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>app_icon.ico</ApplicationIcon>
