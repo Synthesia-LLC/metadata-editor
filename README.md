@@ -10,3 +10,8 @@ Requires the .NET 4 Client profile on Windows or the latest version of Mono on a
 To run in Windows, double-click.
 
 To run in OS X, use "mono MetadataEditor-x.x.x.exe" from a terminal.
+
+Alternatively, package the .exe into an Mac app using the following Mono command-line:
+`macpack -appname:MetadataEditor -i ~/synthesia/app_icon.icns -m winforms MetadataEditor-1.0.0.exe`
+
+That still requires the Mono runtime be installed, but no longer requires running things from terminal.
