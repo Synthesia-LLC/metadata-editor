@@ -84,14 +84,11 @@ namespace Synthesia
 
       private void GroupContextMenu_Opening(object sender, CancelEventArgs e)
       {
-         bool hasSelection = GroupList.SelectedNode != null;
          bool selectionIsGroup = SelectionIsGroup;
-         bool selectionIsSong = hasSelection && !selectionIsGroup;
-
          int songsInSelectedGroup = 0;
          string groupName = "";
 
-         if (hasSelection)
+         if (GroupList.SelectedNode != null)
          {
             TreeNode group = GroupList.SelectedNode;
             if (!selectionIsGroup) group = group.Parent;
@@ -177,7 +174,7 @@ namespace Synthesia
       private void CreateTopLevelGroupMenu_Click(object sender, EventArgs e)
       {
          string groupName = Metadata.AddGroup(new List<string> { "Group" });
-         TreeNode node = AddTreeViewGroup(null, groupName);
+         AddTreeViewGroup(null, groupName);
       }
 
       private void CreateSubGroupMenu_Click(object sender, EventArgs e)
