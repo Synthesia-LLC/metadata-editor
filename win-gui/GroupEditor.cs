@@ -288,5 +288,10 @@ namespace Synthesia
             Console.Out.WriteLine();
         }
 
+        private void GroupEditor_Load(object sender, EventArgs e)
+        {
+            Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+        }
+
     }
 }

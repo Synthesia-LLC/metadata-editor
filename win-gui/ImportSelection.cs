@@ -23,5 +23,10 @@ namespace Synthesia
         {
             _okButton.Enabled = CheckFingerHints.Checked || CheckHandParts.Checked;
         }
+
+        private void ImportSelection_Load(object sender, EventArgs e)
+        {
+            Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+        }
     }
 }

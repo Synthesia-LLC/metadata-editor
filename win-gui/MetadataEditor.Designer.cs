@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
          this.components = new System.ComponentModel.Container();
-         System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MetadataEditor));
          this.SongList = new System.Windows.Forms.ListBox();
          this.AddSong = new System.Windows.Forms.Button();
          this.RemoveSong = new System.Windows.Forms.Button();
@@ -767,13 +766,13 @@
          this.Controls.Add(this.AddSong);
          this.Controls.Add(this.SongList);
          this.Controls.Add(this.MainMenu);
-         this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
          this.KeyPreview = true;
          this.MainMenuStrip = this.MainMenu;
          this.MinimumSize = new System.Drawing.Size(720, 634);
          this.Name = "MetadataEditor";
          this.Text = "[set in code]";
          this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MetadataEditor_FormClosing);
+         this.Load += new System.EventHandler(this.MetadataEditor_Load);
          this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MetadataEditor_DragDrop);
          this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MetadataEditor_DragEnter);
          this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MetadataEditor_KeyDown);

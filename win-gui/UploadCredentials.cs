@@ -22,5 +22,10 @@ namespace Synthesia
         {
             _okButton.Enabled = !string.IsNullOrWhiteSpace(SiteKeyBox.Text);
         }
+
+        private void UploadCredentials_Load(object sender, EventArgs e)
+        {
+            Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+        }
     }
 }

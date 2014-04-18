@@ -858,6 +858,11 @@ namespace Synthesia
          if (BackgroundBox.Text.Contains(':')) MessageBox.Show("It looks like the image is on a separate drive from the metadata file.  This image will probably only display on your own computer.", "Absolute paths are trouble", MessageBoxButtons.OK, MessageBoxIcon.Warning);
       }
 
+      private void MetadataEditor_Load(object sender, EventArgs e)
+      {
+         Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+      }
+
    }
 
    namespace SynthesiaSite
