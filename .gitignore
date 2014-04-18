@@ -1,3 +1,5 @@
 win-gui/bin
 win-gui/obj
+metadata/bin
+metadata/obj
 *.suo

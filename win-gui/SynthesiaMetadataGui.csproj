@@ -13,7 +13,8 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>app_icon.ico</ApplicationIcon>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -146,6 +147,12 @@
     <Content Include="app_icon.ico" />
     <None Include="Resources\arrowDown.png" />
     <None Include="Resources\arrowUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\metadata\metadata.csproj">
+      <Project>{c8f3e5d3-e75d-488a-92c4-414edb4711eb}</Project>
+      <Name>metadata</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
