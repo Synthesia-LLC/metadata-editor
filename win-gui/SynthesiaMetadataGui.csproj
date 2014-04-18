@@ -75,14 +75,12 @@
     <Compile Include="About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="FileExtensions.cs" />
     <Compile Include="GroupEditor.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GroupEditor.Designer.cs">
       <DependentUpon>GroupEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="GroupEntry.cs" />
     <Compile Include="ImportSelection.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,7 +93,6 @@
     <Compile Include="MetadataEditor.designer.cs">
       <DependentUpon>MetadataEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="MetadataFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="About.resx">
@@ -134,14 +131,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Shortcut.cs" />
-    <Compile Include="SongEntry.cs" />
     <Compile Include="UploadCredentials.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UploadCredentials.Designer.cs">
       <DependentUpon>UploadCredentials.cs</DependentUpon>
     </Compile>
-    <Compile Include="XExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app_icon.ico" />
