@@ -1,5 +1,8 @@
 win-gui/bin
 win-gui/obj
+mac-gui/bin
+mac-gui/obj
 metadata/bin
 metadata/obj
 *.suo
+*.userprefs
