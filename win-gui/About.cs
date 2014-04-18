@@ -8,96 +8,96 @@ using System.Windows.Forms;
 
 namespace Synthesia
 {
-    partial class About : Form
-    {
-        public About()
-        {
-            InitializeComponent();
-            this.Text = String.Format("About {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyProduct;
-            this.labelCopyright.Text = AssemblyCopyright;
-            this.labelCompanyName.Text = AssemblyCompany;
-            this.textBoxDescription.Text = AssemblyDescription;
-        }
+   partial class About : Form
+   {
+      public About()
+      {
+         InitializeComponent();
+         this.Text = String.Format("About {0}", AssemblyTitle);
+         this.labelProductName.Text = AssemblyProduct;
+         this.labelCopyright.Text = AssemblyCopyright;
+         this.labelCompanyName.Text = AssemblyCompany;
+         this.textBoxDescription.Text = AssemblyDescription;
+      }
 
-        #region Assembly Attribute Accessors
+      #region Assembly Attribute Accessors
 
-        public string AssemblyTitle
-        {
-            get
+      public string AssemblyTitle
+      {
+         get
+         {
+            object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
+            if (attributes.Length > 0)
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-                if (attributes.Length > 0)
-                {
-                    AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (titleAttribute.Title != "")
-                    {
-                        return titleAttribute.Title;
-                    }
-                }
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+               AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
+               if (titleAttribute.Title != "")
+               {
+                  return titleAttribute.Title;
+               }
             }
-        }
+            return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+         }
+      }
 
-        public string AssemblyVersion
-        {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString(1);
-            }
-        }
+      public string AssemblyVersion
+      {
+         get
+         {
+            return Assembly.GetExecutingAssembly().GetName().Version.ToString(1);
+         }
+      }
 
-        public string AssemblyDescription
-        {
-            get
+      public string AssemblyDescription
+      {
+         get
+         {
+            object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+            if (attributes.Length == 0)
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyDescriptionAttribute)attributes[0]).Description;
+               return "";
             }
-        }
+            return ((AssemblyDescriptionAttribute)attributes[0]).Description;
+         }
+      }
 
-        public string AssemblyProduct
-        {
-            get
+      public string AssemblyProduct
+      {
+         get
+         {
+            object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+            if (attributes.Length == 0)
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyProductAttribute)attributes[0]).Product;
+               return "";
             }
-        }
+            return ((AssemblyProductAttribute)attributes[0]).Product;
+         }
+      }
 
-        public string AssemblyCopyright
-        {
-            get
+      public string AssemblyCopyright
+      {
+         get
+         {
+            object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+            if (attributes.Length == 0)
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
+               return "";
             }
-        }
+            return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
+         }
+      }
 
-        public string AssemblyCompany
-        {
-            get
+      public string AssemblyCompany
+      {
+         get
+         {
+            object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
+            if (attributes.Length == 0)
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyCompanyAttribute)attributes[0]).Company;
+               return "";
             }
-        }
-        #endregion
-    }
+            return ((AssemblyCompanyAttribute)attributes[0]).Company;
+         }
+      }
+      #endregion
+   }
 }

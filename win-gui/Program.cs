@@ -6,20 +6,20 @@ using System.IO;
 
 namespace Synthesia
 {
-    static class Program
-    {
-        [STAThread]
-        static void Main(string[] args)
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+   static class Program
+   {
+      [STAThread]
+      static void Main(string[] args)
+      {
+         Application.EnableVisualStyles();
+         Application.SetCompatibleTextRenderingDefault(false);
 
-            MetadataEditor editor = new MetadataEditor();
+         MetadataEditor editor = new MetadataEditor();
 
-            if (args.Length == 1 && File.Exists(args[0]))
-                editor.ForceOpenFile(args[0]);
+         if (args.Length == 1 && File.Exists(args[0]))
+            editor.ForceOpenFile(args[0]);
 
-            Application.Run(editor);
-        }
-    }
+         Application.Run(editor);
+      }
+   }
 }
