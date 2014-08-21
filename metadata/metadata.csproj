@@ -45,6 +45,7 @@
     <Compile Include="GroupEntry.cs" />
     <Compile Include="MetadataFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shortcut.cs" />
     <Compile Include="SongEntry.cs" />
     <Compile Include="XExtensions.cs" />
   </ItemGroup>
