@@ -4,5 +4,7 @@ mac-gui/bin
 mac-gui/obj
 metadata/bin
 metadata/obj
+metadata-merge/bin
+metadata-merge/obj
 *.suo
 *.userprefs

@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynthesiaMetadataGui", "win-gui\SynthesiaMetadataGui.csproj", "{8306A428-A14E-46BB-B226-60F7029EF503}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "metadata", "metadata\metadata.csproj", "{C8F3E5D3-E75D-488A-92C4-414EDB4711EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetadataMerger", "metadata-merge\MetadataMerger.csproj", "{02FED9C9-0486-4829-A694-82C704301FE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,12 @@ Global
 		{C8F3E5D3-E75D-488A-92C4-414EDB4711EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8F3E5D3-E75D-488A-92C4-414EDB4711EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C8F3E5D3-E75D-488A-92C4-414EDB4711EB}.Release|x86.ActiveCfg = Release|Any CPU
+		{02FED9C9-0486-4829-A694-82C704301FE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02FED9C9-0486-4829-A694-82C704301FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02FED9C9-0486-4829-A694-82C704301FE8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{02FED9C9-0486-4829-A694-82C704301FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02FED9C9-0486-4829-A694-82C704301FE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02FED9C9-0486-4829-A694-82C704301FE8}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
