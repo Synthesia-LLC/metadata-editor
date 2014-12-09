@@ -105,6 +105,7 @@ namespace Synthesia
 
          element.SetAttributeValueAndRemoveEmpty("FingerHints", entry.FingerHints);
          element.SetAttributeValueAndRemoveEmpty("HandParts", entry.HandParts);
+         element.SetAttributeValueAndRemoveEmpty("Parts", entry.Parts);
          element.SetAttributeValueAndRemoveEmpty("Tags", string.Join(";", entry.Tags.ToArray()));
          element.SetAttributeValueAndRemoveEmpty("Bookmarks", string.Join(";", from b in entry.Bookmarks select (string.IsNullOrWhiteSpace(b.Value) ? b.Key.ToString() : string.Join(",", b.Key.ToString(), b.Value))));
       }
@@ -142,6 +143,7 @@ namespace Synthesia
 
                entry.FingerHints = s.AttributeOrDefault("FingerHints");
                entry.HandParts = s.AttributeOrDefault("HandParts");
+               entry.Parts = s.AttributeOrDefault("Parts");
 
                int rating;
                if (int.TryParse(s.AttributeOrDefault("Rating"), out rating)) entry.Rating = rating;

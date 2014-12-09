@@ -288,6 +288,7 @@ namespace Synthesia
 
          BindBox(FingerHintBox, typeof(SongEntry).GetProperty("FingerHints"));
          BindBox(HandsBox, typeof(SongEntry).GetProperty("HandParts"));
+         BindBox(PartsBox, typeof(SongEntry).GetProperty("Parts"));
 
          int selectedCount = SongList.SelectedItems.Count;
          SortedDictionary<string, int> tagFrequency = new SortedDictionary<string, int>();
@@ -489,6 +490,13 @@ namespace Synthesia
          RebindAfterChange();
       }
 
+      private void PartsBox_TextChanged(object sender, EventArgs e)
+      {
+         if (IgnoreUpdates) return;
+         foreach (SongEntry entry in SelectedSongs) entry.Parts = PartsBox.Text;
+         RebindAfterChange();
+      }
+
       private void MetadataEditor_KeyDown(object sender, KeyEventArgs e)
       {
          if (e.Control && e.KeyCode == Keys.OemPeriod && SongList.SelectedIndex != -1 && SongList.SelectedIndex < SongList.Items.Count - 1)
@@ -573,29 +581,26 @@ namespace Synthesia
          IgnoreUpdates = false;
       }
 
-      private string SynthesiaDataPath
+      private string SynthesiaDataPath(bool standard)
       {
-         get
+         // The data directory is different on the Mac version
+         int platform = (int)Environment.OSVersion.Platform;
+         bool unix = platform == 4 || platform == 6 || platform == 128 || Environment.OSVersion.Platform == PlatformID.MacOSX;
+
+         string path = "";
+         if (!unix)
          {
-            // The data directory is different on the Mac version
-            int platform = (int)Environment.OSVersion.Platform;
-            bool unix = platform == 4 || platform == 6 || platform == 128 || Environment.OSVersion.Platform == PlatformID.MacOSX;
-
-            string path = "";
-            if (!unix)
-            {
-               path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            }
-            else
-            {
-               path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-               path = Path.Combine(path, "Library");
-               path = Path.Combine(path, "Application Support");
-            }
-            path = Path.Combine(path, "Synthesia");
-
-            return path;
+            path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
          }
+         else
+         {
+            path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            path = Path.Combine(path, "Library");
+            path = Path.Combine(path, "Application Support");
+         }
+         path = Path.Combine(path, standard ? "Synthesia" : "SynthesiaDev");
+
+         return path;
       }
 
       private void UploadMenu_Click(object sender, EventArgs e)
@@ -654,10 +659,12 @@ namespace Synthesia
          using (ImportSelection importDialog = new ImportSelection())
          {
             if (importDialog.ShowDialog(this) != DialogResult.OK) return;
+            bool standardPath = importDialog.ImportFromStandard;
 
             Dictionary<string, ImportResults> results = new Dictionary<string, ImportResults>();
-            if (importDialog.ImportFingerHints) results["finger hints"] = ImportFingerHints();
-            if (importDialog.ImportHandParts) results["hand parts"] = ImportHandParts();
+            if (importDialog.ImportFingerHints) results["finger hints"] = ImportFingerHints(standardPath);
+            if (importDialog.ImportHandParts) results["hand parts"] = ImportHandParts(standardPath);
+            if (importDialog.ImportParts) results["parts"] = ImportParts(standardPath);
 
             SongList_SelectedIndexChanged(this, new EventArgs());
 
@@ -666,13 +673,12 @@ namespace Synthesia
          }
       }
 
-
-      ImportResults ImportHandParts()
+      ImportResults ImportHandParts(bool standardPath)
       {
          ImportResults results = new ImportResults();
          results.ProblemEncountered = true;
 
-         string SongInfoPath = Path.Combine(SynthesiaDataPath, "songInfo.xml");
+         string SongInfoPath = Path.Combine(SynthesiaDataPath(standardPath), "songInfo.xml");
 
          FileInfo songInfoFile = new FileInfo(SongInfoPath);
          if (!songInfoFile.Exists)
@@ -690,7 +696,7 @@ namespace Synthesia
 
             if (topLevel.AttributeOrDefault("version", "1") != "1")
             {
-               MessageBox.Show(this, "Data in songInfo.xml is in a newer format.  Unable to hand parts import.  (Maybe check for a newer version of the metadata editor.)", "songInfo.xml too new!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+               MessageBox.Show(this, "Data in songInfo.xml is in a newer format.  Unable to import hand parts.  (Check for a newer version of the metadata editor.)", "songInfo.xml too new!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                return results;
             }
 
@@ -735,12 +741,77 @@ namespace Synthesia
          return results;
       }
 
-      ImportResults ImportFingerHints()
+      ImportResults ImportParts(bool standardPath)
       {
          ImportResults results = new ImportResults();
          results.ProblemEncountered = true;
 
-         string FingerHintPath = Path.Combine(SynthesiaDataPath, "fingers.xml");
+         string SongInfoPath = Path.Combine(SynthesiaDataPath(standardPath), "songInfo.xml");
+
+         FileInfo songInfoFile = new FileInfo(SongInfoPath);
+         if (!songInfoFile.Exists)
+         {
+            MessageBox.Show(this, "Couldn't find song info file in the Synthesia data directory.  Aborting part import.", "Missing songInfo.xml", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return results;
+         }
+
+         try
+         {
+            XDocument doc = XDocument.Load(SongInfoPath);
+
+            XElement topLevel = doc.Element("LocalSongInfoList");
+            if (topLevel == null) throw new InvalidDataException("Couldn't find top-level LocalSongInfoList element.");
+
+            if (topLevel.AttributeOrDefault("version", "1") != "1")
+            {
+               MessageBox.Show(this, "Data in songInfo.xml is in a newer format.  Unable to import parts.  (Check for a newer version of the metadata editor.)", "songInfo.xml too new!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+               return results;
+            }
+
+            var elements = topLevel.Elements("SongInfo");
+            var parts = (from i in elements
+                         select new
+                         {
+                            hash = i.AttributeOrDefault("hash"),
+                            parts = i.AttributeOrDefault("parts"),
+                         }).Where(i => !string.IsNullOrWhiteSpace(i.parts)).ToDictionary(i => i.hash);
+
+            foreach (SongEntry s in SongList.Items)
+            {
+               if (!parts.ContainsKey(s.UniqueId)) continue;
+               results.Imported++;
+
+               string oldParts = s.Parts;
+
+               var match = parts[s.UniqueId];
+
+               if (oldParts == match.parts) results.Identical++;
+               else
+               {
+                  s.Parts = match.parts;
+                  Metadata.AddSong(s);
+
+                  results.Changed++;
+               }
+            }
+
+         }
+         catch (Exception ex)
+         {
+            MessageBox.Show(string.Format("Unable to read songInfo.xml.  Aborting part import.\n\n{0}", ex));
+            return results;
+         }
+
+         results.ProblemEncountered = false;
+         return results;
+      }
+
+      ImportResults ImportFingerHints(bool standardPath)
+      {
+         ImportResults results = new ImportResults();
+         results.ProblemEncountered = true;
+
+         string FingerHintPath = Path.Combine(SynthesiaDataPath(standardPath), "fingers.xml");
 
          FileInfo fingerHintFile = new FileInfo(FingerHintPath);
          if (!fingerHintFile.Exists)
@@ -760,7 +831,7 @@ namespace Synthesia
 
             if (topLevel.AttributeOrDefault("version", "1") != "1")
             {
-               MessageBox.Show(this, "Data in fingers.xml is in a newer format.  Unable to import.  (Maybe check for a newer version of the metadata editor.)", "Fingers.xml too new!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+               MessageBox.Show(this, "Data in fingers.xml is in a newer format.  Unable to import.  (Check for a newer version of the metadata editor.)", "Fingers.xml too new!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                return results;
             }
 

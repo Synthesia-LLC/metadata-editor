@@ -13,6 +13,9 @@ namespace Synthesia
    {
       public bool ImportFingerHints { get { return CheckFingerHints.Checked; } }
       public bool ImportHandParts { get { return CheckHandParts.Checked; } }
+      public bool ImportParts { get { return CheckParts.Checked; } }
+
+      public bool ImportFromStandard { get { return ComboImportFrom.SelectedIndex == 0; } }
 
       public ImportSelection()
       {
@@ -21,12 +24,15 @@ namespace Synthesia
 
       private void CheckChanged(object sender, EventArgs e)
       {
-         _okButton.Enabled = CheckFingerHints.Checked || CheckHandParts.Checked;
+         ButtonOK.Enabled = CheckFingerHints.Checked || CheckHandParts.Checked || CheckParts.Checked;
       }
 
       private void ImportSelection_Load(object sender, EventArgs e)
       {
          Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+
+         ComboImportFrom.SelectedIndex = 0;
+         ButtonOK.Select();
       }
    }
 }
