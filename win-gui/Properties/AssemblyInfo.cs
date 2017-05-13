@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Synthesia Metadata Editor")]
-[assembly: AssemblyDescription("Simple editor for .synthesia metadata files used by Synthesia.  For more information, see:\r\n\r\nhttp://www.synthesiagame.com/contentCreators.aspx")]
+[assembly: AssemblyDescription("Simple editor for .synthesia metadata files used by Synthesia.  For more information, see:\r\n\r\nhttp://synthesia.us/support/guide/contentCreators")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Synthesia Metadata Editor")]
-[assembly: AssemblyCopyright("©2014 Synthesia LLC")]
+[assembly: AssemblyCopyright("©2009-2017 Synthesia LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

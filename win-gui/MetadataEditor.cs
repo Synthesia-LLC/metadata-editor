@@ -603,36 +603,6 @@ namespace Synthesia
          return path;
       }
 
-      private void UploadMenu_Click(object sender, EventArgs e)
-      {
-         if (SongList.Items.Count == 0)
-         {
-            MessageBox.Show(this, "You must have at least one song entry in this metadata file to perform an upload to the Synthesia website.  Add a song and try again.", "No song entries", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            return;
-         }
-
-         using (UploadCredentials uploadDialog = new UploadCredentials())
-         {
-            if (uploadDialog.ShowDialog(this) != DialogResult.OK) return;
-            string siteKey = uploadDialog.SiteKey;
-
-            try
-            {
-               string result = "Not implemented.";
-               /*
-               using (SynthesiaSite.MetadataSoapClient client = new SynthesiaSite.MetadataSoapClient())
-                   result = client.SubmitMetadata((from SongEntry s in SongList.Items select SynthesiaSite.SongEntry.ToRemote(s)).ToList(), siteKey);
-               */
-
-               MessageBox.Show(this, result, "Upload results", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-               MessageBox.Show(this, ex.Message, "Unable to upload metadata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-         }
-      }
-
       struct ImportResults
       {
          public int Imported;

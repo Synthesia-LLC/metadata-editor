@@ -117,9 +117,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UploadCredentials.resx">
-      <DependentUpon>UploadCredentials.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -129,12 +126,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="UploadCredentials.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UploadCredentials.Designer.cs">
-      <DependentUpon>UploadCredentials.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
