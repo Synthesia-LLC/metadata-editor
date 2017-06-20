@@ -1,0 +1,12 @@
+root=true
+
+[*]
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 3
+
+[*.{java,txt,gradle}]
+indent_size = 4
+
+[*.{xml,json,rb}]
+indent_size = 2
