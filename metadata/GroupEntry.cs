@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Synthesia
 {
@@ -12,11 +9,7 @@ namespace Synthesia
    public class GroupEntry
    {
       public string Name { get; set; }
-
-      List<GroupEntry> _groups = new List<GroupEntry>();
-      public List<GroupEntry> Groups { get { return _groups; } }
-
-      List<SongEntry> _songs = new List<SongEntry>();
-      public List<SongEntry> Songs { get { return _songs; } }
+      public List<GroupEntry> Groups { get; } = new List<GroupEntry>();
+      public List<SongEntry> Songs { get; } = new List<SongEntry>();
    }
 }
