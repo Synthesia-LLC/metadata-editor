@@ -280,22 +280,6 @@ namespace Synthesia
          SongList.SelectedIndexChanged += SongList_SelectedIndexChanged;
       }
 
-      private void MetadataEditor_KeyDown(object sender, KeyEventArgs e)
-      {
-         // Ctrl+period and Ctrl+comma walk an entry at a time through the list
-         if (e.Control && e.KeyCode == Keys.OemPeriod && SongList.SelectedIndex != -1 && SongList.SelectedIndex < SongList.Items.Count - 1)
-         {
-            SongList.SelectedIndex = SongList.SelectedIndex + 1;
-            e.Handled = true;
-         }
-
-         if (e.Control && e.KeyCode == Keys.Oemcomma && SongList.SelectedIndex != -1 && SongList.SelectedIndex > 0)
-         {
-            SongList.SelectedIndex = SongList.SelectedIndex - 1;
-            e.Handled = true;
-         }
-      }
-
       private void MetadataEditor_DragDrop(object sender, DragEventArgs e)
       {
          if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;

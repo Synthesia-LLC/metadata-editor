@@ -790,7 +790,6 @@
 			this.Load += new System.EventHandler(this.MetadataEditor_Load);
 			this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MetadataEditor_DragDrop);
 			this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MetadataEditor_DragEnter);
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MetadataEditor_KeyDown);
 			((System.ComponentModel.ISupportInitialize)(this.DifficultyBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.RatingBox)).EndInit();
 			this.MainMenu.ResumeLayout(false);
