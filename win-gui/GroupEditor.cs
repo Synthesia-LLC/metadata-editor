@@ -101,9 +101,9 @@ namespace Synthesia
          RemoveSongsFromGroupMenu.Enabled = songsInSelectedGroup > 0;
 
 
-         CreateSubGroupMenu.Text = CreateSubGroupMenu.Enabled ? string.Format("Create group under {0}", groupName) : "Create sub-group";
-         RemoveGroupMenu.Text = RemoveGroupMenu.Enabled ? string.Format("Remove {0}", groupName) : "Remove group";
-         RemoveSongsFromGroupMenu.Text = RemoveSongsFromGroupMenu.Enabled ? string.Format("Remove all {0} songs from {1}", songsInSelectedGroup, groupName) : "Remove all songs from group";
+         CreateSubGroupMenu.Text = CreateSubGroupMenu.Enabled ? $"Create group under {groupName}" : "Create sub-group";
+         RemoveGroupMenu.Text = RemoveGroupMenu.Enabled ? $"Remove {groupName}" : "Remove group";
+         RemoveSongsFromGroupMenu.Text = RemoveSongsFromGroupMenu.Enabled ? $"Remove all {songsInSelectedGroup} songs from {groupName}" : "Remove all songs from group";
       }
 
       /// <summary>

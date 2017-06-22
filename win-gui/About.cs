@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Windows.Forms;
 
 namespace Synthesia
@@ -13,11 +8,11 @@ namespace Synthesia
       public About()
       {
          InitializeComponent();
-         this.Text = String.Format("About {0}", AssemblyTitle);
-         this.labelProductName.Text = AssemblyProduct;
-         this.labelCopyright.Text = AssemblyCopyright;
-         this.labelCompanyName.Text = AssemblyCompany;
-         this.textBoxDescription.Text = AssemblyDescription;
+         Text = $"About {AssemblyTitle}";
+         labelProductName.Text = AssemblyProduct;
+         labelCopyright.Text = AssemblyCopyright;
+         labelCompanyName.Text = AssemblyCompany;
+         textBoxDescription.Text = AssemblyDescription;
       }
 
       #region Assembly Attribute Accessors

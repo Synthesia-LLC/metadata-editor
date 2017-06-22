@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Data;
 
 namespace Synthesia
@@ -83,7 +82,7 @@ namespace Synthesia
          if (string.IsNullOrEmpty(Title)) return "(Unknown Song)";
 
          if (string.IsNullOrEmpty(Subtitle)) return Title;
-         return string.Format("{0}, {1}", Title, Subtitle);
+         return $"{Title}, {Subtitle}";
       }
    }
 }

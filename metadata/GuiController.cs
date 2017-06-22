@@ -485,8 +485,8 @@ namespace Synthesia
 
          public string ToDisplayString(string importType)
          {
-            if (ProblemEncountered) return string.Format("Unable to import {0}.", importType);
-            return string.Format("Imported {0} for {1} song{2}.  ({3} changed, {4} identical.)", importType, Imported, (Imported == 1 ? "" : "s"), Changed, Identical);
+            if (ProblemEncountered) return $"Unable to import {importType}.";
+            return $"Imported {importType} for {Imported} song{(Imported == 1 ? "" : "s")}.  ({Changed} changed, {Identical} identical.)";
          }
       }
 
@@ -550,7 +550,7 @@ namespace Synthesia
          }
          catch (Exception ex)
          {
-            f.ShowError(string.Format("Unable to read songInfo.xml.  Aborting hand part import.\n\n{0}", ex), "Import error!");
+            f.ShowError($"Unable to read songInfo.xml.  Aborting hand part import.\n\n{ex}", "Import error!");
             return results;
          }
 
@@ -615,7 +615,7 @@ namespace Synthesia
          }
          catch (Exception ex)
          {
-            f.ShowError(string.Format("Unable to read songInfo.xml.  Aborting part import.\n\n{0}", ex), "Import error!");
+            f.ShowError($"Unable to read songInfo.xml.  Aborting part import.\n\n{ex}", "Import error!");
             return results;
          }
 
@@ -657,7 +657,7 @@ namespace Synthesia
          }
          catch (Exception ex)
          {
-            f.ShowError(string.Format("Unable to read fingers.xml.  Aborting import.\n\n{0}", ex), "Import error!");
+            f.ShowError($"Unable to read fingers.xml.  Aborting import.\n\n{ex}", "Import error!");
             return results;
          }
 

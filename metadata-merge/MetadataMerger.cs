@@ -65,7 +65,7 @@ namespace Synthesia
 
             if (!new List<string> { ".xml", ".synthesia" }.Contains(file.Extension.ToLower()))
             {
-               Log(string.Format("SKIPPING file with unknown extension: {0}", file.Name));
+               Log($"SKIPPING file with unknown extension: {file.Name}");
                continue;
             }
 
@@ -73,11 +73,11 @@ namespace Synthesia
             if (Master == null)
             {
                Master = metadata;
-               Log(string.Format("Setting \"{0}\" as master ({1})", file.Name, metadata.Statistics));
+               Log($"Setting \"{file.Name}\" as master ({metadata.Statistics})");
             }
             else
             {
-               Log(string.Format("Adding contents of \"{0}\" to master ({1})", file.Name, metadata.Statistics));
+               Log($"Adding contents of \"{file.Name}\" to master ({metadata.Statistics})");
                if (Master.AddRange(metadata, Log)) Dirty = true;
             }
          }

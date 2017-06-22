@@ -75,7 +75,7 @@ namespace Synthesia
          XElement groups = RootGroupElement(false);
          if (groups == null) return true;
 
-         var matchingSongs = groups.XPathSelectElements(string.Format("Group//Song[@UniqueId = \"{0}\"]", oldId));
+         var matchingSongs = groups.XPathSelectElements($"Group//Song[@UniqueId = \"{oldId}\"]");
          foreach (var s in matchingSongs) s.SetAttributeValue("UniqueId", newId);
 
          return true;
@@ -234,7 +234,7 @@ namespace Synthesia
 
          int attempt = 1;
          string finalName = desiredName;
-         while ((from e in parent.Elements("Group") where e.AttributeOrDefault("Name") == finalName select e).Any()) finalName = string.Format("{0} {1}", desiredName, ++attempt);
+         while ((from e in parent.Elements("Group") where e.AttributeOrDefault("Name") == finalName select e).Any()) finalName = $"{desiredName} {++attempt}";
 
          return finalName;
       }
@@ -257,7 +257,7 @@ namespace Synthesia
          ValidatePath(groupNamePath);
 
          XElement parent = groupNamePath.Count == 1 ? RootGroupElement(true) : GroupFromPath(groupNamePath.Take(groupNamePath.Count - 1).ToList(), true);
-         if (parent == null) throw new InvalidOperationException(string.Format("All but the last element must already exist when adding a group.  Path: {0}", string.Join("/", groupNamePath)));
+         if (parent == null) throw new InvalidOperationException($"All but the last element must already exist when adding a group.  Path: {string.Join("/", groupNamePath)}");
 
          string name = DisambiguateName(parent, groupNamePath.Last());
          parent.Add(new XElement("Group", new XAttribute("Name", name)));
@@ -352,7 +352,7 @@ namespace Synthesia
          XElement groups = RootGroupElement(false);
          if (groups == null) return;
 
-         var e = groups.XPathSelectElements(string.Format("Group//Song[@UniqueId = \"{0}\"]", songUniqueId));
+         var e = groups.XPathSelectElements($"Group//Song[@UniqueId = \"{songUniqueId}\"]");
          e.Remove();
       }
 

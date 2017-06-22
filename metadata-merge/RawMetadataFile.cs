@@ -50,9 +50,9 @@ namespace Synthesia
                continue;
             }
 
-            if (Raw.XPathSelectElement(string.Format("/SynthesiaMetadata/Songs/Song[@UniqueId='{0}']", id)) != null)
+            if (Raw.XPathSelectElement($"/SynthesiaMetadata/Songs/Song[@UniqueId='{id}']") != null)
             {
-               log(string.Format("SKIPPING duplicate song \"{0}\"!", s.AttributeOrDefault("Title", "(No Title)")));
+               log($"SKIPPING duplicate song \"{s.AttributeOrDefault("Title", "(No Title)")}\"!");
                continue;
             }
 
@@ -61,15 +61,12 @@ namespace Synthesia
          }
 
          var groups = (from s in other.StatisticsList where s.Key == "Groups" select s.Value).SingleOrDefault();
-         if (groups > 0) log(string.Format("SKIPPING {0} groups.  Groups must be migrated manually!", groups));
+         if (groups > 0) log($"SKIPPING {groups} groups.  Groups must be migrated manually!");
 
          return madeChanges;
       }
 
-      public string Statistics
-      {
-         get { return string.Join(", ", from s in StatisticsList select string.Format("{0} {1}", s.Value, s.Key)); }
-      }
+      public string Statistics => string.Join(", ", from s in StatisticsList select $"{s.Value} {s.Key}");
 
       public IEnumerable<KeyValuePair<string, int>> StatisticsList
       {
