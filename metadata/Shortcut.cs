@@ -8,7 +8,7 @@ using System.Text;
 
 namespace WindowsShell
 {
-   public class Shortcut
+   public static class Shortcut
    {
       [DllImport("shfolder.dll", CharSet = CharSet.Auto)]
       internal static extern int SHGetFolderPath(IntPtr hwndOwner, int nFolder, IntPtr hToken, int dwFlags, StringBuilder lpszPath);

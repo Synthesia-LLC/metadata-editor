@@ -125,29 +125,27 @@ namespace Synthesia
 
             foreach (XElement s in songs.Elements("Song"))
             {
-               SongEntry entry = new SongEntry();
+               SongEntry entry = new SongEntry()
+               {
+                  UniqueId = s.AttributeOrDefault("UniqueId"),
+                  Title = s.AttributeOrDefault("Title"),
+                  Subtitle = s.AttributeOrDefault("Subtitle"),
 
-               entry.UniqueId = s.AttributeOrDefault("UniqueId");
-               entry.Title = s.AttributeOrDefault("Title");
-               entry.Subtitle = s.AttributeOrDefault("Subtitle");
+                  BackgroundImage = s.AttributeOrDefault("BackgroundImage"),
 
-               entry.BackgroundImage = s.AttributeOrDefault("BackgroundImage");
+                  Composer = s.AttributeOrDefault("Composer"),
+                  Arranger = s.AttributeOrDefault("Arranger"),
+                  Copyright = s.AttributeOrDefault("Copyright"),
+                  License = s.AttributeOrDefault("License"),
+                  MadeFamousBy = s.AttributeOrDefault("MadeFamousBy"),
 
-               entry.Composer = s.AttributeOrDefault("Composer");
-               entry.Arranger = s.AttributeOrDefault("Arranger");
-               entry.Copyright = s.AttributeOrDefault("Copyright");
-               entry.License = s.AttributeOrDefault("License");
-               entry.MadeFamousBy = s.AttributeOrDefault("MadeFamousBy");
+                  FingerHints = s.AttributeOrDefault("FingerHints"),
+                  HandParts = s.AttributeOrDefault("HandParts"),
+                  Parts = s.AttributeOrDefault("Parts")
+               };
 
-               entry.FingerHints = s.AttributeOrDefault("FingerHints");
-               entry.HandParts = s.AttributeOrDefault("HandParts");
-               entry.Parts = s.AttributeOrDefault("Parts");
-
-               int rating;
-               if (int.TryParse(s.AttributeOrDefault("Rating"), out rating)) entry.Rating = rating;
-
-               int difficulty;
-               if (int.TryParse(s.AttributeOrDefault("Difficulty"), out difficulty)) entry.Difficulty = difficulty;
+               if (int.TryParse(s.AttributeOrDefault("Rating"), out int rating)) entry.Rating = rating;
+               if (int.TryParse(s.AttributeOrDefault("Difficulty"), out int difficulty)) entry.Difficulty = difficulty;
 
                string tags = s.AttributeOrDefault("Tags");
                if (tags != null)
@@ -165,8 +163,7 @@ namespace Synthesia
                   {
                      int comma = b.IndexOf(',');
 
-                     int measure = 0;
-                     int.TryParse(comma == -1 ? b : b.Substring(0, comma), out measure);
+                     int.TryParse(comma == -1 ? b : b.Substring(0, comma), out int measure);
                      if (measure == 0) continue;
 
                      string description = "";

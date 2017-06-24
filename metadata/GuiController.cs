@@ -47,7 +47,7 @@ namespace Synthesia
 
    public class GuiController
    {
-      IGuiForm f;
+      readonly IGuiForm f;
       public GuiController(IGuiForm f, string initialFile)
       {
          // This circular reference is a little aggressive here, but we need the form's
@@ -76,7 +76,7 @@ namespace Synthesia
       public MetadataFile Metadata { get; set; }
       private bool IgnoreUpdates { get; set; }
 
-      private bool m_dirty = false;
+      private bool m_dirty;
       public bool Dirty
       {
          get { return m_dirty; }
@@ -151,7 +151,7 @@ namespace Synthesia
 
          SelectionChanged();
 
-         if ((from r in results where r.Value.Changed > 0 select true).Any()) Dirty = true;
+         Dirty |= (from r in results where r.Value.Changed > 0 select true).Any();
          f.ShowInfo(string.Join(Environment.NewLine, from r in results select r.Value.ToDisplayString(r.Key)), "Import Complete");
       }
 
@@ -163,7 +163,7 @@ namespace Synthesia
             return;
          }
 
-         if (f.LaunchGroupEditor(Metadata)) Dirty = true;
+         Dirty |= f.LaunchGroupEditor(Metadata);
       }
 
       public void RetargetUniqueId()
@@ -416,8 +416,8 @@ namespace Synthesia
       {
          if (filenames.Length > 1)
          {
-            foreach (string f in filenames)
-               if (!SongExtensions.Contains(new FileInfo(f).Extension.ToLower())) return false;
+            foreach (string file in filenames)
+               if (!SongExtensions.Contains(new FileInfo(file).Extension.ToLower())) return false;
          }
          else
          {
@@ -492,9 +492,7 @@ namespace Synthesia
 
       ImportResults ImportHandParts(bool standardPath)
       {
-         ImportResults results = new ImportResults();
-         results.ProblemEncountered = true;
-
+         ImportResults results = new ImportResults() { ProblemEncountered = true };
          string SongInfoPath = Path.Combine(SynthesiaDataPath(standardPath), "songInfo.xml");
 
          FileInfo songInfoFile = new FileInfo(SongInfoPath);
@@ -560,9 +558,7 @@ namespace Synthesia
 
       ImportResults ImportParts(bool standardPath)
       {
-         ImportResults results = new ImportResults();
-         results.ProblemEncountered = true;
-
+         ImportResults results = new ImportResults() { ProblemEncountered = true };
          string SongInfoPath = Path.Combine(SynthesiaDataPath(standardPath), "songInfo.xml");
 
          FileInfo songInfoFile = new FileInfo(SongInfoPath);
@@ -625,9 +621,7 @@ namespace Synthesia
 
       ImportResults ImportFingerHints(bool standardPath)
       {
-         ImportResults results = new ImportResults();
-         results.ProblemEncountered = true;
-
+         ImportResults results = new ImportResults() { ProblemEncountered = true };
          string FingerHintPath = Path.Combine(SynthesiaDataPath(standardPath), "fingers.xml");
 
          FileInfo fingerHintFile = new FileInfo(FingerHintPath);
@@ -653,7 +647,7 @@ namespace Synthesia
             }
 
             var elements = topLevel.Elements("FingerInfo");
-            foreach (var f in elements) allFingers[f.AttributeOrDefault("hash")] = f.AttributeOrDefault("fingers");
+            foreach (var fi in elements) allFingers[fi.AttributeOrDefault("hash")] = fi.AttributeOrDefault("fingers");
          }
          catch (Exception ex)
          {

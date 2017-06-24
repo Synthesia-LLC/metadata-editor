@@ -17,8 +17,8 @@ namespace Synthesia
       // Source: http://stackoverflow.com/a/340454/1744288
       public static string MakeRelativePath(this FileInfo from, FileInfo to)
       {
-         if (from == null) throw new ArgumentNullException("from");
-         if (to == null) throw new ArgumentNullException("to");
+         if (from == null) throw new ArgumentNullException(nameof(from));
+         if (to == null) throw new ArgumentNullException(nameof(to));
 
          Uri fromUri = new Uri(from.FullName);
          Uri toUri = new Uri(to.FullName);
