@@ -12,7 +12,7 @@ namespace Synthesia
       public GuiController c { get; set; }
 
       public IEnumerable<SongEntry> SelectedSongs => from s in SongList.SelectedItems.Cast<SongEntry>() select s;
-      public void UpdateTitle() { Text = "Synthesia Metadata Editor - " + (c.File?.Name ?? "Untitled.synthesia") + (c.Dirty ? "*" : ""); }
+      public string WindowTitle { set { Text = value; } }
       public void DeselectAllSongs() { SongList.SelectedIndex = -1; }
 
       public bool AskYesNo(string message, string title) => MessageBox.Show(message, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;

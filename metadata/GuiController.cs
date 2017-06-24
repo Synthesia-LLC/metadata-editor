@@ -18,7 +18,7 @@ namespace Synthesia
    {
       GuiController c { set; }
 
-      void UpdateTitle();
+      string WindowTitle { set; }
       bool OkayToProceed();
 
       bool AskYesNo(string message, string title);
@@ -80,7 +80,11 @@ namespace Synthesia
       public bool Dirty
       {
          get { return m_dirty; }
-         set { m_dirty = value; f.UpdateTitle(); }
+         set
+         {
+            m_dirty = value;
+            f.WindowTitle = "Synthesia Metadata Editor - " + (File?.Name ?? "Untitled.synthesia") + (value ? "*" : "");
+         }
       }
 
       public void SaveAs()
