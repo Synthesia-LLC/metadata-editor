@@ -1,7 +1,7 @@
-﻿namespace macgui
+﻿namespace Synthesia
 {
-    [global::Foundation.Register("MainWindowController")]
-    public partial class MainWindowController
-    {
-    }
+   [global::Foundation.Register("MainWindowController")]
+   public partial class MainWindowController
+   {
+   }
 }

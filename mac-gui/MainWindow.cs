@@ -3,22 +3,22 @@
 using Foundation;
 using AppKit;
 
-namespace macgui
+namespace Synthesia
 {
-    public partial class MainWindow : NSWindow
-    {
-        public MainWindow(IntPtr handle) : base(handle)
-        {
-        }
+   public partial class MainWindow : NSWindow
+   {
+      public MainWindow(IntPtr handle) : base(handle)
+      {
+      }
 
-        [Export("initWithCoder:")]
-        public MainWindow(NSCoder coder) : base(coder)
-        {
-        }
+      [Export("initWithCoder:")]
+      public MainWindow(NSCoder coder) : base(coder)
+      {
+      }
 
-        public override void AwakeFromNib()
-        {
-            base.AwakeFromNib();
-        }
-    }
+      public override void AwakeFromNib()
+      {
+         base.AwakeFromNib();
+      }
+   }
 }

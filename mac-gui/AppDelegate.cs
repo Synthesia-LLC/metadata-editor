@@ -1,7 +1,7 @@
 ﻿using AppKit;
 using Foundation;
 
-namespace macgui
+namespace Synthesia
 {
    [Register("AppDelegate")]
    public class AppDelegate : NSApplicationDelegate
@@ -17,5 +17,10 @@ namespace macgui
       }
 
       public override bool ApplicationShouldTerminateAfterLastWindowClosed(NSApplication sender) { return true; }
+
+      public override void WillTerminate(NSNotification notification)
+      {
+         // Insert code here to tear down your application
+      }
    }
 }
