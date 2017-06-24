@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mac-gui", "mac-gui\mac-gui.csproj", "{73097645-77BA-4CAC-A66D-B601C8FC7658}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "metadata", "metadata\metadata.csproj", "{C8F3E5D3-E75D-488A-92C4-414EDB4711EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,5 +15,9 @@ Global
 		{73097645-77BA-4CAC-A66D-B601C8FC7658}.Debug|x86.Build.0 = Debug|x86
 		{73097645-77BA-4CAC-A66D-B601C8FC7658}.Release|x86.ActiveCfg = Release|x86
 		{73097645-77BA-4CAC-A66D-B601C8FC7658}.Release|x86.Build.0 = Release|x86
+		{C8F3E5D3-E75D-488A-92C4-414EDB4711EB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C8F3E5D3-E75D-488A-92C4-414EDB4711EB}.Debug|x86.Build.0 = Debug|Any CPU
+		{C8F3E5D3-E75D-488A-92C4-414EDB4711EB}.Release|x86.ActiveCfg = Release|Any CPU
+		{C8F3E5D3-E75D-488A-92C4-414EDB4711EB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

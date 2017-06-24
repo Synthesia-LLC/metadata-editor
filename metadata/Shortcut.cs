@@ -79,6 +79,9 @@ namespace WindowsShell
 
       public static string Resolve(string filename)
       {
+         // We can only resolve shortcuts on Windows
+         if (Environment.OSVersion.Platform != PlatformID.Win32NT) return filename;
+
          ShellLink link = new ShellLink();
          (link as IPersistFile).Load(filename, STGM_READ);
 
