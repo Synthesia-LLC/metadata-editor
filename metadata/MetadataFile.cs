@@ -144,8 +144,9 @@ namespace Synthesia
                   Parts = s.AttributeOrDefault("Parts")
                };
 
-               if (int.TryParse(s.AttributeOrDefault("Rating"), out int rating)) entry.Rating = rating;
-               if (int.TryParse(s.AttributeOrDefault("Difficulty"), out int difficulty)) entry.Difficulty = difficulty;
+               int rating, difficulty;
+               if (int.TryParse(s.AttributeOrDefault("Rating"), out rating)) entry.Rating = rating;
+               if (int.TryParse(s.AttributeOrDefault("Difficulty"), out difficulty)) entry.Difficulty = difficulty;
 
                string tags = s.AttributeOrDefault("Tags");
                if (tags != null)
@@ -163,7 +164,8 @@ namespace Synthesia
                   {
                      int comma = b.IndexOf(',');
 
-                     int.TryParse(comma == -1 ? b : b.Substring(0, comma), out int measure);
+                     int measure;
+                     int.TryParse(comma == -1 ? b : b.Substring(0, comma), out measure);
                      if (measure == 0) continue;
 
                      string description = "";
