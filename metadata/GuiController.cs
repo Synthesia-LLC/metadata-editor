@@ -236,6 +236,7 @@ namespace Synthesia
 
       public void AddSongs(string[] filenames)
       {
+         if (filenames.Length == 0) return;
          List<string> existingIds = (from s in Metadata.Songs select s.UniqueId).ToList();
 
          foreach (string s in filenames)

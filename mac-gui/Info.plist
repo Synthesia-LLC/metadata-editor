@@ -7,9 +7,9 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.synthesia.metadata-editor</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.2.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>100</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.7</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>${AuthorCopyright}</string>
+	<string>(c)2014-2017 Synthesia LLC</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSMainNibFile</key>

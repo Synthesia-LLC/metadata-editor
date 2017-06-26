@@ -95,7 +95,7 @@
     <MonoDevelop>
       <Properties>
         <Policies>
-          <TextStylePolicy FileWidth="120" RemoveTrailingWhitespace="True" NoTabsAfterNonTabs="False" EolMarker="Native" TabWidth="3" TabsToSpaces="True" IndentWidth="3" scope="text/plain">
+          <TextStylePolicy FileWidth="120" RemoveTrailingWhitespace="True" EolMarker="Native" TabWidth="3" TabsToSpaces="True" IndentWidth="3" NoTabsAfterNonTabs="True" scope="text/plain">
             <inheritsSet />
             <inheritsScope />
           </TextStylePolicy>
