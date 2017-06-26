@@ -7,11 +7,12 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MainWindowController">
             <connections>
+                <outlet property="bookmarkRemoveClicked" destination="DcL-IR-fXk" id="dkt-2v-UFg"/>
                 <outlet property="window" destination="2" id="6"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="[set via code]" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" animationBehavior="default" id="2" customClass="MainWindow">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <rect key="contentRect" x="131" y="74" width="800" height="730"/>
@@ -88,6 +89,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="addSongClicked:" target="-2" id="BFP-b4-xaP"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" misplaced="YES" id="2M3-zW-YJP">
                         <rect key="frame" x="115" y="13" width="81" height="32"/>
@@ -96,6 +100,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="removeSongClicked:" target="-2" id="g5N-yL-MLw"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" misplaced="YES" id="b7V-3a-sIQ">
                         <rect key="frame" x="211" y="13" width="98" height="32"/>
@@ -104,6 +111,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="groupingClicked:" target="-2" id="vQI-H8-J1o"/>
+                        </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" allowsCharacterPickerTouchBarItem="NO" id="4WU-31-eBE">
                         <rect key="frame" x="320" y="691" width="88" height="17"/>
@@ -130,6 +140,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="retargetClicked:" target="-2" id="4x4-wp-6Wr"/>
+                        </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" allowsCharacterPickerTouchBarItem="NO" id="41Z-jt-2Kh">
                         <rect key="frame" x="320" y="664" width="88" height="17"/>
@@ -192,6 +205,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="backgroundBrowseClicked:" target="-2" id="qSa-t4-ks9"/>
+                        </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" allowsCharacterPickerTouchBarItem="NO" id="ErN-Ap-6Ki">
                         <rect key="frame" x="320" y="568" width="88" height="17"/>
@@ -460,6 +476,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="tagAddClicked:" target="-2" id="4K1-fc-XPW"/>
+                        </connections>
                     </button>
                     <scrollView misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="Tlm-h5-hB0">
                         <rect key="frame" x="322" y="51" width="115" height="92"/>
@@ -528,6 +547,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="tagRemoveClicked:" target="-2" id="0Rw-09-Rey"/>
+                        </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" allowsCharacterPickerTouchBarItem="NO" id="cQM-5l-wM8">
                         <rect key="frame" x="499" y="181" width="278" height="17"/>
@@ -567,6 +589,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="bookmarkAddClicked:" target="-2" id="4kN-MC-Ey8"/>
+                        </connections>
                     </button>
                     <scrollView misplaced="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="mID-iW-19O">
                         <rect key="frame" x="501" y="51" width="245" height="92"/>
@@ -635,6 +660,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="bookmarkRemoveClicked:" target="-2" id="Zur-ZD-cZj"/>
+                        </connections>
                     </button>
                 </subviews>
             </view>
