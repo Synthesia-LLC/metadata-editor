@@ -29,9 +29,11 @@ namespace Synthesia
       {
          if (!c.Dirty) return true;
 
-         DialogResult r = MessageBox.Show("Would you like to save your changes first?", "Save Changes?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-         if (r == DialogResult.Cancel) return false;
-         if (r == DialogResult.Yes) if (!c.SaveChanges()) return false;
+         switch (MessageBox.Show("Would you like to save your changes first?", "Save Changes?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+         {
+            case DialogResult.Cancel: return false;
+            case DialogResult.Yes: return c.SaveChanges();
+         }
          return true;
       }
 
@@ -43,6 +45,11 @@ namespace Synthesia
          c = new GuiController(this, initialFile);
       }
 
+      private void MetadataEditor_FormClosing(object sender, FormClosingEventArgs e)
+      {
+         if (!OkayToProceed()) e.Cancel = true;
+      }
+
       private void MetadataEditor_Load(object sender, EventArgs e)
       {
          Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
@@ -52,20 +59,20 @@ namespace Synthesia
       private void OpenMenu_Click(object sender, EventArgs e) { c.Open(); }
       private void SaveMenu_Click(object sender, EventArgs e) { c.SaveChanges(); }
       private void SaveAsMenu_Click(object sender, EventArgs e) { c.SaveAs(); }
-      private void RemoveSong_Click(object sender, EventArgs e) { c.RemoveSelectedSongs(); }
-      private void SongList_SelectedIndexChanged(object sender, EventArgs e) { c.SelectionChanged(); }
       private void ImportMenu_Click(object sender, EventArgs e) { c.Import(); }
+      private void AboutMenu_Click(object sender, EventArgs e) { new About().ShowDialog(); }
+      private void ExitMenu_Click(object sender, EventArgs e) { Close(); }
+
+      private void RemoveSong_Click(object sender, EventArgs e) { c.RemoveSelectedSongs(); }
       private void SongGrouping_Click(object sender, EventArgs e) { c.Grouping(); }
       private void Md5Update_Click(object sender, EventArgs e) { c.RetargetUniqueId(); }
-
-      private void ExitMenu_Click(object sender, EventArgs e) { Close(); }
-      private void AboutMenu_Click(object sender, EventArgs e) { new About().ShowDialog(); }
-
       private void AddSong_Click(object sender, EventArgs e)
       {
          if (OpenSongDialog.ShowDialog(this) != DialogResult.OK) return;
          c.AddSongs(OpenSongDialog.FileNames);
       }
+
+      private void SongList_SelectedIndexChanged(object sender, EventArgs e) { c.SelectionChanged(); }
 
       public void RefreshSongList()
       {
@@ -84,11 +91,6 @@ namespace Synthesia
          }
 
          SongList.EndUpdate();
-      }
-
-      private void MetadataEditor_FormClosing(object sender, FormClosingEventArgs e)
-      {
-         if (!OkayToProceed()) e.Cancel = true;
       }
 
       public void ClearSongControls()
