@@ -20,10 +20,26 @@ namespace Synthesia
       public void ShowError(string message, string title) { new NSAlert { MessageText = title, InformativeText = message, AlertStyle = NSAlertStyle.Critical }.RunModal(); }
       public void ShowExclamation(string message, string title) { new NSAlert { MessageText = title, InformativeText = message, AlertStyle = NSAlertStyle.Warning }.RunModal(); }
 
-      public string SaveMetadataFilename() { return null; /* TODO */ }
-      public string OpenMetadataFilename() { return null; /* TODO */ }
-      public string RetargetSongFilename() { return null; /* TODO */ }
-      public string PickImageFilename() { return null; /* TODO */ }
+      public string SaveMetadataFilename()
+      {
+         var panel = new NSSavePanel() { Title = "Save Metadata File", AllowedFileTypes = (from e in c.MetaExtensions select e.Substring(1)).ToArray(), AllowsOtherFileTypes = true };
+         return (panel.RunModal() == 1) ? panel.Url?.Path ?? null : null;
+      }
+      public string OpenMetadataFilename()
+      {
+         var panel = new NSOpenPanel() { Title = "Open Metadata File", AllowedFileTypes = (from e in c.MetaExtensions select e.Substring(1)).ToArray(), AllowsOtherFileTypes = true, AllowsMultipleSelection = false, CanChooseFiles = true, CanChooseDirectories = false };
+         return (panel.RunModal() == 1) ? panel.Url?.Path ?? null : null;
+      }
+      public string RetargetSongFilename()
+      {
+			var panel = new NSOpenPanel() { Title = "Retarget Metadata", AllowedFileTypes = (from e in c.SongExtensions select e.Substring(1)).ToArray(), AllowsOtherFileTypes = true, AllowsMultipleSelection = false, CanChooseFiles = true, CanChooseDirectories = false };
+			return (panel.RunModal() == 1) ? panel.Url?.Path ?? null : null;
+		}
+      public string PickImageFilename()
+      {
+         var panel = new NSOpenPanel() { Title = "Background Image for Song", AllowedFileTypes = new string[] { "jpg", "jpeg", "gif", "bmp", "png", "tif", "tiff", "tga" }, AllowsOtherFileTypes = true, AllowsMultipleSelection = false, CanChooseFiles = true, CanChooseDirectories = false };
+			return (panel.RunModal() == 1) ? panel.Url?.Path ?? null : null;
+		}
 
       public bool OkayToProceed()
       {
@@ -56,6 +72,20 @@ namespace Synthesia
          c = new GuiController(this, "");
 
          Window.WindowShouldClose += (sender) => { return OkayToProceed(); };
+
+         TitleBox.Changed += (sender, e) => { c.TitleChanged(TitleBox.StringValue); };
+         SubtitleBox.Changed += (sender, e) => { c.SubtitleChanged(SubtitleBox.StringValue); };
+         BackgroundBox.Changed += (sender, e) => { c.BackgroundChanged(BackgroundBox.StringValue); };
+         RatingBox.Changed += (sender, e) => { c.RatingChanged(RatingBox.IntValue); };
+         DifficultyBox.Changed += (sender, e) => { c.DifficultyChanged(DifficultyBox.IntValue); };
+         ComposerBox.Changed += (sender, e) => { c.ComposerChanged(ComposerBox.StringValue); };
+         ArrangerBox.Changed += (sender, e) => { c.ArrangerChanged(ArrangerBox.StringValue); };
+         CopyrightBox.Changed += (sender, e) => { c.CopyrightChanged(CopyrightBox.StringValue); };
+         MadeFamousByBox.Changed += (sender, e) => { c.MadeFamousByChanged(MadeFamousByBox.StringValue); };
+         FingerHintBox.TextDidChange += (sender, e) => { c.FingerHintChanged(FingerHintBox.String); };
+         LicenseBox.Changed += (sender, e) => { c.LicenseChanged(LicenseBox.StringValue); };
+         HandsBox.Changed += (sender, e) => { c.HandsChanged(HandsBox.StringValue); };
+         PartsBox.TextDidChange += (sender, e) => { c.PartsChanged(PartsBox.String); };
       }
 
       public override void AwakeFromNib() { base.AwakeFromNib(); }
@@ -68,8 +98,9 @@ namespace Synthesia
       partial void retargetClicked(NSObject sender) { c.RetargetUniqueId(); }
       partial void addSongClicked(NSObject sender)
       {
-         // TODO
-         c.AddSongs(new string[] { });
+			var panel = new NSOpenPanel() { Title = "Add Songs", AllowedFileTypes = (from e in c.SongExtensions select e.Substring(1)).ToArray(), AllowsOtherFileTypes = true, AllowsMultipleSelection = true, CanChooseFiles = true, CanChooseDirectories = false };
+         if (panel.RunModal() != 1) return;
+         c.AddSongs((from s in panel.Urls select s?.Path ?? null).ToArray());
       }
 
       // TODO: SongList_SelectedIndexChanged
@@ -119,8 +150,6 @@ namespace Synthesia
       // TODO: bookmarkDescriptionChanged
       // TODO: bookmarkSelectedIndexChanged
 
-      // TODO: boxes changed!
-
       public void UpdateSelectedSongTitle()
       {
          // TODO
@@ -143,7 +172,8 @@ namespace Synthesia
 
       partial void backgroundBrowseClicked(NSObject sender)
       {
-         // TODO
+         var relative = c.BrowseBackground();
+         if (relative != null) BackgroundBox.StringValue = relative;
       }
    }
 }

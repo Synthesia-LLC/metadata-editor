@@ -68,9 +68,9 @@ namespace Synthesia
          Dirty = false;
       }
 
-      readonly HashSet<string> SongExtensions = new HashSet<string>() { ".mid", ".midi", ".kar" };
-      readonly HashSet<string> MetaExtensions = new HashSet<string>() { ".synthesia", ".xml" };
-      readonly HashSet<string> LinkExtensions = new HashSet<string>() { ".lnk" };
+      public readonly HashSet<string> SongExtensions = new HashSet<string>() { ".mid", ".midi", ".kar" };
+      public readonly HashSet<string> MetaExtensions = new HashSet<string>() { ".synthesia", ".xml" };
+      public readonly HashSet<string> LinkExtensions = new HashSet<string>() { ".lnk" };
 
       public FileInfo File { get; set; }
       public MetadataFile Metadata { get; set; }

@@ -7,6 +7,19 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MainWindowController">
             <connections>
+                <outlet property="ArrangerBox" destination="Kek-Ji-2yR" id="B6Y-AO-fI2"/>
+                <outlet property="BackgroundBox" destination="hFY-cP-uEx" id="lBq-pU-bHk"/>
+                <outlet property="ComposerBox" destination="cka-zb-aRM" id="Z5r-qE-PRR"/>
+                <outlet property="CopyrightBox" destination="BuF-uD-wAk" id="cNh-Oi-Fsu"/>
+                <outlet property="DifficultyBox" destination="REZ-dL-AVg" id="AT0-Gz-7H7"/>
+                <outlet property="FingerHintBox" destination="RID-q7-7me" id="yVc-aN-cGw"/>
+                <outlet property="HandsBox" destination="Wx8-K7-4x8" id="uSp-ri-A4n"/>
+                <outlet property="LicenseBox" destination="655-eH-VcY" id="201-MG-8SE"/>
+                <outlet property="MadeFamousByBox" destination="NEc-1x-fYJ" id="PQM-d4-1YV"/>
+                <outlet property="PartsBox" destination="zN3-Ns-y11" id="5A8-Ze-6sV"/>
+                <outlet property="RatingBox" destination="AJE-My-UKd" id="Y5t-1k-dcc"/>
+                <outlet property="SubtitleBox" destination="oUP-oU-hB0" id="X6i-po-JtK"/>
+                <outlet property="TitleBox" destination="uhd-c8-1Gy" id="r3o-7Z-E7A"/>
                 <outlet property="bookmarkRemoveClicked" destination="DcL-IR-fXk" id="dkt-2v-UFg"/>
                 <outlet property="window" destination="2" id="6"/>
             </connections>

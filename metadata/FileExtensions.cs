@@ -20,8 +20,19 @@ namespace Synthesia
          if (from == null) throw new ArgumentNullException(nameof(from));
          if (to == null) throw new ArgumentNullException(nameof(to));
 
-         Uri fromUri = new Uri(from.FullName);
-         Uri toUri = new Uri(to.FullName);
+         Uri fromUri, toUri;
+
+         // NOTE: new Uri(something.FullName) gets escaped strangely under Xamarin/Mono, so we pass them in using Uri-format to skip the escaping step
+         if (Environment.OSVersion.Platform == PlatformID.MacOSX || Environment.OSVersion.Platform == PlatformID.Unix)
+         {
+            fromUri = new Uri("file://" + from.FullName, UriKind.Absolute);
+            toUri = new Uri("file://" + to.FullName, UriKind.Absolute);
+         }
+         else
+         {
+            fromUri = new Uri(from.FullName);
+            toUri = new Uri(to.FullName);
+         }
 
          Uri relativeUri = fromUri.MakeRelativeUri(toUri);
          string relativePath = Uri.UnescapeDataString(relativeUri.ToString());
