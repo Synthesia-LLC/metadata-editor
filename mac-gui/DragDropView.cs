@@ -24,7 +24,7 @@ public class DragDropView : NSView
 
    public override NSDragOperation DraggingEntered(NSDraggingInfo sender)
    {
-      return DraggedFilenames(sender.DraggingPasteboard).Any() ? NSDragOperation.Copy : NSDragOperation.None;
+      return controller.c.AllowDragDrop(DraggedFilenames(sender.DraggingPasteboard).ToArray()) ? NSDragOperation.Copy : NSDragOperation.None;
    }
 
    public override bool PerformDragOperation(NSDraggingInfo sender)
