@@ -9,144 +9,237 @@ using System.CodeDom.Compiler;
 
 namespace Synthesia
 {
-	[Register ("MainWindowController")]
-	partial class MainWindowController
-	{
-		[Outlet]
-		AppKit.NSTextField ArrangerBox { get; set; }
+   [Register ("MainWindowController")]
+   partial class MainWindowController
+   {
+      [Outlet]
+      AppKit.NSButton AddTagButton { get; set; }
 
-		[Outlet]
-		AppKit.NSTextField BackgroundBox { get; set; }
+      [Outlet]
+      AppKit.NSTextField ArrangerBox { get; set; }
 
-		[Outlet]
-		AppKit.NSTextField ComposerBox { get; set; }
+      [Outlet]
+      AppKit.NSTextField BackgroundBox { get; set; }
 
-		[Outlet]
-		AppKit.NSTextField CopyrightBox { get; set; }
+      [Outlet]
+      AppKit.NSTextField BookmarkLabelBox { get; set; }
 
-		[Outlet]
-		AppKit.NSTextField DifficultyBox { get; set; }
+      [Outlet]
+      AppKit.NSTableView BookmarkList { get; set; }
 
-		[Outlet]
-		AppKit.NSTextView FingerHintBox { get; set; }
+      [Outlet]
+      AppKit.NSTextField BookmarkMeasureBox { get; set; }
 
-		[Outlet]
-		AppKit.NSTextField HandsBox { get; set; }
+      [Outlet]
+      AppKit.NSTextField ComposerBox { get; set; }
 
-		[Outlet]
-		AppKit.NSTextField LicenseBox { get; set; }
+      [Outlet]
+      AppKit.NSTextField CopyrightBox { get; set; }
 
-		[Outlet]
-		AppKit.NSTextField MadeFamousByBox { get; set; }
+      [Outlet]
+      AppKit.NSTextField DifficultyBox { get; set; }
 
-		[Outlet]
-		AppKit.NSTextView PartsBox { get; set; }
+      [Outlet]
+      AppKit.NSTextView FingerHintBox { get; set; }
 
-		[Outlet]
-		AppKit.NSTextField RatingBox { get; set; }
+      [Outlet]
+      AppKit.NSTextField HandsBox { get; set; }
 
-		[Outlet]
-		AppKit.NSTextField SubtitleBox { get; set; }
+      [Outlet]
+      AppKit.NSTextField LicenseBox { get; set; }
 
-		[Outlet]
-		AppKit.NSTextField TitleBox { get; set; }
+      [Outlet]
+      AppKit.NSTextField MadeFamousByBox { get; set; }
 
-		[Action ("addSongClicked:")]
-		partial void addSongClicked (Foundation.NSObject sender);
+      [Outlet]
+      AppKit.NSTextView PartsBox { get; set; }
 
-		[Action ("backgroundBrowseClicked:")]
-		partial void backgroundBrowseClicked (Foundation.NSObject sender);
+      [Outlet]
+      AppKit.NSBox PropertiesGroup { get; set; }
 
-		[Action ("bookmarkAddClicked:")]
-		partial void bookmarkAddClicked (Foundation.NSObject sender);
+      [Outlet]
+      AppKit.NSTextField RatingBox { get; set; }
 
-		[Action ("bookmarkRemoveClicked:")]
-		partial void bookmarkRemoveClicked (Foundation.NSObject sender);
+      [Outlet]
+      AppKit.NSButton RemoveBookmarkButton { get; set; }
 
-		[Action ("groupingClicked:")]
-		partial void groupingClicked (Foundation.NSObject sender);
+      [Outlet]
+      AppKit.NSButton RemoveTagButton { get; set; }
 
-		[Action ("removeSongClicked:")]
-		partial void removeSongClicked (Foundation.NSObject sender);
+      [Outlet]
+      AppKit.NSButton RetargetButton { get; set; }
 
-		[Action ("retargetClicked:")]
-		partial void retargetClicked (Foundation.NSObject sender);
+      [Outlet]
+      AppKit.NSTableView SongList { get; set; }
 
-		[Action ("tagAddClicked:")]
-		partial void tagAddClicked (Foundation.NSObject sender);
+      [Outlet]
+      AppKit.NSTextField SubtitleBox { get; set; }
 
-		[Action ("tagRemoveClicked:")]
-		partial void tagRemoveClicked (Foundation.NSObject sender);
+      [Outlet]
+      AppKit.NSTextField TagBox { get; set; }
 
-		[Action ("titleChanged:")]
-		partial void titleChanged (AppKit.NSTextField sender);
-		
-		void ReleaseDesignerOutlets ()
-		{
-			if (TitleBox != null) {
-				TitleBox.Dispose ();
-				TitleBox = null;
-			}
+      [Outlet]
+      AppKit.NSTableView TagList { get; set; }
 
-			if (SubtitleBox != null) {
-				SubtitleBox.Dispose ();
-				SubtitleBox = null;
-			}
+      [Outlet]
+      AppKit.NSTextField TitleBox { get; set; }
 
-			if (BackgroundBox != null) {
-				BackgroundBox.Dispose ();
-				BackgroundBox = null;
-			}
+      [Outlet]
+      AppKit.NSTextField UniqueIdBox { get; set; }
 
-			if (RatingBox != null) {
-				RatingBox.Dispose ();
-				RatingBox = null;
-			}
+      [Action ("addSongClicked:")]
+      partial void addSongClicked (Foundation.NSObject sender);
 
-			if (DifficultyBox != null) {
-				DifficultyBox.Dispose ();
-				DifficultyBox = null;
-			}
+      [Action ("backgroundBrowseClicked:")]
+      partial void backgroundBrowseClicked (Foundation.NSObject sender);
 
-			if (ComposerBox != null) {
-				ComposerBox.Dispose ();
-				ComposerBox = null;
-			}
+      [Action ("bookmarkAddClicked:")]
+      partial void bookmarkAddClicked (Foundation.NSObject sender);
 
-			if (ArrangerBox != null) {
-				ArrangerBox.Dispose ();
-				ArrangerBox = null;
-			}
+      [Action ("bookmarkRemoveClicked:")]
+      partial void bookmarkRemoveClicked (Foundation.NSObject sender);
 
-			if (CopyrightBox != null) {
-				CopyrightBox.Dispose ();
-				CopyrightBox = null;
-			}
+      [Action ("groupingClicked:")]
+      partial void groupingClicked (Foundation.NSObject sender);
 
-			if (MadeFamousByBox != null) {
-				MadeFamousByBox.Dispose ();
-				MadeFamousByBox = null;
-			}
+      [Action ("removeSongClicked:")]
+      partial void removeSongClicked (Foundation.NSObject sender);
 
-			if (FingerHintBox != null) {
-				FingerHintBox.Dispose ();
-				FingerHintBox = null;
-			}
+      [Action ("retargetClicked:")]
+      partial void retargetClicked (Foundation.NSObject sender);
 
-			if (LicenseBox != null) {
-				LicenseBox.Dispose ();
-				LicenseBox = null;
-			}
+      [Action ("tagAddClicked:")]
+      partial void tagAddClicked (Foundation.NSObject sender);
 
-			if (HandsBox != null) {
-				HandsBox.Dispose ();
-				HandsBox = null;
-			}
+      [Action ("tagRemoveClicked:")]
+      partial void tagRemoveClicked (Foundation.NSObject sender);
 
-			if (PartsBox != null) {
-				PartsBox.Dispose ();
-				PartsBox = null;
-			}
-		}
-	}
+      void ReleaseDesignerOutlets ()
+      {
+         if (AddTagButton != null) {
+            AddTagButton.Dispose ();
+            AddTagButton = null;
+         }
+
+         if (ArrangerBox != null) {
+            ArrangerBox.Dispose ();
+            ArrangerBox = null;
+         }
+
+         if (BackgroundBox != null) {
+            BackgroundBox.Dispose ();
+            BackgroundBox = null;
+         }
+
+         if (BookmarkLabelBox != null) {
+            BookmarkLabelBox.Dispose ();
+            BookmarkLabelBox = null;
+         }
+
+         if (BookmarkList != null) {
+            BookmarkList.Dispose ();
+            BookmarkList = null;
+         }
+
+         if (BookmarkMeasureBox != null) {
+            BookmarkMeasureBox.Dispose ();
+            BookmarkMeasureBox = null;
+         }
+
+         if (ComposerBox != null) {
+            ComposerBox.Dispose ();
+            ComposerBox = null;
+         }
+
+         if (CopyrightBox != null) {
+            CopyrightBox.Dispose ();
+            CopyrightBox = null;
+         }
+
+         if (DifficultyBox != null) {
+            DifficultyBox.Dispose ();
+            DifficultyBox = null;
+         }
+
+         if (FingerHintBox != null) {
+            FingerHintBox.Dispose ();
+            FingerHintBox = null;
+         }
+
+         if (HandsBox != null) {
+            HandsBox.Dispose ();
+            HandsBox = null;
+         }
+
+         if (LicenseBox != null) {
+            LicenseBox.Dispose ();
+            LicenseBox = null;
+         }
+
+         if (MadeFamousByBox != null) {
+            MadeFamousByBox.Dispose ();
+            MadeFamousByBox = null;
+         }
+
+         if (PartsBox != null) {
+            PartsBox.Dispose ();
+            PartsBox = null;
+         }
+
+         if (PropertiesGroup != null) {
+            PropertiesGroup.Dispose ();
+            PropertiesGroup = null;
+         }
+
+         if (RatingBox != null) {
+            RatingBox.Dispose ();
+            RatingBox = null;
+         }
+
+         if (RemoveBookmarkButton != null) {
+            RemoveBookmarkButton.Dispose ();
+            RemoveBookmarkButton = null;
+         }
+
+         if (RemoveTagButton != null) {
+            RemoveTagButton.Dispose ();
+            RemoveTagButton = null;
+         }
+
+         if (RetargetButton != null) {
+            RetargetButton.Dispose ();
+            RetargetButton = null;
+         }
+
+         if (SongList != null) {
+            SongList.Dispose ();
+            SongList = null;
+         }
+
+         if (SubtitleBox != null) {
+            SubtitleBox.Dispose ();
+            SubtitleBox = null;
+         }
+
+         if (TagBox != null) {
+            TagBox.Dispose ();
+            TagBox = null;
+         }
+
+         if (TagList != null) {
+            TagList.Dispose ();
+            TagList = null;
+         }
+
+         if (TitleBox != null) {
+            TitleBox.Dispose ();
+            TitleBox = null;
+         }
+
+         if (UniqueIdBox != null) {
+            UniqueIdBox.Dispose ();
+            UniqueIdBox = null;
+         }
+      }
+   }
 }

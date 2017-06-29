@@ -45,6 +45,23 @@ namespace Synthesia
       void BindSongControls();
    }
 
+   public class Bookmark
+   {
+      public int Measure { get; private set; }
+      public string Description { get; private set; }
+
+      public Bookmark(int measure, string description)
+      {
+         Measure = measure;
+         Description = description ?? "";
+      }
+
+      public override string ToString()
+      {
+         return Measure.ToString() + (string.IsNullOrWhiteSpace(Description) ? "" : (": " + Description));
+      }
+   }
+
    public class GuiController
    {
       readonly IGuiForm f;
@@ -68,9 +85,9 @@ namespace Synthesia
          Dirty = false;
       }
 
-      public readonly HashSet<string> SongExtensions = new HashSet<string>() { ".mid", ".midi", ".kar" };
-      public readonly HashSet<string> MetaExtensions = new HashSet<string>() { ".synthesia", ".xml" };
-      public readonly HashSet<string> LinkExtensions = new HashSet<string>() { ".lnk" };
+      public static readonly HashSet<string> SongExtensions = new HashSet<string> { ".mid", ".midi", ".kar" };
+      public static readonly HashSet<string> MetaExtensions = new HashSet<string> { ".synthesia", ".xml" };
+      public static readonly HashSet<string> LinkExtensions = new HashSet<string> { ".lnk" };
 
       public FileInfo File { get; set; }
       public MetadataFile Metadata { get; set; }
@@ -121,6 +138,18 @@ namespace Synthesia
          Dirty = false;
       }
 
+      public void Open(string filename)
+      {
+         if (!System.IO.File.Exists(filename)) return;
+			if (!f.OkayToProceed()) return;
+
+         File = new FileInfo(filename);
+			using (FileStream input = File.OpenRead()) Metadata = new MetadataFile(input);
+
+			WipeSelection();
+			Dirty = false;
+		}
+
       public void Open()
       {
          if (!f.OkayToProceed()) return;
@@ -128,11 +157,7 @@ namespace Synthesia
          var filename = f.OpenMetadataFilename();
          if (filename == null) return;
 
-         File = new FileInfo(filename);
-         using (FileStream input = File.OpenRead()) Metadata = new MetadataFile(input);
-
-         WipeSelection();
-         Dirty = false;
+         Open(filename);
       }
 
       public void Import()
@@ -433,29 +458,34 @@ namespace Synthesia
          return true;
       }
 
-      public void DragDropFiles(string[] filenames)
+      public bool DragDropFiles(string[] filenames)
       {
-         if (filenames.Length > 1) AddSongs(filenames);
-         else
+         if (filenames.Length == 0) return false;
+
+         if (filenames.Length > 1)
          {
-            FileInfo file = new FileInfo(filenames[0]);
-            if (LinkExtensions.Contains(file.Extension.ToLower())) file = new FileInfo(WindowsShell.Shortcut.Resolve(filenames[0]));
-
-            if (SongExtensions.Contains(file.Extension.ToLower()))
-            {
-               AddSongs(filenames);
-               return;
-            }
-
-            if (!MetaExtensions.Contains(file.Extension.ToLower())) return;
-            if (!f.OkayToProceed()) return;
-
-            File = file;
-            using (FileStream input = File.OpenRead()) Metadata = new MetadataFile(input);
-
-            WipeSelection();
-            Dirty = false;
+            AddSongs(filenames);
+            return true;
          }
+
+         FileInfo file = new FileInfo(filenames[0]);
+         if (LinkExtensions.Contains(file.Extension.ToLower())) file = new FileInfo(WindowsShell.Shortcut.Resolve(filenames[0]));
+
+         if (SongExtensions.Contains(file.Extension.ToLower()))
+         {
+            AddSongs(filenames);
+            return true;
+         }
+
+         if (!MetaExtensions.Contains(file.Extension.ToLower())) return false;
+         if (!f.OkayToProceed()) return false;
+
+         File = file;
+         using (FileStream input = File.OpenRead()) Metadata = new MetadataFile(input);
+
+         WipeSelection();
+         Dirty = false;
+         return true;
       }
 
       static private string SynthesiaDataPath(bool standard)

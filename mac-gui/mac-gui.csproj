@@ -79,6 +79,7 @@
       <DependentUpon>MainWindowController.cs</DependentUpon>
     </Compile>
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="DragDropView.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainMenu.xib" />

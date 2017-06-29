@@ -139,23 +139,6 @@ namespace Synthesia
          box.Value = values == 1 ? (prop.GetValue(SelectedSongs.First(), null) as int?) ?? 0 : 0;
       }
 
-      private class BookmarkListItem
-      {
-         public int Measure { get; private set; }
-         public string Description { get; private set; }
-
-         public BookmarkListItem(int measure, string description)
-         {
-            Measure = measure;
-            Description = description ?? "";
-         }
-
-         public override string ToString()
-         {
-            return Measure.ToString() + (string.IsNullOrWhiteSpace(Description) ? "" : (": " + Description));
-         }
-      }
-
       public void BindSongControls()
       {
          PropertiesGroup.Enabled = true;
@@ -195,7 +178,7 @@ namespace Synthesia
          foreach (var tag in tagFrequency) if (tag.Value == selectedCount) TagList.Items.Add(tag.Key);
 
          BookmarkList.Items.Clear();
-         foreach (var b in bookmarkFrequency) if (b.Value == selectedCount) BookmarkList.Items.Add(new BookmarkListItem(b.Key.Key, b.Key.Value));
+         foreach (var b in bookmarkFrequency) if (b.Value == selectedCount) BookmarkList.Items.Add(new Bookmark(b.Key.Key, b.Key.Value));
       }
 
       private void AddTag_Click(object sender, EventArgs e)
@@ -233,7 +216,7 @@ namespace Synthesia
       private void RemoveBookmark_Click(object sender, EventArgs e)
       {
          if (BookmarkList.SelectedItem == null) return;
-         BookmarkListItem b = BookmarkList.SelectedItem as BookmarkListItem;
+         Bookmark b = BookmarkList.SelectedItem as Bookmark;
          c.RemoveBookmark(b.Measure);
 
          BookmarkMeasureBox.Value = b.Measure;

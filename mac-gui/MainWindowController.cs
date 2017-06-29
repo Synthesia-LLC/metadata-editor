@@ -4,6 +4,7 @@ using System.Linq;
 
 using Foundation;
 using AppKit;
+using System.Reflection;
 
 namespace Synthesia
 {
@@ -11,9 +12,38 @@ namespace Synthesia
    {
       public GuiController c { get; set; }
 
-      public IEnumerable<SongEntry> SelectedSongs => new SongEntry[] { /* TODO */ };
+      public class TableSource<Type> : NSTableViewDataSource
+      {
+         public List<Type> Data = new List<Type>();
+         public override nint GetRowCount(NSTableView tableView) { return Data.Count; }
+      }
+
+      public class TableDelegate<Type> : NSTableViewDelegate
+      {
+         readonly TableSource<Type> Source;
+         public Action SelectionChanged;
+
+         public TableDelegate(TableSource<Type> s, Action selectionChanged = null) { Source = s; SelectionChanged = selectionChanged; }
+
+         public override NSView GetViewForItem(NSTableView tableView, NSTableColumn tableColumn, nint row)
+         {
+            NSTextField v = (NSTextField)tableView.MakeView("cell", this);
+            if (v == null) v = new NSTextField { Identifier = "cell", BackgroundColor = NSColor.Clear, Bordered = false, Selectable = false, Editable = false };
+
+            v.StringValue = Source.Data[(int)row].ToString();
+            return v;
+         }
+
+         public override void SelectionDidChange(NSNotification notification) { SelectionChanged?.Invoke(); }
+      }
+
+      readonly TableSource<SongEntry> Songs = new TableSource<SongEntry>();
+      readonly TableSource<Bookmark> Bookmarks = new TableSource<Bookmark>();
+      readonly TableSource<string> Tags = new TableSource<string>();
+
+      public IEnumerable<SongEntry> SelectedSongs => from s in SongList.SelectedRows select Songs.Data[(int)s];
       public string WindowTitle { set { Window.Title = value; } }
-      public void DeselectAllSongs() { /* TODO */ }
+      public void DeselectAllSongs() { SongList.DeselectAll(this); }
 
       public bool AskYesNo(string message, string title) { var alert = new NSAlert { MessageText = title, InformativeText = message }; alert.AddButton("No"); alert.AddButton("Yes"); return alert.RunModal() == (int)NSAlertButtonReturn.Second; }
       public void ShowInfo(string message, string title) { new NSAlert { MessageText = title, InformativeText = message, AlertStyle = NSAlertStyle.Informational }.RunModal(); }
@@ -22,17 +52,17 @@ namespace Synthesia
 
       public string SaveMetadataFilename()
       {
-         var panel = new NSSavePanel() { Title = "Save Metadata File", AllowedFileTypes = (from e in c.MetaExtensions select e.Substring(1)).ToArray(), AllowsOtherFileTypes = true };
+         var panel = new NSSavePanel() { Title = "Save Metadata File", AllowedFileTypes = (from e in GuiController.MetaExtensions select e.Substring(1)).ToArray(), AllowsOtherFileTypes = true };
          return (panel.RunModal() == 1) ? panel.Url?.Path ?? null : null;
       }
       public string OpenMetadataFilename()
       {
-         var panel = new NSOpenPanel() { Title = "Open Metadata File", AllowedFileTypes = (from e in c.MetaExtensions select e.Substring(1)).ToArray(), AllowsOtherFileTypes = true, AllowsMultipleSelection = false, CanChooseFiles = true, CanChooseDirectories = false };
+         var panel = new NSOpenPanel() { Title = "Open Metadata File", AllowedFileTypes = (from e in GuiController.MetaExtensions select e.Substring(1)).ToArray(), AllowsOtherFileTypes = true, AllowsMultipleSelection = false, CanChooseFiles = true, CanChooseDirectories = false };
          return (panel.RunModal() == 1) ? panel.Url?.Path ?? null : null;
       }
       public string RetargetSongFilename()
       {
-			var panel = new NSOpenPanel() { Title = "Retarget Metadata", AllowedFileTypes = (from e in c.SongExtensions select e.Substring(1)).ToArray(), AllowsOtherFileTypes = true, AllowsMultipleSelection = false, CanChooseFiles = true, CanChooseDirectories = false };
+			var panel = new NSOpenPanel() { Title = "Retarget Metadata", AllowedFileTypes = (from e in GuiController.SongExtensions select e.Substring(1)).ToArray(), AllowsOtherFileTypes = true, AllowsMultipleSelection = false, CanChooseFiles = true, CanChooseDirectories = false };
 			return (panel.RunModal() == 1) ? panel.Url?.Path ?? null : null;
 		}
       public string PickImageFilename()
@@ -68,9 +98,6 @@ namespace Synthesia
       public MainWindowController(IntPtr handle) : base(handle) { }
       public MainWindowController() : base("MainWindow")
       {
-         // NOTE: This c.set is actually superfluous.  The GuiController sets it for us.
-         c = new GuiController(this, "");
-
          Window.WindowShouldClose += (sender) => { return OkayToProceed(); };
 
          TitleBox.Changed += (sender, e) => { c.TitleChanged(TitleBox.StringValue); };
@@ -86,9 +113,36 @@ namespace Synthesia
          LicenseBox.Changed += (sender, e) => { c.LicenseChanged(LicenseBox.StringValue); };
          HandsBox.Changed += (sender, e) => { c.HandsChanged(HandsBox.StringValue); };
          PartsBox.TextDidChange += (sender, e) => { c.PartsChanged(PartsBox.String); };
-      }
 
-      public override void AwakeFromNib() { base.AwakeFromNib(); }
+         TagBox.Changed += (sender, e) => {
+            if (TagBox.StringValue.Contains(';')) TagBox.StringValue = TagBox.StringValue.Replace(";", "");
+            AddTagButton.Enabled = TagBox.StringValue.Length > 0 && !Tags.Data.Contains(TagBox.StringValue);
+         };
+
+			BookmarkLabelBox.Changed += (sender, e) =>
+			{
+            if (BookmarkLabelBox.StringValue.Contains(';')) BookmarkLabelBox.StringValue = BookmarkLabelBox.StringValue.Replace(";", "");
+			};
+		}
+
+      public override void AwakeFromNib()
+      {
+         base.AwakeFromNib();
+         (Window.ContentView as DragDropView).controller = this;
+
+			SongList.DataSource = Songs;
+         SongList.Delegate = new TableDelegate<SongEntry>(Songs, () => { c.SelectionChanged(); });
+
+         BookmarkList.DataSource = Bookmarks;
+         BookmarkList.Delegate = new TableDelegate<Bookmark>(Bookmarks, () => { RemoveBookmarkButton.Enabled = BookmarkList.SelectedRowCount > 0; });
+
+			TagList.DataSource = Tags;
+         TagList.Delegate = new TableDelegate<string>(Tags, () => { RemoveTagButton.Enabled = TagList.SelectedRowCount > 0; });
+
+			// NOTE: This c.set is actually superfluous.  The GuiController sets it for us.
+			c = new GuiController(this, "");
+		}
+
       public new MainWindow Window { get { return (MainWindow)base.Window; } }
 
       // New, Open, Save, Save As, and Import handled in AppDelegate (About and Exit handled automatically)
@@ -98,65 +152,139 @@ namespace Synthesia
       partial void retargetClicked(NSObject sender) { c.RetargetUniqueId(); }
       partial void addSongClicked(NSObject sender)
       {
-			var panel = new NSOpenPanel() { Title = "Add Songs", AllowedFileTypes = (from e in c.SongExtensions select e.Substring(1)).ToArray(), AllowsOtherFileTypes = true, AllowsMultipleSelection = true, CanChooseFiles = true, CanChooseDirectories = false };
+			var panel = new NSOpenPanel() { Title = "Add Songs", AllowedFileTypes = (from e in GuiController.SongExtensions select e.Substring(1)).ToArray(), AllowsOtherFileTypes = true, AllowsMultipleSelection = true, CanChooseFiles = true, CanChooseDirectories = false };
          if (panel.RunModal() != 1) return;
          c.AddSongs((from s in panel.Urls select s?.Path ?? null).ToArray());
       }
 
-      // TODO: SongList_SelectedIndexChanged
-
       public void RefreshSongList()
       {
-         // TODO
-      }
+         var selectedIds = (from s in SelectedSongs select s.UniqueId).ToList();
+         if (c.Metadata != null) Songs.Data = c.Metadata.Songs.ToList();
 
-      public void ClearSongControls()
-      {
-         // TODO
-      }
+			SongList.ReloadData();
+         SongList.DeselectAll(this);
+         for (int i = 0; i < Songs.Data.Count; ++i) if (selectedIds.Contains(Songs.Data[i].UniqueId)) SongList.SelectRow(i, true);
+		}
 
-      // TODO: BindBox
-      // TODO: BindNumericBox
-      // TODO: BookmarkListItem
+      public void ClearSongControls() { PropertiesGroup.Hidden = true; }
+
+		void BindBox(NSTextField box, PropertyInfo prop)
+		{
+			int values = (from e in SelectedSongs select prop.GetValue(e, null) as string).Distinct().Count();
+
+         box.TextColor = values == 1 ? NSColor.ControlText : NSColor.DisabledControlText;
+         box.StringValue = values == 1 ? prop.GetValue(SelectedSongs.First()) as string ?? "" : "(Various)";
+		}
+
+		void BindBox(NSTextView box, PropertyInfo prop)
+		{
+			int values = (from e in SelectedSongs select prop.GetValue(e, null) as string).Distinct().Count();
+
+			box.TextColor = values == 1 ? NSColor.ControlText : NSColor.DisabledControlText;
+			box.Value = values == 1 ? prop.GetValue(SelectedSongs.First()) as string ?? "" : "(Various)";
+		}
+
+		void BindNumericBox(NSTextField box, PropertyInfo prop)
+		{
+			int values = (from e in SelectedSongs select prop.GetValue(e, null) as int?).Distinct().Count();
+
+			box.TextColor = values == 1 ? NSColor.ControlText : NSColor.DisabledControlText;
+			box.IntValue = values == 1 ? (prop.GetValue(SelectedSongs.First()) as int?) ?? 0 : 0;
+		}
 
       public void BindSongControls()
       {
-         // TODO
-      }
+         PropertiesGroup.Hidden = false;
+
+         BindBox(UniqueIdBox, typeof(SongEntry).GetProperty("UniqueId"));
+			BindBox(TitleBox, typeof(SongEntry).GetProperty("Title"));
+			BindBox(SubtitleBox, typeof(SongEntry).GetProperty("Subtitle"));
+
+			BindBox(BackgroundBox, typeof(SongEntry).GetProperty("BackgroundImage"));
+
+			BindBox(ComposerBox, typeof(SongEntry).GetProperty("Composer"));
+			BindBox(ArrangerBox, typeof(SongEntry).GetProperty("Arranger"));
+			BindBox(CopyrightBox, typeof(SongEntry).GetProperty("Copyright"));
+			BindBox(LicenseBox, typeof(SongEntry).GetProperty("License"));
+			BindBox(MadeFamousByBox, typeof(SongEntry).GetProperty("MadeFamousBy"));
+
+			BindNumericBox(DifficultyBox, typeof(SongEntry).GetProperty("Difficulty"));
+			BindNumericBox(RatingBox, typeof(SongEntry).GetProperty("Rating"));
+
+			BindBox(FingerHintBox, typeof(SongEntry).GetProperty("FingerHints"));
+			BindBox(HandsBox, typeof(SongEntry).GetProperty("HandParts"));
+			BindBox(PartsBox, typeof(SongEntry).GetProperty("Parts"));
+
+         int selectedCount = (int)SongList.SelectedRowCount;
+			SortedDictionary<string, int> tagFrequency = new SortedDictionary<string, int>();
+			Dictionary<KeyValuePair<int, string>, int> bookmarkFrequency = new Dictionary<KeyValuePair<int, string>, int>();
+
+			RetargetButton.Enabled = selectedCount == 1;
+
+			foreach (SongEntry e in SelectedSongs)
+			{
+				foreach (string tag in e.Tags) tagFrequency[tag] = tagFrequency.ContainsKey(tag) ? tagFrequency[tag] + 1 : 1;
+				foreach (var b in e.Bookmarks) bookmarkFrequency[b] = bookmarkFrequency.ContainsKey(b) ? bookmarkFrequency[b] + 1 : 1;
+			}
+
+			Tags.Data.Clear();
+			foreach (var tag in tagFrequency) if (tag.Value == selectedCount) Tags.Data.Add(tag.Key);
+         TagList.ReloadData();
+
+			Bookmarks.Data.Clear();
+			foreach (var b in bookmarkFrequency) if (b.Value == selectedCount) Bookmarks.Data.Add(new Bookmark(b.Key.Key, b.Key.Value));
+         BookmarkList.ReloadData();
+		}
 
       partial void tagAddClicked(NSObject sender)
       {
-         // TODO
+         c.AddTag(TagBox.StringValue);
+         TagBox.StringValue = "";
       }
 
       partial void tagRemoveClicked(NSObject sender)
       {
-         // TODO
-      }
+         int selected = (int)TagList.SelectedRow;
+         if (selected < 0) return;
 
-      // TODO: tagTextChanged
-      // TODO: tagSelectedIndexChanged
+         var tag = Tags.Data[selected];
+         c.RemoveTag(tag);
+         TagBox.StringValue = tag;
+      }
 
       partial void bookmarkAddClicked(NSObject sender)
       {
-         // TODO
+         c.AddBookmark(Math.Min(10000, Math.Max(1, BookmarkMeasureBox.IntValue)), BookmarkLabelBox.StringValue);
+         BookmarkLabelBox.StringValue = "";
       }
 
       partial void bookmarkRemoveClicked(NSObject sender)
       {
-         // TODO
-      }
+         int selected = (int)BookmarkList.SelectedRow;
+         if (selected < 0) return;
 
-      // TODO: bookmarkDescriptionChanged
-      // TODO: bookmarkSelectedIndexChanged
+         var bookmark = Bookmarks.Data[selected];
+         c.RemoveBookmark(bookmark.Measure);
+
+         BookmarkMeasureBox.IntValue = bookmark.Measure;
+         BookmarkLabelBox.StringValue = bookmark.Description ?? "";
+      }
 
       public void UpdateSelectedSongTitle()
       {
-         // TODO
-      }
+			var selected = SongList.SelectedRows;
+         if (!selected.Any()) return;
 
-      // TODO: DragDrop
-      // TODO: DragEnter
+			var d = SongList.Delegate as TableDelegate<SongEntry>;
+         var a = d.SelectionChanged;
+         d.SelectionChanged = null;
+
+         SongList.ReloadData();
+         SongList.SelectRows(selected, false);
+
+         d.SelectionChanged = a;
+      }
 
       public ImportOptions AskImportOptions()
       {
