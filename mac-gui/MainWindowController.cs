@@ -319,7 +319,10 @@ namespace Synthesia
       partial void backgroundBrowseClicked(NSObject sender)
       {
          var relative = c.BrowseBackground();
-         if (relative != null) BackgroundBox.StringValue = relative;
+         if (relative == null) return;
+
+         BackgroundBox.StringValue = relative;
+         c.BackgroundChanged(relative);
       }
    }
 }
