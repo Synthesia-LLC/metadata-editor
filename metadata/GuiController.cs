@@ -91,9 +91,9 @@ namespace Synthesia
 
       public FileInfo File { get; set; }
       public MetadataFile Metadata { get; set; }
-      private bool IgnoreUpdates { get; set; }
+      bool IgnoreUpdates { get; set; }
 
-      private bool m_dirty;
+      bool m_dirty;
       public bool Dirty
       {
          get { return m_dirty; }
@@ -169,7 +169,7 @@ namespace Synthesia
          }
 
          ImportOptions options = f.AskImportOptions();
-         if (options == 0) return;
+         if ((options & (ImportOptions.FingerHints | ImportOptions.HandParts | ImportOptions.Parts)) == 0) return;
 
          bool standardPath = options.HasFlag(ImportOptions.StandardPath);
 
@@ -178,7 +178,7 @@ namespace Synthesia
          if (options.HasFlag(ImportOptions.HandParts)) results["hand parts"] = ImportHandParts(standardPath);
          if (options.HasFlag(ImportOptions.Parts)) results["parts"] = ImportParts(standardPath);
 
-         SelectionChanged();
+         f.RefreshSongList();
 
          Dirty |= (from r in results where r.Value.Changed > 0 select true).Any();
          f.ShowInfo(string.Join(Environment.NewLine, from r in results select r.Value.ToDisplayString(r.Key)), "Import Complete");
@@ -291,14 +291,14 @@ namespace Synthesia
          else BindSong();
       }
 
-      private void WipeSelection()
+      void WipeSelection()
       {
          f.RefreshSongList();
          f.DeselectAllSongs();
          UnbindSong();
       }
 
-      private void RebindAfterChange()
+      void RebindAfterChange()
       {
          Dirty = true;
          foreach (SongEntry e in f.SelectedSongs) Metadata.AddSong(e);

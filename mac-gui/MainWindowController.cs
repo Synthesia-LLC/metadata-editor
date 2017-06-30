@@ -76,8 +76,8 @@ namespace Synthesia
          if (!c.Dirty) return true;
 
          var alert = new NSAlert { InformativeText = "Would you like to save your changes first?", MessageText = "Save Changes?" };
-         alert.AddButton("Yes");
-         alert.AddButton("No");
+         alert.AddButton("Save");
+         alert.AddButton("Discard");
          alert.AddButton("Cancel");
 
          var result = alert.RunModal();
@@ -288,8 +288,26 @@ namespace Synthesia
 
       public ImportOptions AskImportOptions()
       {
-         // TODO
-         return ImportOptions.Cancel;
+         var import = new ImportViewController();
+         var alert = new NSAlert()
+         {
+            AlertStyle = NSAlertStyle.Informational,
+            InformativeText = "This will scan the auto-saved data files in your Synthesia data directory and import the selected data for any song entries matching those in the current metadata file.\n\nCAUTION: Matching song data will always overwrite the selected fields in this metadata file!  This cannot be reversed.  Save a backup copy first if you are unsure.",
+            MessageText = "Import from Synthesia",
+            AccessoryView = import.View
+         };
+         alert.AddButton("Import");
+         alert.AddButton("Cancel");
+         alert.Layout();
+
+         if (alert.RunSheetModal(Window) == (int)NSAlertButtonReturn.Second) return ImportOptions.Cancel;
+
+         ImportOptions result = 0;
+         if (import.StandardSource) result |= ImportOptions.StandardPath;
+         if (import.FingerHints) result |= ImportOptions.FingerHints;
+         if (import.HandParts) result |= ImportOptions.HandParts;
+         if (import.Parts) result |= ImportOptions.Parts;
+         return result;
       }
 
       public bool LaunchGroupEditor(MetadataFile m)

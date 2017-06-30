@@ -80,10 +80,19 @@
     </Compile>
     <Compile Include="AppDelegate.cs" />
     <Compile Include="DragDropView.cs" />
+    <Compile Include="ImportView.cs" />
+    <Compile Include="ImportViewController.cs" />
+    <Compile Include="ImportView.designer.cs">
+      <DependentUpon>ImportView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImportViewController.designer.cs">
+      <DependentUpon>ImportViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainMenu.xib" />
     <InterfaceDefinition Include="MainWindow.xib" />
+    <InterfaceDefinition Include="ImportView.xib" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\metadata\metadata.csproj">
