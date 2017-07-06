@@ -12,34 +12,9 @@ namespace Synthesia
    {
       public GuiController c { get; set; }
 
-      public class TableSource<Type> : NSTableViewDataSource
-      {
-         public List<Type> Data = new List<Type>();
-         public override nint GetRowCount(NSTableView tableView) { return Data.Count; }
-      }
-
-      public class TableDelegate<Type> : NSTableViewDelegate
-      {
-         readonly TableSource<Type> Source;
-         public Action SelectionChanged;
-
-         public TableDelegate(TableSource<Type> s, Action selectionChanged = null) { Source = s; SelectionChanged = selectionChanged; }
-
-         public override NSView GetViewForItem(NSTableView tableView, NSTableColumn tableColumn, nint row)
-         {
-            NSTextField v = (NSTextField)tableView.MakeView("cell", this);
-            if (v == null) v = new NSTextField { Identifier = "cell", BackgroundColor = NSColor.Clear, Bordered = false, Selectable = false, Editable = false };
-
-            v.StringValue = Source.Data[(int)row].ToString();
-            return v;
-         }
-
-         public override void SelectionDidChange(NSNotification notification) { SelectionChanged?.Invoke(); }
-      }
-
-      readonly TableSource<SongEntry> Songs = new TableSource<SongEntry>();
-      readonly TableSource<Bookmark> Bookmarks = new TableSource<Bookmark>();
-      readonly TableSource<string> Tags = new TableSource<string>();
+      readonly SimpleTableSource<SongEntry> Songs = new SimpleTableSource<SongEntry>();
+      readonly SimpleTableSource<Bookmark> Bookmarks = new SimpleTableSource<Bookmark>();
+      readonly SimpleTableSource<string> Tags = new SimpleTableSource<string>();
 
       public IEnumerable<SongEntry> SelectedSongs => from s in SongList.SelectedRows select Songs.Data[(int)s];
       public string WindowTitle { set { Window.Title = value; } }
@@ -131,13 +106,13 @@ namespace Synthesia
          (Window.ContentView as DragDropView).controller = this;
 
 			SongList.DataSource = Songs;
-         SongList.Delegate = new TableDelegate<SongEntry>(Songs, () => { c.SelectionChanged(); });
+         SongList.Delegate = new SimpleTableDelegate<SongEntry>(Songs, () => { c.SelectionChanged(); });
 
          BookmarkList.DataSource = Bookmarks;
-         BookmarkList.Delegate = new TableDelegate<Bookmark>(Bookmarks, () => { RemoveBookmarkButton.Enabled = BookmarkList.SelectedRowCount > 0; });
+         BookmarkList.Delegate = new SimpleTableDelegate<Bookmark>(Bookmarks, () => { RemoveBookmarkButton.Enabled = BookmarkList.SelectedRowCount > 0; });
 
 			TagList.DataSource = Tags;
-         TagList.Delegate = new TableDelegate<string>(Tags, () => { RemoveTagButton.Enabled = TagList.SelectedRowCount > 0; });
+         TagList.Delegate = new SimpleTableDelegate<string>(Tags, () => { RemoveTagButton.Enabled = TagList.SelectedRowCount > 0; });
 
 			// NOTE: This c.set is actually superfluous.  The GuiController sets it for us.
 			c = new GuiController(this, "");
@@ -276,7 +251,7 @@ namespace Synthesia
 			var selected = SongList.SelectedRows;
          if (!selected.Any()) return;
 
-			var d = SongList.Delegate as TableDelegate<SongEntry>;
+			var d = SongList.Delegate as SimpleTableDelegate<SongEntry>;
          var a = d.SelectionChanged;
          d.SelectionChanged = null;
 
@@ -312,8 +287,9 @@ namespace Synthesia
 
       public bool LaunchGroupEditor(MetadataFile m)
       {
-         // TODO
-         return false;
+         GroupEditorController editor = new GroupEditorController(c.Metadata);
+         NSApplication.SharedApplication.RunModalForWindow(editor.Window);
+         return editor.MadeChanges;
       }
 
       partial void backgroundBrowseClicked(NSObject sender)

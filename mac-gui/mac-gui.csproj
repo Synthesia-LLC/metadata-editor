@@ -64,6 +64,14 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-512.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-512%402x.png" />
     <ImageAsset Include="Assets.xcassets\Contents.json" />
+    <ImageAsset Include="Resources\Assets.xcassets\arrowDown.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Assets.xcassets\arrowUp.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Assets.xcassets\arrowUp.imageset\arrowUp.pdf" />
+    <ImageAsset Include="Resources\Assets.xcassets\arrowDown.imageset\arrowDown.pdf" />
+    <ImageAsset Include="Resources\Assets.xcassets\iconGroup.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Assets.xcassets\iconGroup.imageset\iconGroup.pdf" />
+    <ImageAsset Include="Resources\Assets.xcassets\iconSong.imageset\Contents.json" />
+    <ImageAsset Include="Resources\Assets.xcassets\iconSong.imageset\iconSong.pdf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -88,17 +96,31 @@
     <Compile Include="ImportViewController.designer.cs">
       <DependentUpon>ImportViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="GroupEditor.cs" />
+    <Compile Include="GroupEditor.designer.cs">
+      <DependentUpon>GroupEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GroupEditorController.cs" />
+    <Compile Include="GroupEditorController.designer.cs">
+      <DependentUpon>GroupEditorController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleDelegates.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="MainMenu.xib" />
     <InterfaceDefinition Include="MainWindow.xib" />
     <InterfaceDefinition Include="ImportView.xib" />
+    <InterfaceDefinition Include="GroupEditor.xib" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\metadata\metadata.csproj">
       <Project>{C8F3E5D3-E75D-488A-92C4-414EDB4711EB}</Project>
       <Name>metadata</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Assets.xcassets\iconGroup.imageset\" />
+    <Folder Include="Resources\Assets.xcassets\iconSong.imageset\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
   <ProjectExtensions>
