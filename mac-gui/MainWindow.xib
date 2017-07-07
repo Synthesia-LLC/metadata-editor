@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
         <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -31,10 +32,8 @@
                 <outlet property="SubtitleBox" destination="oUP-oU-hB0" id="X6i-po-JtK"/>
                 <outlet property="TagBox" destination="aR7-wj-UYg" id="eRd-yb-Esn"/>
                 <outlet property="TagList" destination="LTf-t6-58J" id="uy3-L7-6MB"/>
-                <outlet property="TagsBox" destination="aR7-wj-UYg" id="XKE-bz-ufX"/>
                 <outlet property="TitleBox" destination="uhd-c8-1Gy" id="r3o-7Z-E7A"/>
                 <outlet property="UniqueIdBox" destination="Jll-lx-07v" id="fYh-3b-Wj0"/>
-                <outlet property="bookmarkRemoveClicked" destination="DcL-IR-fXk" id="dkt-2v-UFg"/>
                 <outlet property="window" destination="2" id="6"/>
             </connections>
         </customObject>

@@ -96,6 +96,9 @@
                             <rect key="frame" x="224" y="17" width="15" height="102"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
+                        <connections>
+                            <outlet property="menu" destination="Lgt-sm-pU1" id="MOh-tH-qmZ"/>
+                        </connections>
                     </scrollView>
                     <textField verticalHuggingPriority="750" misplaced="YES" allowsCharacterPickerTouchBarItem="NO" id="g18-H5-kTY">
                         <rect key="frame" x="20" y="61" width="317" height="22"/>
@@ -243,6 +246,36 @@
             </view>
             <point key="canvasLocation" x="186" y="214.5"/>
         </window>
+        <menu id="Lgt-sm-pU1">
+            <items>
+                <menuItem title="Create new top-level group" id="ySP-UO-Q8n">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="menuCreateTopLevelClicked:" target="-2" id="V9M-TL-Tde"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Create group under [set in code]" tag="1" id="erZ-Ab-Oos">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="menuCreateGroupUnderClicked:" target="-2" id="3Vb-OU-KXi"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="n0k-Bp-xdk"/>
+                <menuItem title="Remove [set in code]" tag="2" id="tk6-Zl-IVZ">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="menuRemoveGroupClicked:" target="-2" id="PKg-Jo-4gF"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Remove all songs from [set in code]" tag="3" id="J7c-Fs-qas">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="menuRemoveAllSongsClicked:" target="-2" id="39g-Cb-HA4"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="7" y="558"/>
+        </menu>
     </objects>
     <resources>
         <image name="arrowDown" width="128" height="128"/>

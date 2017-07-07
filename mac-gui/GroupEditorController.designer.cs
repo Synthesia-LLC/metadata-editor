@@ -42,6 +42,18 @@ namespace Synthesia
 		[Action ("downClicked:")]
 		partial void downClicked (Foundation.NSObject sender);
 
+		[Action ("menuCreateGroupUnderClicked:")]
+		partial void menuCreateGroupUnderClicked (Foundation.NSObject sender);
+
+		[Action ("menuCreateTopLevelClicked:")]
+		partial void menuCreateTopLevelClicked (Foundation.NSObject sender);
+
+		[Action ("menuRemoveAllSongsClicked:")]
+		partial void menuRemoveAllSongsClicked (Foundation.NSObject sender);
+
+		[Action ("menuRemoveGroupClicked:")]
+		partial void menuRemoveGroupClicked (Foundation.NSObject sender);
+
 		[Action ("removeClicked:")]
 		partial void removeClicked (Foundation.NSObject sender);
 
