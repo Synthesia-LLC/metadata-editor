@@ -9,3 +9,4 @@ metadata-merge/obj
 *.suo
 *.userprefs
 *.user
+.vs

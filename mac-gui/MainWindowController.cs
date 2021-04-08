@@ -154,10 +154,14 @@ namespace Synthesia
 
 		void BindBox(NSTextView box, PropertyInfo prop)
 		{
+         var cursor = box.SelectedRanges;
+
 			int values = (from e in SelectedSongs select prop.GetValue(e, null) as string).Distinct().Count();
 
 			box.TextColor = values == 1 ? NSColor.ControlText : NSColor.DisabledControlText;
 			box.Value = values == 1 ? prop.GetValue(SelectedSongs.First()) as string ?? "" : "(Various)";
+
+         box.SelectedRanges = cursor;
 		}
 
 		void BindNumericBox(NSTextField box, PropertyInfo prop)
