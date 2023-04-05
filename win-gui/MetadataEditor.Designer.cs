@@ -484,7 +484,7 @@
 			// 
 			// OpenSongDialog
 			// 
-			this.OpenSongDialog.Filter = "Supported Songs|*.mid;*.midi;*.kar|All Files (*.*)|*.*";
+			this.OpenSongDialog.Filter = "Supported Songs|*.mid;*.midi;*.kar;*.xml;*.musicxml;*.mxl|All Files (*.*)|*.*";
 			this.OpenSongDialog.Multiselect = true;
 			// 
 			// SongListLabel
@@ -761,7 +761,7 @@
 			// 
 			// RetargetSongDialog
 			// 
-			this.RetargetSongDialog.Filter = "Supported Songs|*.mid;*.midi;*.kar|All Files (*.*)|*.*";
+			this.RetargetSongDialog.Filter = "Supported Songs|*.mid;*.midi;*.kar;*.xml;*.musicxml;*.mxl|All Files (*.*)|*.*";
 			// 
 			// PickImageDialog
 			// 

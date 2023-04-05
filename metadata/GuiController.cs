@@ -85,7 +85,7 @@ namespace Synthesia
          Dirty = false;
       }
 
-      public static readonly HashSet<string> SongExtensions = new HashSet<string> { ".mid", ".midi", ".kar" };
+      public static readonly HashSet<string> SongExtensions = new HashSet<string> { ".mid", ".midi", ".kar", ".xml", ".musicxml", ".mxl" };
       public static readonly HashSet<string> MetaExtensions = new HashSet<string> { ".synthesia", ".xml" };
       public static readonly HashSet<string> LinkExtensions = new HashSet<string> { ".lnk" };
 
