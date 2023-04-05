@@ -6,7 +6,7 @@ Synthesia Metadata Editor
 
 - **[Download](https://github.com/Synthesia-LLC/metadata-editor/releases/latest) the latest release!**
 - [Learn](https://github.com/Synthesia-LLC/metadata-editor/wiki) more about the .synthesia file format.
-- [Get tips](http://www.synthesiagame.com/support/guide/contentCreators) on the best way to use Synthesia with metadata.
+- [Get tips](https://synthesia.app/support/guide/contentCreators) on the best way to use Synthesia with metadata.
 
 The Synthesia Metadata Editor is a PC/Mac desktop application that can generate and edit fully-compliant Synthesia metadata (.synthesia) files.
 
