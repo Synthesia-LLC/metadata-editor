@@ -12,4 +12,4 @@ The Synthesia Metadata Editor is a PC/Mac desktop application that can generate 
 
 The editing capabilities expose all of the available functionality of the Synthesia metadata file format including simple content tags, background images, finger hints, and more as the standard develops.
 
-Requires the .NET 4.5 profile on Windows (which tends to be automatically installed via Windows Update these days).
+Requires .NET 4.8 on Windows.
