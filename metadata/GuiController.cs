@@ -143,10 +143,23 @@ namespace Synthesia
          if (!System.IO.File.Exists(filename)) return;
 			if (!f.OkayToProceed()) return;
 
-         File = new FileInfo(filename);
-			using (FileStream input = File.OpenRead()) Metadata = new MetadataFile(input);
+         var file = new FileInfo(filename);
+         MetadataFile metadata = null;
+         try
+         {
+            using (FileStream input = file.OpenRead())
+               metadata = new MetadataFile(input);
+         }
+         catch (Exception) { }
 
-			WipeSelection();
+         if (metadata == null) f.ShowError($"The file '{filename}' doesn't appear to be a valid Synthesia metadata file.", "Couldn't Open");
+         else
+         {
+            File = file;
+            Metadata = metadata;
+         }
+
+         WipeSelection();
 			Dirty = false;
 		}
 
