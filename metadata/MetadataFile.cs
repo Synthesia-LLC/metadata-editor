@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
@@ -24,7 +25,12 @@ namespace Synthesia
       public MetadataFile(Stream input)
       {
          using (var reader = new StreamReader(input))
-            doc = XDocument.Load(reader, LoadOptions.None);
+         {
+            var settings = new XmlReaderSettings();
+            settings.DtdProcessing = DtdProcessing.Ignore;
+            using (var xmlReader = XmlReader.Create(reader, settings))
+               doc = XDocument.Load(xmlReader, LoadOptions.None);
+         }
 
          XElement top = doc.Root;
          if (top == null || top.Name != "SynthesiaMetadata") throw new InvalidOperationException("Stream does not contain a valid Synthesia metadata file.");
