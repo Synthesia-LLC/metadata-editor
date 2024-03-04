@@ -7,11 +7,11 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.synthesia.metadata-editor</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.3.0</string>
+	<string>1.4.0</string>
 	<key>CFBundleVersion</key>
 	<string>100</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.9</string>
+	<string>10.13</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleInfoDictionaryVersion</key>

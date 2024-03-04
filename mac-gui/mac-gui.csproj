@@ -9,6 +9,7 @@
     <RootNamespace>Synthesia</RootNamespace>
     <AssemblyName>Metadata Editor</AssemblyName>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <UseXamMacFullFramework>true</UseXamMacFullFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -30,6 +31,8 @@
     <PackageSigningKey>3rd Party Mac Developer Installer</PackageSigningKey>
     <LinkMode>None</LinkMode>
     <AOTMode>None</AOTMode>
+    <XamMacArch>x86_64,ARM64</XamMacArch>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType></DebugType>
@@ -51,7 +54,8 @@
     <AOTMode>None</AOTMode>
     <UseHardenedRuntime>true</UseHardenedRuntime>
     <CodeSignEntitlements>Synthesia.entitlements</CodeSignEntitlements>
-    <XamMacArch>x86_64</XamMacArch>
+    <XamMacArch>x86_64,ARM64</XamMacArch>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

@@ -65,10 +65,7 @@
     <MonoDevelop>
       <Properties>
         <Policies>
-          <TextStylePolicy RemoveTrailingWhitespace="True" EolMarker="Native" FileWidth="200" TabWidth="3" TabsToSpaces="True" IndentWidth="3" NoTabsAfterNonTabs="True" scope="text/plain">
-            <inheritsSet />
-            <inheritsScope />
-          </TextStylePolicy>
+          <TextStylePolicy RemoveTrailingWhitespace="True" EolMarker="Native" FileWidth="200" TabWidth="3" TabsToSpaces="True" IndentWidth="3" NoTabsAfterNonTabs="True" scope="text/plain" />
         </Policies>
       </Properties>
     </MonoDevelop>
