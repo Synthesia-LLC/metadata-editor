@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Synthesia Metadata Library")]
-[assembly: AssemblyCopyright("©2014-2023 Synthesia LLC")]
+[assembly: AssemblyCopyright("©2014-2024 Synthesia LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

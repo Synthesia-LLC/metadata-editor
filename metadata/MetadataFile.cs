@@ -11,22 +11,22 @@ namespace Synthesia
    /// <remarks>Custom XML structures in existing metadata files will be preserved as best as possible.</remarks>
    public class MetadataFile
    {
-      XDocument m_document;
+      readonly XDocument doc;
 
       /// <summary>
       /// Starts a new, empty metadata XML file
       /// </summary>
       public MetadataFile()
       {
-         m_document = new XDocument(new XElement("SynthesiaMetadata", (new XAttribute("Version", "1"))));
+         doc = new XDocument(new XElement("SynthesiaMetadata", (new XAttribute("Version", "1"))));
       }
 
       public MetadataFile(Stream input)
       {
          using (var reader = new StreamReader(input))
-            m_document = XDocument.Load(reader, LoadOptions.None);
+            doc = XDocument.Load(reader, LoadOptions.None);
 
-         XElement top = m_document.Root;
+         XElement top = doc.Root;
          if (top == null || top.Name != "SynthesiaMetadata") throw new InvalidOperationException("Stream does not contain a valid Synthesia metadata file.");
 
          if (top.AttributeOrDefault("Version") != "1") throw new InvalidOperationException("Unknown Synthesia metadata version.  A newer version of this editor may be available.");
@@ -35,14 +35,14 @@ namespace Synthesia
       public void Save(Stream output)
       {
          using (StreamWriter writer = new StreamWriter(output))
-            m_document.Save(writer, SaveOptions.None);
+            doc.Save(writer, SaveOptions.None);
       }
 
       public void RemoveSong(string uniqueId)
       {
          if (uniqueId == null) return;
 
-         XElement songs = m_document.Root.Element("Songs");
+         XElement songs = doc.Root.Element("Songs");
          if (songs == null) return;
 
          foreach (XElement s in songs.Elements("Song"))
@@ -63,7 +63,7 @@ namespace Synthesia
       {
          if (string.IsNullOrWhiteSpace(newId)) return false;
 
-         XElement songs = m_document.Root.Element("Songs");
+         XElement songs = doc.Root.Element("Songs");
          if (songs == null) return false;
 
          XElement element = (from e in songs.Elements("Song") where e.AttributeOrDefault("UniqueId") == oldId select e).FirstOrDefault();
@@ -110,8 +110,8 @@ namespace Synthesia
 
       public void AddSong(SongEntry entry)
       {
-         XElement songs = m_document.Root.Element("Songs");
-         if (songs == null) m_document.Root.Add(songs = new XElement("Songs"));
+         XElement songs = doc.Root.Element("Songs");
+         if (songs == null) doc.Root.Add(songs = new XElement("Songs"));
 
          AddSong(songs, entry);
       }
@@ -120,7 +120,7 @@ namespace Synthesia
       {
          get
          {
-            XElement songs = m_document.Root.Element("Songs");
+            XElement songs = doc.Root.Element("Songs");
             if (songs == null) yield break;
 
             foreach (XElement s in songs.Elements("Song"))
@@ -144,9 +144,8 @@ namespace Synthesia
                   Parts = s.AttributeOrDefault("Parts")
                };
 
-               int rating, difficulty;
-               if (int.TryParse(s.AttributeOrDefault("Rating"), out rating)) entry.Rating = rating;
-               if (int.TryParse(s.AttributeOrDefault("Difficulty"), out difficulty)) entry.Difficulty = difficulty;
+               if (int.TryParse(s.AttributeOrDefault("Rating"), out int rating)) entry.Rating = rating;
+               if (int.TryParse(s.AttributeOrDefault("Difficulty"), out int difficulty)) entry.Difficulty = difficulty;
 
                string tags = s.AttributeOrDefault("Tags");
                if (tags != null)
@@ -164,8 +163,7 @@ namespace Synthesia
                   {
                      int comma = b.IndexOf(',');
 
-                     int measure;
-                     int.TryParse(comma == -1 ? b : b.Substring(0, comma), out measure);
+                     int.TryParse(comma == -1 ? b : b.Substring(0, comma), out int measure);
                      if (measure == 0) continue;
 
                      string description = "";
@@ -181,8 +179,8 @@ namespace Synthesia
 
          set
          {
-            XElement songs = m_document.Root.Element("Songs");
-            if (songs == null) m_document.Add(songs = new XElement("Songs"));
+            XElement songs = doc.Root.Element("Songs");
+            if (songs == null) doc.Add(songs = new XElement("Songs"));
 
             foreach (SongEntry entry in value) AddSong(songs, entry);
          }
@@ -200,8 +198,8 @@ namespace Synthesia
 
       private XElement RootGroupElement(bool createIfMissing)
       {
-         XElement result = m_document.Root.Element("Groups");
-         if (result == null && createIfMissing) m_document.Root.Add(result = new XElement("Groups"));
+         XElement result = doc.Root.Element("Groups");
+         if (result == null && createIfMissing) doc.Root.Add(result = new XElement("Groups"));
 
          return result;
       }
@@ -243,7 +241,7 @@ namespace Synthesia
          ValidatePath(groupNamePath);
 
          XElement e = GroupFromPath(groupNamePath, false);
-         if (e != null) e.Remove();
+         e?.Remove();
       }
 
       /// <summary>
@@ -273,9 +271,7 @@ namespace Synthesia
          ValidatePath(groupNamePath);
          if (groupNamePath.Last() == newName) return newName;
 
-         XElement group = GroupFromPath(groupNamePath, false);
-         if (group == null) throw new InvalidOperationException("Couldn't find group to rename.");
-
+         XElement group = GroupFromPath(groupNamePath, false) ?? throw new InvalidOperationException("Couldn't find group to rename.");
          XElement parent = group.Parent;
 
          string name = DisambiguateName(parent, newName);
@@ -302,9 +298,7 @@ namespace Synthesia
       public void SwapSongsInGroup(List<string> groupNamePath, string songUniqueIdA, string songUniqueIdB)
       {
          ValidatePath(groupNamePath);
-         XElement g = GroupFromPath(groupNamePath, false);
-         if (g == null) throw new InvalidOperationException("Couldn't find group to swap songs.");
-
+         XElement g = GroupFromPath(groupNamePath, false) ?? throw new InvalidOperationException("Couldn't find group to swap songs.");
          XElement a = (from s in g.Elements("Song") where s.AttributeOrDefault("UniqueId") == songUniqueIdA select s).FirstOrDefault();
          XElement b = (from s in g.Elements("Song") where s.AttributeOrDefault("UniqueId") == songUniqueIdB select s).FirstOrDefault();
          if (a == null || b == null) throw new InvalidOperationException("Couldn't find songs for swapping.");

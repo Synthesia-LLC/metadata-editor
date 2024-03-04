@@ -85,7 +85,7 @@ namespace Synthesia
          Dirty = false;
       }
 
-      public static readonly HashSet<string> SongExtensions = new HashSet<string> { ".mid", ".midi", ".kar", ".xml", ".musicxml", ".mxl" };
+      public static readonly HashSet<string> SongExtensions = new HashSet<string> { ".mid", ".midi", ".musicxml", ".mxl", ".xml", ".kar", ".smf" };
       public static readonly HashSet<string> MetaExtensions = new HashSet<string> { ".synthesia", ".xml" };
       public static readonly HashSet<string> LinkExtensions = new HashSet<string> { ".lnk" };
 
@@ -471,17 +471,27 @@ namespace Synthesia
          FileInfo file = new FileInfo(filenames[0]);
          if (LinkExtensions.Contains(file.Extension.ToLower())) file = new FileInfo(WindowsShell.Shortcut.Resolve(filenames[0]));
 
-         if (SongExtensions.Contains(file.Extension.ToLower()))
+         // There is a corner case where a single .xml file could be either Synthesia metadata or a MusicXML
+         // file using the older-style extension.  It's easiest to just load it as metadata and see if it works.
+         MetadataFile maybe = null;
+         try
+         {
+            if (MetaExtensions.Contains(file.Extension.ToLower()))
+               using (FileStream input = file.OpenRead()) maybe = new MetadataFile(input);
+         }
+         catch (Exception) { }
+
+         if (maybe == null && SongExtensions.Contains(file.Extension.ToLower()))
          {
             AddSongs(filenames);
             return true;
          }
 
-         if (!MetaExtensions.Contains(file.Extension.ToLower())) return false;
+         if (maybe == null) return false;
          if (!f.OkayToProceed()) return false;
 
          File = file;
-         using (FileStream input = File.OpenRead()) Metadata = new MetadataFile(input);
+         Metadata = maybe;
 
          WipeSelection();
          Dirty = false;
@@ -494,7 +504,7 @@ namespace Synthesia
          int platform = (int)Environment.OSVersion.Platform;
          bool unix = platform == 4 || platform == 6 || platform == 128 || Environment.OSVersion.Platform == PlatformID.MacOSX;
 
-         string path = "";
+         string path;
          if (!unix)
          {
             path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -540,9 +550,7 @@ namespace Synthesia
          try
          {
             XDocument doc = XDocument.Load(SongInfoPath);
-
-            XElement topLevel = doc.Element("LocalSongInfoList");
-            if (topLevel == null) throw new InvalidDataException("Couldn't find top-level LocalSongInfoList element.");
+            XElement topLevel = doc.Element("LocalSongInfoList") ?? throw new InvalidDataException("Couldn't find top-level LocalSongInfoList element.");
 
             if (topLevel.AttributeOrDefault("version", "1") != "1")
             {
@@ -606,9 +614,7 @@ namespace Synthesia
          try
          {
             XDocument doc = XDocument.Load(SongInfoPath);
-
-            XElement topLevel = doc.Element("LocalSongInfoList");
-            if (topLevel == null) throw new InvalidDataException("Couldn't find top-level LocalSongInfoList element.");
+            XElement topLevel = doc.Element("LocalSongInfoList") ?? throw new InvalidDataException("Couldn't find top-level LocalSongInfoList element.");
 
             if (topLevel.AttributeOrDefault("version", "1") != "1")
             {
@@ -671,9 +677,7 @@ namespace Synthesia
          try
          {
             XDocument doc = XDocument.Load(FingerHintPath);
-
-            XElement topLevel = doc.Element("LocalFingerInfoList");
-            if (topLevel == null) throw new InvalidDataException("Couldn't find top-level LocalFingerInfoList element.");
+            XElement topLevel = doc.Element("LocalFingerInfoList") ?? throw new InvalidDataException("Couldn't find top-level LocalFingerInfoList element.");
 
             if (topLevel.AttributeOrDefault("version", "1") != "1")
             {
